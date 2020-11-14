@@ -12483,7 +12483,7 @@ exports.default = _default;
         ? _c("g-icon", { staticClass: "icon", attrs: { name: _vm.icon } })
         : _vm._e(),
       _vm._v(" "),
-      _c("g-icon", { attrs: { name: "loading" } }),
+      _c("g-icon", { staticClass: "loading", attrs: { name: "loading" } }),
       _vm._v(" "),
       _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
     ],
