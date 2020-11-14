@@ -1,7 +1,7 @@
 <template>
-  <button class="g-button" :class="{ [`icon-${iconPosition}`]: true }">
-    <g-icon v-if="icon" class="icon" :name="icon"></g-icon>
-    <g-icon class="loading" name="loading"></g-icon>
+  <button class="g-button" :class="{ [`icon-${iconPosition}`]: true }" @click="$emit('click')">
+    <g-icon v-if="icon && !loading" class="icon" :name="icon"></g-icon>
+    <g-icon v-if="loading" class="loading icon" name="loading"></g-icon>
     <div class="content">
       <slot></slot>
     </div>
@@ -20,8 +20,12 @@ export default {
       validator(val){
         return !(val !== 'left' && val !== 'right')
       }
-    }
-  }
+    },
+    loading: {
+        type: Boolean,
+        default: false
+      }
+  },
 };
 </script>
 
@@ -69,6 +73,7 @@ export default {
   }
   .loading {
     animation: spin 2s infinite linear;
+    margin-right: .3em;
   }
 }
 </style>
