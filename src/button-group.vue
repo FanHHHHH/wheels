@@ -5,7 +5,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    for (let node of this.$el.children){
+      const name = node.nodeName.toLowerCase()
+      if ( name !== 'button' ){
+        console.warn(`wheels waring: g-button-group 下面的所有标签应该为g-button，而你给的是${name}`)
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss">
