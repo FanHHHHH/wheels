@@ -23787,89 +23787,111 @@ _chai.default.use(_chaiSpies.default);
 
 var expect = _chai.default.expect; //单元测试
 
-{
-  var Constructor = _vue.default.extend(_button.default);
+try {
+  {
+    var Constructor = _vue.default.extend(_button.default);
 
-  var vm = new Constructor({
-    propsData: {
-      icon: 'settings'
-    }
+    var vm = new Constructor({
+      propsData: {
+        icon: 'settings'
+      }
+    });
+    vm.$mount();
+    var useElement = vm.$el.querySelector('use');
+    var href = useElement.getAttribute('xlink:href');
+    expect(href).to.eq('#icon-settings');
+    vm.$el.remove();
+    vm.$destroy();
+  } // positon
+
+  {
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+
+    var _Constructor = _vue.default.extend(_button.default);
+
+    var _vm = new _Constructor({
+      propsData: {
+        icon: 'settings'
+      }
+    });
+
+    _vm.$mount(div);
+
+    var svg = _vm.$el.querySelector('svg');
+
+    var _window$getComputedSt = window.getComputedStyle(svg),
+        order = _window$getComputedSt.order;
+
+    expect(order).to.eq('1');
+
+    _vm.$el.remove();
+
+    _vm.$destroy();
+  }
+  {
+    var _div = document.createElement('div');
+
+    document.body.appendChild(_div);
+
+    var _Constructor2 = _vue.default.extend(_button.default);
+
+    var _vm2 = new _Constructor2({
+      propsData: {
+        icon: 'settings',
+        iconPosition: 'right'
+      }
+    });
+
+    _vm2.$mount(_div);
+
+    var _svg = _vm2.$el.querySelector('svg');
+
+    var _window$getComputedSt2 = window.getComputedStyle(_svg),
+        _order = _window$getComputedSt2.order;
+
+    expect(_order).to.eq('2');
+
+    _vm2.$el.remove();
+
+    _vm2.$destroy();
+  } //click
+
+  {
+    // mock
+    var _div2 = document.createElement('div');
+
+    document.body.appendChild(_div2);
+
+    var _Constructor3 = _vue.default.extend(_button.default);
+
+    var _vm3 = new _Constructor3({
+      propsData: {
+        icon: 'settings',
+        iconPosition: 'right'
+      }
+    });
+
+    _vm3.$mount(_div2);
+
+    var spy = _chai.default.spy(function () {});
+
+    _vm3.$on('click', spy);
+
+    var button = _vm3.$el;
+    button.click();
+    expect(spy).to.have.been.called();
+
+    _vm3.$el.remove();
+
+    _vm3.$destroy();
+  }
+} catch (err) {
+  window.errors = [err];
+} finally {
+  window.errors && window.errors.forEach(function (err) {
+    console.log(err.message);
   });
-  vm.$mount('');
-  var useElement = vm.$el.querySelector('use');
-  var href = useElement.getAttribute('xlink:href'); // console.log(useElement);
-
-  expect(href).to.eq('#icon-settings');
-  vm.$el.remove();
-  vm.$destroy();
-} // positon
-
-{
-  var _Constructor = _vue.default.extend(_button.default);
-
-  var _vm = new _Constructor({
-    propsData: {
-      icon: 'settings'
-    }
-  });
-
-  _vm.$mount('');
-
-  var svg = _vm.$el.querySelector('svg');
-
-  var _window$getComputedSt = window.getComputedStyle(svg),
-      order = _window$getComputedSt.order; // expect(order).to.eq('1')
-
-
-  _vm.$el.remove();
-
-  _vm.$destroy();
-}
-{
-  var _Constructor2 = _vue.default.extend(_button.default);
-
-  var _vm2 = new _Constructor2({
-    propsData: {
-      icon: 'settings',
-      iconPosition: 'right'
-    }
-  });
-
-  _vm2.$mount('');
-
-  var _svg = _vm2.$el.querySelector('svg');
-
-  var _window$getComputedSt2 = window.getComputedStyle(_svg),
-      _order = _window$getComputedSt2.order; // expect(order).to.eq('2')
-
-
-  _vm2.$el.remove();
-
-  _vm2.$destroy();
-} //click
-
-{
-  // mock
-  var _Constructor3 = _vue.default.extend(_button.default);
-
-  var _vm3 = new _Constructor3({
-    propsData: {
-      icon: 'settings',
-      iconPosition: 'right'
-    }
-  });
-
-  _vm3.$mount('#test');
-
-  var spy = _chai.default.spy(function () {});
-
-  _vm3.$on('click', spy);
-
-  var button = _vm3.$el;
-  button.click();
-  expect(spy).to.have.been.called(); // expect(order).to.eq('2')
-  // vm.$el.remove()
-  // vm.$destroy()
 }
 },{"vue":"node_modules/vue/dist/vue.common.js","./button.vue":"src/button.vue","./Icon.vue":"src/Icon.vue","./button-group":"src/button-group.vue","chai":"node_modules/chai/index.js","chai-spies":"node_modules/chai-spies/chai-spies.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
