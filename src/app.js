@@ -76,7 +76,7 @@ try{
         // mock
         const div = document.createElement('div')
         document.body.appendChild(div)
-        
+
         const Constructor = Vue.extend(Button)
         const vm = new Constructor({
             propsData: {
