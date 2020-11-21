@@ -43,10 +43,6 @@
             'g-icon': Icon
         }
     }
-4.引入svg
-    ```
-    <script src="//at.alicdn.com/t/font_2203588_6shfxjyji6h.js"></script>
-    ```
     
 ##文档
 
