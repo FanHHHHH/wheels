@@ -12778,6 +12778,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = {
   name: 'GuluInput',
   components: {
@@ -12820,7 +12825,21 @@ exports.default = _default;
       _c("input", {
         class: { error: _vm.error },
         attrs: { type: "text", disabled: _vm.disabled, readonly: _vm.readonly },
-        domProps: { value: _vm.value }
+        domProps: { value: _vm.value },
+        on: {
+          change: function($event) {
+            return _vm.$emit("change", $event)
+          },
+          input: function($event) {
+            return _vm.$emit("input")
+          },
+          focus: function($event) {
+            return _vm.$emit("focus")
+          },
+          blur: function($event) {
+            return _vm.$emit("blur")
+          }
+        }
       }),
       _vm._v(" "),
       _vm.error
@@ -12901,6 +12920,11 @@ new _vue.default({
     return {
       loading1: false
     };
+  },
+  methods: {
+    inputChange: function inputChange(e) {
+      console.log(e.target.value);
+    }
   }
 }); // import chai from 'chai'
 // import spies from 'chai-spies'
