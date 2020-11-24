@@ -2,13 +2,13 @@
   <div class="wrapper">
       <input type="text" :value="value" :disabled="disabled" :readonly="readonly" :class="{'error': error}" 
       @change="$emit('change', $event)"
-      @input="$emit('input')"
-      @focus="$emit('focus')"
-      @blur="$emit('blur')"
+      @input="$emit('input', $event)"
+      @focus="$emit('focus', $event)"
+      @blur="$emit('blur', $event)"
       >
       <template v-if="error">
           <g-icon name="error" class="icon-error"></g-icon>   
-          <div class="error-message">{{error}}</div>
+          <span class="error-message">{{error}}</span>
       </template>
   </div>
 </template>

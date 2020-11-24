@@ -12849,7 +12849,7 @@ exports.default = _default;
               attrs: { name: "error" }
             }),
             _vm._v(" "),
-            _c("div", { staticClass: "error-message" }, [
+            _c("span", { staticClass: "error-message" }, [
               _vm._v(_vm._s(_vm.error))
             ])
           ]
@@ -12921,9 +12921,21 @@ new _vue.default({
       loading1: false
     };
   },
+  created: function created() {
+    var _this = this;
+
+    setTimeout(function () {
+      var event = new Event('change');
+
+      var inputElement = _this.$el.querySelector('input');
+
+      inputElement.dispatchEvent(event);
+      console.log('hi');
+    }, 3000);
+  },
   methods: {
     inputChange: function inputChange(e) {
-      console.log(e.target.value);
+      console.log(e);
     }
   }
 }); // import chai from 'chai'
@@ -13036,7 +13048,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52487" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51117" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
