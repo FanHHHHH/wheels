@@ -30,7 +30,7 @@
     IE15及以上支持
 2.安装
     ```
-    npn i --save leoheguluui
+    npm i --save leoheguluui
     ```
 3.引入
     import {Button, ButtonGroup, Icon} from 'leoheguluui'

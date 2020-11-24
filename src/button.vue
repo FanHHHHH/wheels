@@ -1,11 +1,14 @@
 <template>
-  <button class="g-button" :class="{ [`icon-${iconPosition}`]: true }" @click="$emit('click')">
+  <button
+    class="g-button"
+    :class="{ [`icon-${iconPosition}`]: true }"
+    @click="$emit('click')"
+  >
     <g-icon v-if="icon && !loading" class="icon" :name="icon"></g-icon>
     <g-icon v-if="loading" class="loading icon" name="loading"></g-icon>
     <div class="content">
       <slot></slot>
     </div>
-    
   </button>
 </template>
 
@@ -14,38 +17,43 @@
 // import Icon from './Icon'
 
 // Vue.component('g-icon', Icon)
-import Icon from './Icon.vue'
+import Icon from "./Icon.vue";
 export default {
+  name: "GuluButton",
   // props: ["icon", "iconPosition"],
   components: {
-    'g-icon': Icon
+    "g-icon": Icon,
   },
   props: {
     icon: {},
     iconPosition: {
       type: String,
-      default: 'left',
-      validator(val){
-        return !(val !== 'left' && val !== 'right')
-      }
+      default: "left",
+      validator(val) {
+        return !(val !== "left" && val !== "right");
+      },
     },
     loading: {
-        type: Boolean,
-        default: false
-      }
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
 
 <style lang="scss">
-  @keyframes spin {
-    0% {transform: rotate(0deg);}
-    100% {transform: rotate(360deg);}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .g-button {
   font-size: var(--font-size);
   height: var(--button-height);
-  padding: 0 .9em;
+  padding: 0 0.9em;
   border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
   background: var(--button-bg);
@@ -62,26 +70,26 @@ export default {
   &:focus {
     outline: none;
   }
-  > .icon{
+  > .icon {
     order: 1;
     margin-right: 0.3em;
   }
-  > .content{
+  > .content {
     order: 2;
   }
   &.icon-right {
-    > .content{
-      order: 1
+    > .content {
+      order: 1;
     }
     > .icon {
       order: 2;
       margin-right: 0;
-      margin-left: .3em;
+      margin-left: 0.3em;
     }
   }
   .loading {
     animation: spin 2s infinite linear;
-    margin-right: .3em;
+    margin-right: 0.3em;
   }
 }
 </style>
