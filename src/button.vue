@@ -13,14 +13,9 @@
 </template>
 
 <script>
-// import Vue from 'vue'
-// import Icon from './Icon'
-
-// Vue.component('g-icon', Icon)
 import Icon from "./Icon.vue";
 export default {
   name: "GuluButton",
-  // props: ["icon", "iconPosition"],
   components: {
     "g-icon": Icon,
   },

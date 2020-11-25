@@ -12567,12 +12567,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-// import Vue from 'vue'
-// import Icon from './Icon'
-// Vue.component('g-icon', Icon)
 var _default = {
   name: "GuluButton",
-  // props: ["icon", "iconPosition"],
   components: {
     "g-icon": _Icon.default
   },
@@ -12905,7 +12901,7 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: 'GuluRow',
+  name: "GuluRow",
   props: {
     gutter: {
       type: [Number, String]
@@ -12914,10 +12910,17 @@ var _default = {
   mounted: function mounted() {
     var _this = this;
 
-    console.log(this.$children);
     this.$children.forEach(function (vm) {
       vm.gutter = _this.gutter;
     });
+  },
+  computed: {
+    rowStyle: function rowStyle() {
+      return {
+        marginLeft: -this.gutter / 2 + "px",
+        marginRight: -this.gutter / 2 + "px"
+      };
+    }
   }
 };
 exports.default = _default;
@@ -12935,13 +12938,7 @@ exports.default = _default;
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "row",
-      style: {
-        marginLeft: -_vm.gutter / 2 + "px",
-        marginRight: -_vm.gutter / 2 + "px"
-      }
-    },
+    { staticClass: "row", style: _vm.rowStyle },
     [_vm._t("default")],
     2
   )
@@ -12992,11 +12989,6 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
-//
-//
 var _default = {
   props: {
     span: {
@@ -13010,6 +13002,19 @@ var _default = {
     return {
       gutter: 0
     };
+  },
+  computed: {
+    colStyle: function colStyle() {
+      return {
+        paddingLeft: this.gutter / 2 + "px",
+        paddingRight: "".concat(this.gutter / 2, "px")
+      };
+    },
+    colClass: function colClass() {
+      var span = this.span,
+          offset = this.offset;
+      return ["col-".concat(span), offset && "offset-".concat(offset)];
+    }
   }
 };
 exports.default = _default;
@@ -13027,22 +13032,9 @@ exports.default = _default;
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "col",
-      class: ["col-" + _vm.span, _vm.offset && "offset-" + _vm.offset],
-      style: {
-        paddingLeft: _vm.gutter / 2 + "px",
-        paddingRight: _vm.gutter / 2 + "px"
-      }
-    },
-    [
-      _c(
-        "div",
-        { staticStyle: { border: "1px solid #555", height: "100px" } },
-        [_vm._t("default")],
-        2
-      )
-    ]
+    { staticClass: "col", class: _vm.colClass, style: _vm.colStyle },
+    [_vm._t("default")],
+    2
   )
 }
 var staticRenderFns = []
