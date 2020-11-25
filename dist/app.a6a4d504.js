@@ -12910,6 +12910,14 @@ var _default = {
     gutter: {
       type: [Number, String]
     }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    console.log(this.$children);
+    this.$children.forEach(function (vm) {
+      vm.gutter = _this.gutter;
+    });
   }
 };
 exports.default = _default;
@@ -12996,10 +13004,12 @@ var _default = {
     },
     offset: {
       type: [Number, String]
-    },
-    gutter: {
-      type: [Number, String]
     }
+  },
+  data: function data() {
+    return {
+      gutter: 0
+    };
   }
 };
 exports.default = _default;
