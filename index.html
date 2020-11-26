@@ -85,10 +85,10 @@
             <g-col span="14" class="content">2</g-col>
             <g-col span="6" class="content">3</g-col>
         </g-row> -->
-        <!-- <div style="border: 1px solid black;">
+        <div style="border: 1px solid black;">
             <g-row gutter="20">
-                <g-col span="2">1</g-col>
-                <g-col span="22">2</g-col>
+                <g-col span="2" offset="1" :phone="{span:12, offset: 1, gutter: 5}">1</g-col>
+                <g-col span="22" :phone="{span: 12}">2</g-col>
             </g-row>
             <g-row gutter="1">
                 <g-col span="3">1</g-col>
@@ -117,7 +117,7 @@
                 <g-col span="2">1</g-col>
                 <g-col span="20" offset="10">2</g-col>
             </g-row>
-        </div> -->
+        </div>
         <div style="margin: 20px;">
             <g-button @click="loading1 = !loading1" :loading="loading1">按钮</g-button>
             <g-button icon="settings" icon-position="right">按钮</g-button>

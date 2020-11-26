@@ -13,6 +13,19 @@ export default {
     offset: {
       type: [Number, String],
     },
+    phone: {
+      type: Object,
+      validator(val) {
+        let keys = Object.keys(val);
+        let valid = true;
+        keys.forEach((key) => {
+          if (!["span", "offset", "gutter"].includes(key)) {
+            valid = false;
+          }
+        });
+        return valid;
+      },
+    },
   },
   data() {
     return {
@@ -27,8 +40,16 @@ export default {
       };
     },
     colClass() {
-      let { span, offset } = this;
-      return [span && `col-${span}`, offset && `offset-${offset}`];
+      let { span, offset, phone } = this;
+      let phoneClass = [];
+      if (phone) {
+        phoneClass = [`col-phone-${phone.span}`];
+      }
+      return [
+        span && `col-${span}`,
+        offset && `offset-${offset}`,
+        ...phoneClass,
+      ];
     },
   },
 };
@@ -47,6 +68,24 @@ export default {
   @for $n from 1 through 24 {
     &.#{$prefix}#{$n} {
       margin-left: ($n / 24) * 100%;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .col {
+    $prefix: col-phone-;
+    @for $n from 1 through 24 {
+      &.#{$prefix}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+
+    $prefix: offset-phone-;
+    @for $n from 1 through 24 {
+      &.#{$prefix}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
     }
   }
 }
