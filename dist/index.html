@@ -34,8 +34,56 @@
 <link rel="stylesheet" href="/app.a6a4d504.css"></head>
 
 <body>
+    <style>.content {
+            min-height: 50px;
+            background: pink;
+            border: 1px solid mediumaquamarine;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .log-wrapper {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }</style>
+
     <div id="app">
-        <div style="border: 1px solid black;">
+        <g-row class="topbar">
+            <g-col span="9" class="content">
+                <g-row align="left">
+                    <g-col>1</g-col>
+                    <g-col>2</g-col>
+                    <g-col>3</g-col>
+                    <g-col>4</g-col>
+                </g-row>
+            </g-col>
+            <g-col span="15" class="content">
+                <g-row align="right">
+                    <g-col>1</g-col>
+                    <g-col>2</g-col>
+                    <g-col>3</g-col>
+                    <g-col>4</g-col>
+                    <g-col>5</g-col>
+                    <g-col>6</g-col>
+                    <g-col>7</g-col>
+                </g-row>
+            </g-col>
+        </g-row>
+        <g-row class="log-search-qrcode">
+            <g-col span="4" class="content">
+                <div class="log-wrapper">
+                    <img class="logo" src="https://img.alicdn.com/tfs/TB1_uT8a5ERMeJjSspiXXbZLFXa-143-59.png" alt="">
+                </div>
+            </g-col>
+            <g-col span="14" class="content">2</g-col>
+            <g-col span="6" class="content">3</g-col>
+        </g-row>
+
+
+        <!-- <div style="border: 1px solid black;">
             <g-row gutter="20">
                 <g-col span="2">1</g-col>
                 <g-col span="22">2</g-col>
@@ -71,8 +119,8 @@
         <div style="margin: 20px;">
             <g-button @click="loading1 = !loading1" :loading="loading1">按钮</g-button>
             <g-button icon="settings" icon-position="right">按钮</g-button>
-            <g-button icon="right" icon-position="right">按钮</g-button>
-            <g-button icon="left" icon-position="left" loading="">按钮</g-button>
+            <g-button icon="right" icon-position='right'>按钮</g-button>
+            <g-button icon="left" icon-position='left' loading>按钮</g-button>
             <g-button icon="up">按钮</g-button>
             <g-button icon="left">按钮</g-button>
             <g-icon name="download"></g-icon>
@@ -89,16 +137,15 @@
             <g-input value="王五" readonly></g-input>
             
         </div> -->
-        <div class="box">
+        <!-- <div class="box">
             <g-input value="赵" v-model="message"></g-input>
             <p>{{message}}</p>
             <button @click="changeInput">按钮</button>
-        </div>
+        </div> -->
         <!-- <div class="box">
             <g-input value="马保国"></g-input>
             <g-input></g-input>
         </div> -->
-
     </div>
     <div id="test"></div>
     <script src="/app.a6a4d504.js"></script>

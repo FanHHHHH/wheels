@@ -28,7 +28,7 @@ export default {
     },
     colClass() {
       let { span, offset } = this;
-      return [`col-${span}`, offset && `offset-${offset}`];
+      return [span && `col-${span}`, offset && `offset-${offset}`];
     },
   },
 };
@@ -36,9 +36,6 @@ export default {
 
 <style scoped lang="scss">
 .col {
-  height: 100px;
-  width: 50%;
-
   $prefix: col-;
   @for $n from 1 through 24 {
     &.#{$prefix}#{$n} {

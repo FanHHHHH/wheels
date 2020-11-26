@@ -1,5 +1,5 @@
 <template>
-  <div class="row" :style="rowStyle">
+  <div class="row" :style="rowStyle" :class="colAlign">
     <slot></slot>
   </div>
 </template>
@@ -11,6 +11,12 @@ export default {
     gutter: {
       type: [Number, String],
     },
+    align: {
+      type: String,
+      validator(val) {
+        return ['left', 'right', 'center'].includes(val)
+       }
+    }
   },
   mounted() {
     this.$children.forEach((vm) => {
@@ -24,6 +30,10 @@ export default {
         marginRight: -this.gutter / 2 + "px",
       };
     },
+    colAlign() {
+      let {align} = this
+      return [align && 'align-' + align]
+    }
   },
 };
 </script>
@@ -31,5 +41,14 @@ export default {
 <style scoped lang="scss">
 .row {
   display: flex;
+  &.align-left {
+    justify-content: flex-start;
+  }
+  &.align-right {
+    justify-content: flex-end;
+  }
+  &.align-center {
+    justify-content: center;
+  }
 }
 </style>
