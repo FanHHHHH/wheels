@@ -23,7 +23,6 @@ export default {
     offset: {
       type: [Number, String],
     },
-    phone: { type: Object, validator },
     ipad: { type: Object, validator },
     narrowPc: { type: Object, validator },
     pc: { type: Object, validator },
@@ -42,11 +41,10 @@ export default {
       };
     },
     colClass() {
-      let { span, offset, phone, ipad, narrowPc, pc, widePc} = this;
+      let { span, offset, ipad, narrowPc, pc, widePc} = this;
       return [
         span && `col-${span}`,
         offset && `offset-${offset}`,
-        ...[phone && `col-phone-${phone.span}`],
         ...[ipad && `col-ipad-${ipad.span}`],
         ...[narrowPc && `col-narrow-pc-${narrowPc.span}`],
         ...[pc && `col-pc-${pc.span}`],
@@ -74,23 +72,6 @@ export default {
   }
 }
 
-@media (max-width: 576px) {
-  .col {
-    $prefix: col-phone-;
-    @for $n from 1 through 24 {
-      &.#{$prefix}#{$n} {
-        width: ($n / 24) * 100%;
-      }
-    }
-
-    $prefix: offset-phone-;
-    @for $n from 1 through 24 {
-      &.#{$prefix}#{$n} {
-        margin-left: ($n / 24) * 100%;
-      }
-    }
-  }
-}
 @media (min-width: 577px) and (max-width: 768px) {
   .col {
     $prefix: col-ipad-;
@@ -142,7 +123,7 @@ export default {
     }
   }
 }
-@media (min-width: 1201px) and (max-width: 1600px) {
+@media (min-width: 1201px) {
   .col {
     $prefix: col-wide-pc-;
     @for $n from 1 through 24 {
