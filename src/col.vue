@@ -33,6 +33,21 @@ export default {
       gutter: 0,
     };
   },
+  methods: {
+    getClasses(obj, str = "") {
+      const res = [];
+      if (!obj) {
+        return [];
+      }
+      if (obj.span) {
+        res.push(`col-${str}${obj.span}`);
+      }
+      if (obj.offset) {
+        res.push(`offset-${str}${obj.offset}`);
+      }
+      return res;
+    },
+  },
   computed: {
     colStyle() {
       return {
@@ -41,14 +56,14 @@ export default {
       };
     },
     colClass() {
-      let { span, offset, ipad, narrowPc, pc, widePc} = this;
+      let { span, offset, ipad, narrowPc, pc, widePc } = this;
+
       return [
-        span && `col-${span}`,
-        offset && `offset-${offset}`,
-        ...[ipad && `col-ipad-${ipad.span}`],
-        ...[narrowPc && `col-narrow-pc-${narrowPc.span}`],
-        ...[pc && `col-pc-${pc.span}`],
-        ...[widePc && `col-wide-pc-${widePc.span}`],
+        ...this.getClasses({ span, offset }),
+        ...this.getClasses(ipad, "ipad-"),
+        ...this.getClasses(narrowPc, "narrow-pc-"),
+        ...this.getClasses(pc, "pc-"),
+        ...this.getClasses(widePc, "wide-pc-"),
       ];
     },
   },
