@@ -23,9 +23,7 @@
             --border-color-hover: #666;
         } */
 
-        #app {
-            margin: 20px;
-        }
+        #app {}
 
         .box {
             margin: 20px;
@@ -53,17 +51,47 @@
             justify-content: center;
         }
     </style> -->
+    <style>
+        .demo {
+            border: 1px solid brown;
+            min-height: 100px;
+        }
 
+        .sider {
+            width: 200px;
+            background: #aaa;
+        }
+
+        .header {
+            background: #999;
+        }
+
+        .content {
+            background: #ccc;
+        }
+
+        .footer {
+            background: #888;
+        }
+    </style>
     <div id="app">
-        <g-layout>
+        <g-layout style="height: 100vh">
+            <g-sider class="demo">sider</g-sider>
+            <g-layout>
+                <g-header class="demo">header</g-header>
+                <g-content class="demo">content</g-content>
+                <g-footer class="demo">footer</g-footer>
+            </g-layout>
+        </g-layout>
+        <!-- <g-layout>
             <g-header></g-header>
             <g-layout>
                 <g-sider></g-sider>
                 <g-content></g-content>
             </g-layout>
             <g-footer></g-footer>
-        </g-layout>
-        <g-layout>
+        </g-layout> -->
+        <!-- <g-layout>
             <g-header></g-header>
             <g-layout>
                 <g-content></g-content>
@@ -78,7 +106,7 @@
                 <g-content></g-content>
                 <g-footer></g-footer>
             </g-layout>
-        </g-layout>
+        </g-layout> -->
 
         <!-- <g-row class="topbar">
             <g-col span="9" class="content">
