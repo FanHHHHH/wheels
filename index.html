@@ -55,6 +55,31 @@
     </style> -->
 
     <div id="app">
+        <g-layout>
+            <g-header></g-header>
+            <g-layout>
+                <g-sider></g-sider>
+                <g-content></g-content>
+            </g-layout>
+            <g-footer></g-footer>
+        </g-layout>
+        <g-layout>
+            <g-header></g-header>
+            <g-layout>
+                <g-content></g-content>
+                <g-sider></g-sider>
+            </g-layout>
+            <g-footer></g-footer>
+        </g-layout>
+        <g-layout>
+            <g-header></g-header>
+            <g-layout>
+                <g-header></g-header>
+                <g-content></g-content>
+                <g-footer></g-footer>
+            </g-layout>
+        </g-layout>
+
         <!-- <g-row class="topbar">
             <g-col span="9" class="content">
                 <g-row align="left">
@@ -85,18 +110,11 @@
             <g-col span="14" class="content">2</g-col>
             <g-col span="6" class="content">3</g-col>
         </g-row> -->
-        <div style="border: 1px solid black;">
+        <!-- <div style="border: 1px solid black;">
             <g-row gutter="2">
-                <g-col span="24" 
-                :ipad="{span:8}"
-                :narrow-pc="{span: 6}"
-                :pc= "{span: 4}"
-                :wide-pc="{span: 1}">1</g-col>
-                <g-col span="24" 
-                :ipad="{span:16}"
-                :narrow-pc="{span: 16}"
-                :pc= "{span: 20}"
-                :wide-pc="{span: 23}">2</g-col>
+                <g-col span="24" :ipad="{span:8}" :narrow-pc="{span: 6}" :pc="{span: 4}" :wide-pc="{span: 1}">1</g-col>
+                <g-col span="24" :ipad="{span:16}" :narrow-pc="{span: 16}" :pc="{span: 20}" :wide-pc="{span: 23}">2
+                </g-col>
             </g-row>
             <g-row gutter="1">
                 <g-col span="3" :ipad="{span: 12, offset: 2, gutter: 2}">1</g-col>
@@ -155,7 +173,7 @@
         <div class="box">
             <g-input value="马保国"></g-input>
             <g-input></g-input>
-        </div>
+        </div> -->
     </div>
     <div id="test"></div>
     <script src="./src/app.js"></script>
