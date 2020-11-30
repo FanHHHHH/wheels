@@ -2,7 +2,6 @@
   "name": "leoheguluui",
   "version": "0.0.1",
   "description": "ui框架",
-  
   "scripts": {
     "start": "parcel index.html --no-cache",
     "dev-test": "parcel watch test/* --no-cache & karma start",
@@ -24,6 +23,7 @@
   "homepage": "https://github.com/FanHHHHH/wheels#readme",
   "dependencies": {
     "ca": "^0.1.9",
+    "v": "^0.3.0",
     "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4"
   },

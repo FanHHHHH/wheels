@@ -10,7 +10,7 @@ import Content from './content.vue'
 import Header from './header.vue'
 import Sider from './sider.vue'
 import Footer from './footer.vue'
-
+import Toast from './toast.vue'
 
 Vue.component('g-button', Button)
 Vue.component('g-icon', Icon)
@@ -23,7 +23,7 @@ Vue.component('g-content', Content)
 Vue.component('g-header', Header)
 Vue.component('g-footer', Footer)
 Vue.component('g-sider', Sider)
-
+Vue.component('g-toast', Toast)
 
 new Vue({
     el: '#app',
@@ -43,13 +43,19 @@ new Vue({
     //     }, 3000)
 
     // },
+    created() {
+        this.$toast()
+    },
     methods: {
         inputChange(e) {
             console.log(e)
         },
         changeInput() {
             this.message += '!'
-        }
+        },
+        // showToast() {
+        //     this.$toast('当前功能不稳定，如果遇到bug，请关闭该功能！')
+        // }
     }
 })
 

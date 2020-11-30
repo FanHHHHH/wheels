@@ -6,15 +6,17 @@
 
 <script>
 export default {
-  name: 'GuluButtonGroup',
+  name: "GuluButtonGroup",
   mounted() {
-    for (let node of this.$el.children){
-      const name = node.nodeName.toLowerCase()
-      if ( name !== 'button' ){
-        console.warn(`wheels waring: g-button-group 下面的所有标签应该为g-button，而你给的是${name}`)
+    for (let node of this.$el.children) {
+      const name = node.nodeName.toLowerCase();
+      if (name !== "button") {
+        console.warn(
+          `wheels waring: g-button-group 下面的所有标签应该为g-button，而你给的是${name}`
+        );
       }
     }
-  }
+  },
 };
 </script>
 
@@ -24,7 +26,7 @@ export default {
   vertical-align: middle;
   > .g-button {
     border-radius: 0;
-    &:not(:first-child){
+    &:not(:first-child) {
       margin-left: -1px;
     }
     &:first-child {
@@ -39,8 +41,6 @@ export default {
       position: relative;
       z-index: 1;
     }
-    
   }
-  
 }
 </style>
