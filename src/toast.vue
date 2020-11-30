@@ -1,8 +1,13 @@
 <template>
-  <div class="toast">
-    <slot></slot>
-    <div class="line"></div>
-    <span class="close" @click="onclickClose" v-if="closeButton">{{ this.closeButton.text }}</span>
+  <div class="toast" ref="wrapper">
+    <div class="message">
+      <slot v-if="!enableHTML"></slot>
+      <div v-else v-html="this.$slots.default[0]"></div>
+    </div>
+    <div class="line" ref="line"></div>
+    <span class="close" @click="onclickClose" v-if="closeButton">{{
+      this.closeButton.text
+    }}</span>
   </div>
 </template>
 
@@ -16,36 +21,54 @@ export default {
     },
     autoCloseDelay: {
       type: Number,
-      default: 5,
+      default: 50,
     },
     closeButton: {
       type: Object,
       default: () => {
         return {
           text: "关闭",
-          callback: () => {
-            this.close();
-          },
+          callback: undefined,
         };
       },
     },
+    enableHTML: {
+      type: Boolean,
+      default: false,
+    },
   },
   mounted() {
-    if (this.autoClose) {
-      setTimeout(() => {
-        this.close();
-      }, this.autoCloseDelay * 1000);
-    }
+    this.updateLineStyle();
+    this.excuteAutoClose();
   },
   methods: {
+    updateLineStyle() {
+      this.$nextTick(() => {
+        this.$refs.line.style.height = `${
+          this.$refs.wrapper.getBoundingClientRect().height
+        }px`;
+      }); // trickey
+    },
+    excuteAutoClose() {
+      if (this.autoClose) {
+        setTimeout(() => {
+          this.close();
+        }, this.autoCloseDelay * 1000);
+      }
+    },
     close() {
       this.$el.remove();
       this.$destroy();
     },
+    log() {
+      console.log("测试给回调函数传组件的实例");
+    },
     onclickClose() {
-        this.close()
-        this.closeButton.callback()
-    }
+      this.close();
+      if (this.closeButton && typeof this.closeButton.callback === "function") {
+        this.closeButton.callback(this);
+      }
+    },
   },
 };
 </script>
@@ -53,12 +76,12 @@ export default {
 <style lang="scss" socped>
 $font-size: 14px;
 $font-color: #fff;
-$toast-height: 40px;
+$toast-min-height: 40px;
 $toast-bg: rgba(0, 0, 0, 0.74);
 .toast {
   font-size: $font-size;
   color: $font-color;
-  height: $toast-height;
+  min-height: $toast-min-height;
   line-height: 1.8;
   display: flex;
   align-items: center;
@@ -70,15 +93,16 @@ $toast-bg: rgba(0, 0, 0, 0.74);
   box-shadow: 0px 0px 3px 0px;
   padding: 0 16px;
   border-radius: 4px;
-  >.close {
-    padding-left: 16px;
+  &> .message {
+      padding: 4px 0;
   }
-  >.line {
-      border: 1px solid #666;
-      margin-left:16px ;
-      height: 100%;
-  };
+  > .close {
+    padding-left: 16px;
+    flex-shrink: 0;
+  }
+  > .line {
+    border: 1px solid #666;
+    margin-left: 16px;
+  }
 }
-
-
 </style>
