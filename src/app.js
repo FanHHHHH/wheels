@@ -56,7 +56,7 @@ new Vue({
             this.message += '!'
         },
         showToast() {
-            this.$toast('当前功能不稳定，如果遇到bug，请关闭该功能！')
+            this.$toast('当前功能不稳定，如果遇到bug，请关闭该功能')
         }
     }
 })
