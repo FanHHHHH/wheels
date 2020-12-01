@@ -45,9 +45,9 @@ new Vue({
     //     }, 3000)
 
     // },
-    created() {
-        this.$toast(`这是<strong>加粗的文字</strong>`, { enableHTML: true, position: 'middle' })
-    },
+    // created() {
+    //     this.$toast(`这是<strong>加粗的文字</strong>`, { enableHTML: true, position: 'bottom' })
+    // },
     methods: {
         inputChange(e) {
             console.log(e)
@@ -62,7 +62,7 @@ new Vue({
                     toast.log()
                     console.log('用户知道了');
                 },
-                position: 'middle',
+                position: 'bottom',
             })
         }
     }
