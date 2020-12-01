@@ -85,7 +85,7 @@ export default {
 };
 </script>
 
-<style lang="scss" socped>
+<style lang="scss" scoped>
 $font-size: 14px;
 $font-color: #fff;
 $toast-min-height: 40px;
