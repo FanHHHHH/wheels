@@ -65,6 +65,7 @@ export default {
     },
     close() {
       this.$el.remove();
+      this.$emit('beforeClose')
       this.$destroy();
     },
     log() {
@@ -127,5 +128,6 @@ $toast-bg: rgba(0, 0, 0, 0.74);
     top: 50%;
     transform: translate(-50%, -50%);
   }
+   
 }
 </style>

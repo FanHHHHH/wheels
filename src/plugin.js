@@ -9,17 +9,26 @@ export default {
             if (currentToast) {
                 currentToast.close()
             }
-            currentToast = createToast({ Vue, message, propsData: toastOptions })
+            currentToast = createToast({
+                Vue,
+                message,
+                propsData: toastOptions,
+                onClose: () => {
+                    currentToast = null
+                }
+            })
+
         }
     }
 }
 
 /*helpers */
-function createToast({ Vue, message, propsData }) {
+function createToast({ Vue, message, propsData, onClose }) {
     const construcor = Vue.extend(Toast)
     const toast = new construcor({ propsData })
     toast.$slots.default = [message]
     toast.$mount()  // 重要
+    toast.$on('beforeClose', onClose)
     document.body.appendChild(toast.$el)
     return toast
 }
