@@ -46,7 +46,7 @@ new Vue({
 
     // },
     created() {
-        this.$toast(`这是<strong>加粗的文字</strong>`, {enableHTML: true})
+        this.$toast(`这是<strong>加粗的文字</strong>`, {enableHTML: true, position: 'top'})
     },
     methods: {
         inputChange(e) {
