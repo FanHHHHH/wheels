@@ -55,15 +55,24 @@ new Vue({
         changeInput() {
             this.message += '!'
         },
-        showToast() {
+        showToast(position) {
             this.$toast('当前功能不稳定，如果遇到bug，请关闭该功能' + parseInt(Math.random() * 100), {
                 text: '知道了',
                 callback(toast) {
                     toast.log()
                     console.log('用户知道了');
                 },
-                position: 'bottom',
+                position
             })
+        },
+        showToast1() {
+            this.showToast('top')
+        },
+        showToast2() {
+            this.showToast('middle')
+        },
+        showToast3() {
+            this.showToast('bottom')
         }
     }
 })
