@@ -21,14 +21,13 @@ describe('Toast', () => {
                 propsData: {
                     autoClose: 1,
                 }
-
             }).$mount(div)
             vm.$on('beforeClose', () => {
                 expect(document.body.contains(vm.$el)).to.eq(false)
                 done()
             })
         })
-        it('可以设置closeButton', () => {
+        it('可以设置closeButton', (done) => {
             const callback = sinon.spy()
             const Constructor = Vue.extend(Toast)
             const vm = new Constructor({
@@ -41,8 +40,12 @@ describe('Toast', () => {
             }).$mount()
             const closeButton = vm.$el.querySelector('.close')
             expect(closeButton.textContent.trim()).to.eq('测试关闭按钮')
-            closeButton.click()
-            expect(callback).to.have.been.called
+            //bug 修复 ： 如果mount之后直接click，速度太快，不能再$nexttick()，之后close() toast组件，所以会造成undefined错误
+            setTimeout(() => {
+                closeButton.click()
+                expect(callback).to.have.been.called
+                done()
+            }, 200)
 
         })
         it('可以设置enableHTML', () => {
