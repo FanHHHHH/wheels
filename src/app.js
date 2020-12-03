@@ -12,6 +12,11 @@ import Sider from './sider.vue'
 import Footer from './footer.vue'
 import Toast from './toast.vue'
 import plugin from './plugin'
+import Tabs from './tabs'
+import TabsNav from './tabs-nav'
+import TabsContent from './tabs-content'
+import TabsItem from './tabs-item'
+import TabsPane from './tabs-pane'
 
 Vue.component('g-button', Button)
 Vue.component('g-icon', Icon)
@@ -26,51 +31,24 @@ Vue.component('g-footer', Footer)
 Vue.component('g-sider', Sider)
 Vue.component('g-toast', Toast)
 Vue.use(plugin)
+Vue.component('g-tabs', Tabs)
+Vue.component('g-tabs-nav', TabsNav)
+Vue.component('g-tabs-content', TabsContent)
+Vue.component('g-tabs-item', TabsItem)
+Vue.component('g-tabs-pane', TabsPane)
+
 
 new Vue({
     el: '#app',
     data() {
         return {
-            loading1: false,
-            message: ''
+            selectedTab: 'sports',
+            direction: 'horizontal'
         }
     },
-    // created() {
-    //     setTimeout(() => {
-    //         let event = new Event('change');
-    //         const inputElement = this.$el.querySelector('input')
+    // methods: {
 
-    //         inputElement.dispatchEvent(event)
-    //         console.log('hi')
-    //     }, 3000)
-
-    // },
-    // created() {
-    //     this.$toast(`这是<strong>加粗的文字</strong>`, { enableHTML: true, position: 'bottom' })
-    // },
-    methods: {
-        inputChange(e) {
-            console.log(e)
-        },
-        changeInput() {
-            this.message += '!'
-        },
-        showToast(position) {
-            this.$toast('当前功能不稳定，如果遇到bug，请关闭该功能' + parseInt(Math.random() * 100), {
-                autoClose: false,
-                position
-            })
-        },
-        showToast1() {
-            this.showToast('top')
-        },
-        showToast2() {
-            this.showToast('middle')
-        },
-        showToast3() {
-            this.showToast('bottom')
-        }
-    }
+    // }
 })
 
 // import chai from 'chai'

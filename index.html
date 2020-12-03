@@ -23,8 +23,6 @@
             --border-color-hover: #666;
         } */
 
-        #app {}
-
         .box {
             margin: 20px;
         }
@@ -34,181 +32,33 @@
 </head>
 
 <body>
-    <!-- <style>
-        .content {
-            min-height: 50px;
-            background: pink;
-            border: 1px solid mediumaquamarine;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        .log-wrapper {
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-    </style> -->
-    <!-- <style>
-        .demo {
-            border: 1px solid brown;
-            min-height: 100px;
-        }
-
-        .sider {
-            width: 200px;
-            background: #aaa;
-        }
-
-        .header {
-            background: #999;
-        }
-
-        .content {
-            background: #ccc;
-        }
-
-        .footer {
-            background: #888;
-        }
-    </style> -->
     <div id="app">
-        <button @click="showToast1">top</button>
-        <button @click="showToast2">middle</button>
-        <button @click="showToast3">bottom</button>
-        <!-- <g-layout style="height: 100vh">
-            <g-sider class="demo">sider</g-sider>
-            <g-layout>
-                <g-header class="demo">header</g-header>
-                <g-content class="demo">content</g-content>
-                <g-footer class="demo">footer</g-footer>
-            </g-layout>
-        </g-layout> -->
-        <!-- <g-layout>
-            <g-header></g-header>
-            <g-layout>
-                <g-sider></g-sider>
-                <g-content></g-content>
-            </g-layout>
-            <g-footer></g-footer>
-        </g-layout> -->
-        <!-- <g-layout>
-            <g-header></g-header>
-            <g-layout>
-                <g-content></g-content>
-                <g-sider></g-sider>
-            </g-layout>
-            <g-footer></g-footer>
-        </g-layout>
-        <g-layout>
-            <g-header></g-header>
-            <g-layout>
-                <g-header></g-header>
-                <g-content></g-content>
-                <g-footer></g-footer>
-            </g-layout>
-        </g-layout> -->
+        <g-tabs :selected.sync="selectedTab" :direction="direction">
+            <g-tabs-nav>
+                <template slot="actions">
+                    <button>按钮</button>
+                </template>
+                <g-tabs-item name="women" disabled>
+                    <g-icon name="settings"></g-icon>
+                    美女
+                </g-tabs-item>
+                <g-tabs-item name="finance">
+                    财经
+                </g-tabs-item>
+                <g-tabs-item name="sports">
+                    体育
+                </g-tabs-item>
+            </g-tabs-nav>
+            <g-tabs-content>
+                <g-tabs-pane name="women">美女相关资讯</g-tabs-pane>
+                <g-tabs-pane name="finance">财经相关资讯</g-tabs-pane>
+                <g-tabs-pane name="sports">体育相关资讯</g-tabs-pane>
+            </g-tabs-content>
+        </g-tabs>
 
-        <!-- <g-row class="topbar">
-            <g-col span="9" class="content">
-                <g-row align="left">
-                    <g-col>1</g-col>
-                    <g-col>2</g-col>
-                    <g-col>3</g-col>
-                    <g-col>4</g-col>
-                </g-row>
-            </g-col>
-            <g-col span="15" class="content">
-                <g-row align="right">
-                    <g-col>1</g-col>
-                    <g-col>2</g-col>
-                    <g-col>3</g-col>
-                    <g-col>4</g-col>
-                    <g-col>5</g-col>
-                    <g-col>6</g-col>
-                    <g-col>7</g-col>
-                </g-row>
-            </g-col>
-        </g-row>
-        <g-row class="log-search-qrcode">
-            <g-col span="4" class="content">
-                <div class="log-wrapper">
-                    <img class="logo" src="https://img.alicdn.com/tfs/TB1_uT8a5ERMeJjSspiXXbZLFXa-143-59.png" alt="">
-                </div>
-            </g-col>
-            <g-col span="14" class="content">2</g-col>
-            <g-col span="6" class="content">3</g-col>
-        </g-row> -->
-        <!-- <div style="border: 1px solid black;">
-            <g-row gutter="2">
-                <g-col span="24" :ipad="{span:8}" :narrow-pc="{span: 6}" :pc="{span: 4}" :wide-pc="{span: 1}">1</g-col>
-                <g-col span="24" :ipad="{span:16}" :narrow-pc="{span: 16}" :pc="{span: 20}" :wide-pc="{span: 23}">2
-                </g-col>
-            </g-row>
-            <g-row gutter="1">
-                <g-col span="3" :ipad="{span: 12, offset: 2, gutter: 2}">1</g-col>
-                <g-col span="15" offset="2">2</g-col>
-                <g-col span="3" offset="1">3</g-col>
-            </g-row>
-            <g-row gutter="15">
-                <g-col>1</g-col>
-                <g-col>2</g-col>
-                <g-col>3</g-col>
-                <g-col>4</g-col>
-            </g-row>
-            <g-row>
-                <g-col>1</g-col>
-                <g-col>2</g-col>
-                <g-col>3</g-col>
-                <g-col>4</g-col>
-            </g-row>
-            <g-row>
-                <g-col>1</g-col>
-                <g-col>2</g-col>
-                <g-col>3</g-col>
-            </g-row>
-
-            <g-row>
-                <g-col span="2">1</g-col>
-                <g-col span="20" offset="10">2</g-col>
-            </g-row>
-        </div>
-        <div style="margin: 20px;">
-            <g-button @click="loading1 = !loading1" :loading="loading1">按钮</g-button>
-            <g-button icon="settings" icon-position="right">按钮</g-button>
-            <g-button icon="right" icon-position='right'>按钮</g-button>
-            <g-button icon="left" icon-position='left' loading>按钮</g-button>
-            <g-button icon="up">按钮</g-button>
-            <g-button icon="left">按钮</g-button>
-            <g-icon name="download"></g-icon>
-            <g-icon name="loading"></g-icon>
-            <g-button-group>
-                <g-button icon="left" icon-position="left">上一页</g-button>
-                <g-button>更多</g-button>
-                <g-button icon="right" icon-position="right">下一页</g-button>
-            </g-button-group>
-        </div>
-
-        <div class="box">
-            <g-input value="张三" disabled></g-input>
-            <g-input value="王五" readonly></g-input>
-
-        </div>
-        <div class="box">
-            <g-input value="赵" v-model="message"></g-input>
-            <p>{{message}}</p>
-            <button @click="changeInput">按钮</button>
-        </div>
-        <div class="box">
-            <g-input value="马保国"></g-input>
-            <g-input></g-input>
-        </div> -->
     </div>
     <div id="test"></div>
     <script src="./src/app.js"></script>
-    <!-- <script src="//at.alicdn.com/t/font_2203588_6shfxjyji6h.js"></script> -->
 </body>
 
 </html>
