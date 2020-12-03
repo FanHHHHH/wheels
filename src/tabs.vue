@@ -22,19 +22,24 @@ export default {
   },
   data() {
     return {
-      eventBus: new Vue()
+      eventBus: new Vue(),
     };
   },
   provide() {
     return {
-      eventBus: this.eventBus
+      eventBus: this.eventBus,
     };
   },
   created() {
-    //   this.$emit('update:selected', 'xxx')
+    this.$emit("update:selected", "xxx");
+  },
+  mounted() {
+    this.eventBus.$emit("update:selected", this.selected);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+// .tabs {
+// }
 </style>

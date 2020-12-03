@@ -1,36 +1,53 @@
 <template>
-    <div class="tabs-item" @click="xxx">
-        <slot></slot>
-    </div>
+  <div class="tabs-item" @click="xxx" :class="activeClass">
+    <slot></slot>
+  </div>
 </template>
 <script>
 export default {
-  name: 'GuluTabsItem',
+  name: "GuluTabsItem",
+  data() {
+    return {
+      active: false,
+    };
+  },
   props: {
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     name: {
       type: [String, Number],
-      required: true
-    }
+      required: true,
+    },
   },
-  inject: ['eventBus'],
+  inject: ["eventBus"],
   created() {
-    this.eventBus.$on('update:selected', (val) => {
-      console.log('item选中组件变为：' + val);
-    })
+    this.eventBus.$on("update:selected", (val) => {
+      this.active = val === this.name
+    });
   },
   methods: {
     xxx() {
-      this.eventBus.$emit('update:selected', this.name)
-    }
-  }
-
-}
+      this.eventBus.$emit("update:selected", this.name);
+    },
+  },
+  computed: {
+    activeClass() {
+      return {
+        active: this.active
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
+.tabs-item {
+  flex-shrink: 0;
+  padding:0 1em;
+  &.active {
+    background: red;
+  }
+}
 </style>

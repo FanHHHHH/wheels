@@ -1,18 +1,30 @@
 <template>
-    <div class="tabs-nav">
-        <slot></slot>
-        <slot name="actions"></slot>
+  <div class="tabs-nav">
+    <slot></slot>
+    <div class="actions-wrapper">
+      <slot name="actions"></slot>
     </div>
+  </div>
 </template>
 <script>
 export default {
-  name: 'GuluTabsNav',
-  inject: ['eventBus'],
+  name: "GuluTabsNav",
+  inject: ["eventBus"],
   // created() {
   // }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
+$tab-height: 40px;
+.tabs-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid sandybrown;
+  height: $tab-height;
+  > .actions-wrapper {
+    margin-left: auto;
+  }
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs-pane">
+  <div class="tabs-pane" :class="activeClass" v-if="active">
     <slot></slot>
   </div>
 </template>
@@ -10,16 +10,34 @@ export default {
   props: {
     name: {
       type: [String, Number],
-      required: true
-    }
+      required: true,
+    },
   },
-  created() {
-    this.eventBus.$on('update:selected', (val) => {
-      console.log('pane组件变为'+ val);
-    })
+  data() {
+    return {
+      active: false,
+    };
+  },
+  mounted() {
+    this.eventBus.$on("update:selected", (val) => {
+      this.active = val === this.name;
+    });
+  },
+  computed: {
+    activeClass() {
+      return {
+        active: this.active,
+      };
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.tabs-pane {
+  border: 1px solid saddlebrown;
+  &.active {
+    background: red;
+  }
+}
 </style>
