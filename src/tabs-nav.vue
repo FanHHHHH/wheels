@@ -6,7 +6,10 @@
 </template>
 <script>
 export default {
-  name: 'GuluTabsNav'
+  name: 'GuluTabsNav',
+  inject: ['eventBus'],
+  // created() {
+  // }
 }
 </script>
 
