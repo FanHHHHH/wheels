@@ -20,9 +20,9 @@ $tab-height: 40px;
 .tabs-nav {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
   border: 1px solid sandybrown;
   height: $tab-height;
+  cursor: pointer;
   > .actions-wrapper {
     margin-left: auto;
   }
