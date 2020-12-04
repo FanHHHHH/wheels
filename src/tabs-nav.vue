@@ -26,14 +26,19 @@ export default {
 <style lang="scss" scoped>
 $tab-height: 40px;
 $blue: blue;
+$boder-color: #ddd;
 .tabs-nav {
   display: flex;
   justify-content: flex-start;
   height: $tab-height;
-  cursor: pointer;
+  border-bottom: 1px solid $boder-color;
   position: relative;
   & .actions-wrapper {
     margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1em;
   }
   & .line {
     position: absolute;
