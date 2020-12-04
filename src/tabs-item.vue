@@ -25,7 +25,6 @@ export default {
   created() {
     this.eventBus.$on("update:selected", (val, vm) => {
       this.active = val === this.name
-      console.log(vm.$el);
     });
   },
   methods: {

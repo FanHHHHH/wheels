@@ -36,13 +36,12 @@ export default {
   mounted() {
     this.$children.forEach((vm) => {
       if (vm.$options.name === "GuluTabsNav") {
-        vm.$children.forEach((item) => {
+        vm.$children.forEach((childVm) => {
           if (
-            item.$options.name === "GuluTabsItem" &&
-            item.name === this.selected
+            childVm.$options.name === "GuluTabsItem" &&
+            childVm.name === this.selected
           ) {
-            this.eventBus.$emit("update:selected", this.selected, item);
-            console.log(item.$el);
+            this.eventBus.$emit("update:selected", this.selected, childVm);
           }
         });
       }
