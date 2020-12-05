@@ -1,6 +1,6 @@
 <template>
-  <div class="popover" @click="onClick">
-    <div v-if="visable" class="content-wrapper">
+  <div class="popover" @click.stop="onClick">
+    <div v-if="visable" class="content-wrapper" @click.stop>
       <slot name="content"></slot>
     </div>
     <slot></slot>
@@ -18,6 +18,18 @@ export default {
   methods: {
     onClick() {
       this.visable = !this.visable;
+      let eventHandler = () => {
+        console.log("document隐藏");
+        this.visable = false;
+        document.removeEventListener("click", eventHandler);
+      };
+      if (this.visable) {
+        setTimeout(() => {
+          document.addEventListener("click", eventHandler);
+        });
+      } else {
+          console.log("vm隐藏");
+      }
     },
   },
 };
