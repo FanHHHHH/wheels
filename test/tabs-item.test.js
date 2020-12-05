@@ -5,7 +5,6 @@ import TabsContent from '../src/tabs-content'
 import TabsItem from '../src/tabs-item'
 import TabsNav from '../src/tabs-nav.vue'
 import TabsPane from '../src/tabs-pane'
-import { spy } from 'chai';
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
