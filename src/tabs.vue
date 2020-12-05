@@ -9,8 +9,7 @@ export default {
   name: "GuluTabs",
   props: {
     selected: {
-      type: String,
-      required: true,
+      type: String
     },
     direction: {
       type: String,
@@ -34,6 +33,13 @@ export default {
     this.$emit("update:selected", "xxx");
   },
   mounted() {
+    if (this.$children.length === 0) {
+      console &&
+        console.warn &&
+        console.warn(
+          "tabs里面的子组件应该是tabs-nav和tabs-content,但你没有传入子组件"
+        );
+    }
     this.$children.forEach((vm) => {
       if (vm.$options.name === "GuluTabsNav") {
         vm.$children.forEach((childVm) => {
@@ -51,6 +57,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .tabs {
-// }
 </style>

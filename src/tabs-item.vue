@@ -1,5 +1,10 @@
 <template>
-  <div class="tabs-item" @click="onClick" :class="activeClass">
+  <div
+    class="tabs-item"
+    @click="onClick"
+    :class="activeClass"
+    :data-name="name"
+  >
     <slot></slot>
   </div>
 </template>
@@ -23,25 +28,28 @@ export default {
   },
   inject: ["eventBus"],
   created() {
-    this.eventBus.$on("update:selected", (val, vm) => {
-      this.active = val === this.name
-    });
+    this.eventBus &&
+      this.eventBus.$on("update:selected", (val, vm) => {
+        this.active = val === this.name;
+      });
   },
   methods: {
     onClick() {
       if (this.disabled) {
-        return
+        return;
       }
-      this.eventBus.$emit("update:selected", this.name, this);
+      if (this.eventBus) {
+        this.eventBus.$emit("update:selected", this.name, this);
+      }
+      this.$emit('click', this)
     },
-    
   },
   computed: {
     activeClass() {
       return {
         active: this.active,
-        disabled: this.disabled
-      }
+        disabled: this.disabled,
+      };
     },
   },
 };
@@ -52,7 +60,7 @@ $blue: blue;
 $disabled-color: grey;
 .tabs-item {
   flex-shrink: 0;
-  padding:0 1em;
+  padding: 0 1em;
   height: 100%;
   display: flex;
   align-items: center;

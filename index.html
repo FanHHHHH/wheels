@@ -33,12 +33,15 @@
 
 <body>
     <div id="app">
+        <g-tabs>
+            <div></div>
+        </g-tabs>
         <g-tabs :selected.sync="selectedTab" :direction="direction">
             <g-tabs-nav>
                 <template slot="actions">
                     <button>按钮</button>
                 </template>
-                <g-tabs-item name="women" disabled>
+                <g-tabs-item name="women">
                     <g-icon name="settings"></g-icon>
                     美女
                 </g-tabs-item>
