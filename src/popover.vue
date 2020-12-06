@@ -1,5 +1,5 @@
 <template>
-  <div class="popover" @click.stop="onClick">
+  <div class="popover" @click="onClick" ref="popover">
     <div v-if="visable" ref="contentWrapper" class="content-wrapper">
       <slot name="content"></slot>
     </div>
@@ -18,21 +18,45 @@ export default {
     };
   },
   methods: {
-    onClick() {
-      this.visable = !this.visable;
-
-      let eventHandler = () => {
-        this.visable = false;
-        document.removeEventListener("click", eventHandler);
-      };
-      if (this.visable) {
-        this.$nextTick(() => {
-          document.body.appendChild(this.$refs.contentWrapper);
-          let { width, height, top, left, } = this.$refs.triggerWrapper.getBoundingClientRect();
-          this.$refs.contentWrapper.style.left = left + window.screenX + "px";
-          this.$refs.contentWrapper.style.top = top + window.scrollY + "px";
-          document.addEventListener("click", eventHandler);
-        });
+    positionContent() {
+      document.body.appendChild(this.$refs.contentWrapper);
+      let {
+        width,
+        height,
+        top,
+        left,
+      } = this.$refs.triggerWrapper.getBoundingClientRect();
+      this.$refs.contentWrapper.style.left = left + window.screenX + "px";
+      this.$refs.contentWrapper.style.top = top + window.scrollY + "px";
+    },
+    onClickDocument(e) {
+      if (
+        this.$refs.contentWrapper &&
+        (this.$refs.contentWrapper.contains(e.target) ||
+          this.$refs.contentWrapper === e.target)
+      ) {
+        return;
+      }
+      this.close();
+    },
+    open() {
+      this.visable = true;
+      setTimeout(() => {
+        this.positionContent();
+        document.addEventListener("click", this.onClickDocument);
+      });
+    },
+    close() {
+      this.visable = false;
+      document.removeEventListener("click", this.onClickDocument);
+    },
+    onClick(event) {
+      if (this.$refs.triggerWrapper.contains(event.target)) {
+        if (this.visable) {
+          this.close();
+        } else {
+          this.open();
+        }
       }
     },
   },
