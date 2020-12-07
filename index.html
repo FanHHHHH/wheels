@@ -34,18 +34,30 @@
 <body>
     <div style="height: 1000px;"></div>
     <div id="app" style="margin: 100px; padding: 100px; ">
-        <div style="overflow: hidden; border: 1px solid mediumspringgreen; padding-top: 10px;">
+        <div style="overflow: hidden; ">
             <g-popover>
-                <template slot="content">
-                    popover 内容
+                <template slot="content" position="top">
+                    popoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopover
                 </template>
-                <button>点击显示</button>
+                <g-button>点击显示</g-button>
             </g-popover>
-            <g-popover>
+            <g-popover position="bottom">
+                <template slot="content" >
+                    popover 内容
+                </template>
+                <g-button>点击显示</g-button>
+            </g-popover>
+            <g-popover position="left">
+                <template slot="content" >
+                    popover 内容
+                </template>
+                <g-button>点击显示点击显示点击显示点击显示点击显示点击显示点击显示点击显示</g-button>
+            </g-popover>
+            <g-popover position="right">
                 <template slot="content">
                     popover 内容
                 </template>
-                <button>点击显示</button>
+                <g-button>点击显示</g-button>
             </g-popover>
         </div>
 
