@@ -35,23 +35,29 @@ export default {
     positionContent() {
       document.body.appendChild(this.$refs.contentWrapper);
       const { contentWrapper, triggerWrapper } = this.$refs;
+      const { height: height1 } = contentWrapper.getBoundingClientRect();
       let { width, height, top, left } = triggerWrapper.getBoundingClientRect();
-      if (this.position === "top") {
-        contentWrapper.style.left = left + window.scrollX + "px";
-        contentWrapper.style.top = top + window.scrollY + "px";
-      } else if (this.position === "bottom") {
-        contentWrapper.style.left = left + window.scrollX + "px";
-        contentWrapper.style.top = top + height + window.scrollY + "px";
-      } else if (this.position === "left") {
-        const { height: height1 } = contentWrapper.getBoundingClientRect();
-        contentWrapper.style.left = left + window.scrollX + "px";
-        contentWrapper.style.top =
-          top + (height - height1) / 2 + window.scrollY + "px";
-      } else if (this.position === "right") {
-        const { height: height1 } = contentWrapper.getBoundingClientRect();
-        contentWrapper.style.left = left + width + window.scrollX + "px";
-        contentWrapper.style.top = top + (height - height1) / 2 + window.scrollY + "px";
+
+      const positions = {
+        top: {
+          left: left + window.scrollX,
+          top: top + window.scrollY
+        },
+        bottom: {
+          left: left + window.scrollX,
+          top: top + height + window.scrollY
+        },
+        left: {
+          left: left + window.scrollX,
+          top: top + (height - height1) / 2 + window.scrollY
+        },
+        right: {
+          left: left + width + window.scrollX,
+          top: top + (height - height1) / 2 + window.scrollY
+        }
       }
+      contentWrapper.style.left = positions[this.position].left + 'px'
+      contentWrapper.style.top = positions[this.position].top + 'px'
     },
     onClickDocument(e) {
       if (
@@ -90,9 +96,6 @@ export default {
         }
       }
     },
-  },
-  mounted() {
-    console.log(this.position);
   },
 };
 </script>
