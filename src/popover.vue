@@ -1,5 +1,5 @@
 <template>
-  <div class="popover" @click="onClick" ref="popover">
+  <div class="popover" ref="popover">
     <div
       v-if="visable"
       ref="contentWrapper"
@@ -25,11 +25,30 @@ export default {
         return ["top", "bottom", "left", "right"].indexOf(value) >= 0;
       },
     },
+    trigger: {
+      type: String,
+      default: "click",
+      validator(value) {
+        return ["click", "hover"].indexOf(value) >= 0;
+      },
+    },
   },
   data() {
     return {
       visable: false,
     };
+  },
+  mounted() {
+    if (this.trigger === "click") {
+      this.$refs.popover.addEventListener("click", this.onClick);
+    } else {
+      this.$refs.popover.addEventListener("mouseenter", this.open);
+      this.$refs.popover.addEventListener("mouseleave", this.close);
+    }
+  },
+  destroyed() {
+    this.$refs.popover.removeEventListener("mouseenter", this.open);
+    this.$refs.popover.removeEventListener("mouseleave", this.close);
   },
   methods: {
     positionContent() {
@@ -41,23 +60,23 @@ export default {
       const positions = {
         top: {
           left: left + window.scrollX,
-          top: top + window.scrollY
+          top: top + window.scrollY,
         },
         bottom: {
           left: left + window.scrollX,
-          top: top + height + window.scrollY
+          top: top + height + window.scrollY,
         },
         left: {
           left: left + window.scrollX,
-          top: top + (height - height1) / 2 + window.scrollY
+          top: top + (height - height1) / 2 + window.scrollY,
         },
         right: {
           left: left + width + window.scrollX,
-          top: top + (height - height1) / 2 + window.scrollY
-        }
-      }
-      contentWrapper.style.left = positions[this.position].left + 'px'
-      contentWrapper.style.top = positions[this.position].top + 'px'
+          top: top + (height - height1) / 2 + window.scrollY,
+        },
+      };
+      contentWrapper.style.left = positions[this.position].left + "px";
+      contentWrapper.style.top = positions[this.position].top + "px";
     },
     onClickDocument(e) {
       if (
