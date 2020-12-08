@@ -6,7 +6,7 @@
       class="content-wrapper"
       :class="{ [`position-${this.position}`]: position }"
     >
-      <slot name="content"></slot>
+      <slot name="content" :close="close"></slot>
     </div>
     <span ref="triggerWrapper" style="display: inline-block">
       <slot></slot>
@@ -151,6 +151,7 @@ $border-radius: 4px;
     &::before,
     &::after {
       left: 10px;
+      border-bottom: none;
     }
     &::before {
       border-top-color: $border-color;
@@ -167,6 +168,7 @@ $border-radius: 4px;
     &::before,
     &::after {
       left: 10px;
+      border-top: none;
     }
     &::before {
       border-bottom-color: $border-color;
@@ -185,6 +187,7 @@ $border-radius: 4px;
       left: 100%;
       transform: translateY(-50%);
       top: 50%;
+      border-right: none;
     }
     &::before {
       border-left-color: $border-color;
@@ -201,6 +204,7 @@ $border-radius: 4px;
       right: 100%;
       transform: translateY(-50%);
       top: 50%;
+      border-left: none;
     }
     &::before {
       border-right-color: $border-color;
@@ -209,6 +213,14 @@ $border-radius: 4px;
       border-right-color: white;
       right: calc(100% - 1px);
     }
+  }
+  .slide-enter-active,
+  .slide-leave-active {
+    transition: all 0.5s;
+  }
+  .slide-enter,
+  .slide-leave-to {
+    margin-left: -200px;
   }
 }
 </style>

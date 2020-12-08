@@ -36,8 +36,9 @@
     <div id="app" style="margin: 100px; padding: 100px; ">
         <div style="overflow: hidden; ">
             <g-popover>
-                <template slot="content" position="top">
+                <template slot="content" position="top" slot-scope="{close}">
                     popoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopover
+                    <g-button @click="close">关闭</g-button>
                 </template>
                 <g-button>点击显示</g-button>
             </g-popover>
@@ -62,8 +63,9 @@
         </div>
         <div style="overflow: hidden; ">
             <g-popover trigger="hover" position="top">
-                <template slot="content">
+                <template slot="content" position="top" slot-scope="{close}">
                     popoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopoverpopover
+                    <g-button @click="close">关闭</g-button>
                 </template>
                 <g-button>点击显示</g-button>
             </g-popover>
