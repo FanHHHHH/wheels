@@ -35,21 +35,14 @@ export default {
   methods: {
     checkChildren() {
       if (this.$children.length === 0) {
-        console &&
-          console.warn &&
-          console.warn(
-            "tabs里面的子组件应该是tabs-nav和tabs-content,但你没有传入子组件"
-          );
+        console && console.warn && console.warn("tabs里面的子组件应该是tabs-nav和tabs-content,但你没有传入子组件");
       }
     },
     setSelected() {
       this.$children.forEach((vm) => {
         if (vm.$options.name === "GuluTabsNav") {
           vm.$children.forEach((childVm) => {
-            if (
-              childVm.$options.name === "GuluTabsItem" &&
-              childVm.name === this.selected
-            ) {
+            if (childVm.$options.name === "GuluTabsItem" && childVm.name === this.selected) {
               this.eventBus.$emit("update:selected", this.selected, childVm);
             }
           });
@@ -58,11 +51,10 @@ export default {
     },
   },
   mounted() {
-    this.checkChildren()
-    this.setSelected()
+    this.checkChildren();
+    this.setSelected();
   },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
