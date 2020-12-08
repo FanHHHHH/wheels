@@ -17,6 +17,10 @@ export default {
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true
+    }
   },
   inject: ["eventBus"],
   data() {
@@ -27,22 +31,27 @@ export default {
   methods: {
     toggle() {
       if (this.open) {
-        this.open = false;
+        this.close()
       } else {
-        this.open = true;
-        this.eventBus && this.eventBus.$emit("update:selected", this);
+        this.show()
+        this.eventBus && this.eventBus.$emit("update:selected", this.name);
       }
     },
     close() {
       this.open = false;
     },
+    show() {
+      this.open = true
+    }
   },
   mounted() {
     if (this.eventBus) {
-      this.eventBus.$on("update:selected", (vm) => {
-        if (this !== vm) {
+      this.eventBus.$on("update:selected", (name) => {
+        if (this.name !== name) {
           this.close();
-        }
+        } else {
+          this.show()
+         }
       });
     }
   },

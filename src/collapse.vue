@@ -13,6 +13,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    selected: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -24,6 +27,14 @@ export default {
       return {
         eventBus: this.eventBus,
       };
+    }
+  },
+  mounted() {
+    if (this.selected) {
+      this.eventBus.$emit("update:selected", this.selected);
+      this.eventBus.$on("update:selected", (name) => {
+        this.$emit("update:selected", name);
+      });
     }
   },
 };
