@@ -1,12 +1,7 @@
 <template>
   <div class="popover" ref="popover">
-    <div
-      v-if="visable"
-      ref="contentWrapper"
-      class="content-wrapper"
-      :class="{ [`position-${this.position}`]: position }"
-    >
-      <slot name="content" :close="close"></slot>
+    <div v-if="visable" ref="contentWrapper" class="content-wrapper" :class="{ [`position-${this.position}`]: position }">
+      <slot name="content" :close="close"> </slot>
     </div>
     <span ref="triggerWrapper" style="display: inline-block">
       <slot></slot>
@@ -79,18 +74,10 @@ export default {
       contentWrapper.style.top = positions[this.position].top + "px";
     },
     onClickDocument(e) {
-      if (
-        this.$refs.popover &&
-        (this.$refs.popover.contains(e.target) ||
-          this.$refs.popover === e.target)
-      ) {
+      if (this.$refs.popover && (this.$refs.popover.contains(e.target) || this.$refs.popover === e.target)) {
         return;
       }
-      if (
-        this.$refs.contentWrapper &&
-        (this.$refs.contentWrapper.contains(e.target) ||
-          this.$refs.contentWrapper === e.target)
-      ) {
+      if (this.$refs.contentWrapper && (this.$refs.contentWrapper.contains(e.target) || this.$refs.contentWrapper === e.target)) {
         return;
       }
       this.close();
@@ -119,7 +106,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 $border-color: #999;
 $border-radius: 4px;
 .popover {

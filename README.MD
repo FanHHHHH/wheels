@@ -8,7 +8,7 @@
 ##开始使用
 1.添加css样式
     使用本框架前需要启用border-box
-    ```
+    ``` 
     *{box-sizing: border-box}
     *::before{box-sizing: border-box}
     *::after{box-sizing: border-box}
