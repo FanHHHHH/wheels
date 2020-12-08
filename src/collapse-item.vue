@@ -19,8 +19,8 @@ export default {
     },
     name: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   inject: ["eventBus"],
   data() {
@@ -31,27 +31,20 @@ export default {
   methods: {
     toggle() {
       if (this.open) {
-        this.close()
+        this.eventBus && this.eventBus.$emit("update:removeSelected", this.name);
       } else {
-        this.show()
-        this.eventBus && this.eventBus.$emit("update:selected", this.name);
+        this.eventBus && this.eventBus.$emit("update:addSelected", this.name);
       }
     },
-    close() {
-      this.open = false;
-    },
-    show() {
-      this.open = true
-    }
   },
   mounted() {
     if (this.eventBus) {
-      this.eventBus.$on("update:selected", (name) => {
-        if (this.name !== name) {
-          this.close();
+      this.eventBus.$on("update:selected", (names) => {
+        if (names.indexOf(this.name) >= 0) {
+            this.open = true
         } else {
-          this.show()
-         }
+          this.open = false
+        }
       });
     }
   },

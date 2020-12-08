@@ -14,7 +14,7 @@ export default {
       default: false,
     },
     selected: {
-      type: String,
+      type: Array,
     },
   },
   data() {
@@ -23,19 +23,29 @@ export default {
     };
   },
   provide() {
-    if (this.single) {
-      return {
-        eventBus: this.eventBus,
-      };
-    }
+    return {
+      eventBus: this.eventBus,
+    };
   },
   mounted() {
-    if (this.selected) {
-      this.eventBus.$emit("update:selected", this.selected);
-      this.eventBus.$on("update:selected", (name) => {
-        this.$emit("update:selected", name);
-      });
-    }
+    this.eventBus.$emit("update:selected", this.selected);
+    this.eventBus.$on("update:addSelected", (name) => {
+      let selectedCopy = JSON.parse(JSON.stringify(this.selected));
+      if (this.single) {
+        selectedCopy = [name];
+      } else {
+        selectedCopy.push(name);
+      }
+      this.eventBus.$emit("update:selected", selectedCopy);
+      this.$emit("update:selected", selectedCopy);
+    });
+    this.eventBus.$on("update:removeSelected", (name) => {
+      let selectedCopy = JSON.parse(JSON.stringify(this.selected));
+      const idx = selectedCopy.indexOf(name);
+      selectedCopy.splice(idx, 1);
+      this.eventBus.$emit("update:selected", selectedCopy);
+      this.$emit("update:selected", selectedCopy);
+    });
   },
 };
 </script>
