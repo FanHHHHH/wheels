@@ -11,10 +11,12 @@ module.exports = {
     sidebar: [
       {
         title: "入门",
+        collapsable: false,
         children: ["install/", "/get-started/"],
       },
       {
         title: "组件",
+        collapsable: false,
         children: ["components/icon", "components/layout", "components/button", "components/toast", "components/tabs", "components/popover", "components/collapse"],
       },
     ],
