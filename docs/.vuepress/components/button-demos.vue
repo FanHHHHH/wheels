@@ -5,11 +5,7 @@
     <g-button loading>loading</g-button>
     <g-button disabled>disabled</g-button>
 
-    <pre>
-      <code>
-        {{code}}
-      </code>
-    </pre>
+    <pre><code>{{code}}</code></pre>
   </div>
 </template>
 
@@ -26,7 +22,7 @@ export default {
         <g-button icon="settings">settings</g-button>
         <g-button loading>loading</g-button>
         <g-button disabled>disabled</g-button>
-        `,
+        `.trim().replace(/\t+| +/g, ''),
     };
   },
 };

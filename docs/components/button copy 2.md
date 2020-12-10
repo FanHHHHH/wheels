@@ -1,5 +1,5 @@
 ---
-title: button 按钮
+title: 按钮
 ---
 
 # 按钮
