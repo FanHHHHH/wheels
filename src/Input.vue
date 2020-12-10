@@ -40,16 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    $height: 32px;
-    $width: 128px;
-    $border-color: #666; 
-    $border-color-hover: #999;
-    $border-radius: 4px;
-    $font-size: 14px;
-    $border-shadow-color: rgba(0, 0, 0, 0.5);
-    $disabled-color: #aaa;
-    $readonly-color: #aaa;
-    $red: #F1435D;
+    @import 'var';
     .wrapper {
         display: inline-flex;
         justify-content: center;
@@ -59,7 +50,7 @@ export default {
             margin-right: 0.5em;
         }
         > input{
-            height: $height; width: $width; border: 1px solid $border-color;
+            height: $input-height; width: $width; border: 1px solid $border-color;
             border-radius: $border-radius; padding: 0 8px; font-size: inherit;
             &:hover { border-color: $border-color-hover; }
             &:focus { box-shadow: inset 0 1px 3px $border-shadow-color;

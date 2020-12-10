@@ -16,22 +16,21 @@ export default {
   mounted() {
     this.eventBus.$on("update:selected", (val, vm) => {
       const { width, left } = vm.$el.getBoundingClientRect();
+      const {left: left2} = this.$el.getBoundingClientRect()
       this.$refs.line.style.width = `${width}px`;
-      this.$refs.line.style.left = `${left}px`;
+      this.$refs.line.style.left = `${left - left2}px`;
     });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-$tab-height: 40px;
-$blue: blue;
-$boder-color: #ddd;
+@import 'var';
 .tabs-nav {
   display: flex;
   justify-content: flex-start;
   height: $tab-height;
-  border-bottom: 1px solid $boder-color;
+  border-bottom: 1px solid $border-color;
   position: relative;
   & .actions-wrapper {
     margin-left: auto;

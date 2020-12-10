@@ -88,11 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$font-size: 14px;
-$font-color: #fff;
-$toast-min-height: 40px;
-$toast-bg: rgba(0, 0, 0, 0.74);
-$animation-duration: 0.6s;
+@import "var";
 @keyframes slide-up {
   0% { opacity: 0%; transform: translateY(100%); }
   100% { opacity: 100%; transform: translateY(0%); }
