@@ -1,9 +1,5 @@
 <template>
-  <button
-    class="g-button"
-    :class="{ [`icon-${iconPosition}`]: true }"
-    @click="$emit('click')"
-  >
+  <button class="g-button" :class="{ [`icon-${iconPosition}`]: true }" @click="$emit('click')">
     <g-icon v-if="icon && !loading" class="icon" :name="icon"></g-icon>
     <g-icon v-if="loading" class="loading icon" name="loading"></g-icon>
     <div class="content">
@@ -36,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $button-height: 32px;
 $font-size: 14px;
 $button-bg: white;
