@@ -1,4 +1,5 @@
 module.exports = {
+    base: '/wheels/',
     title: 'G-UI',
     description: '一个好用的ui框架！',
     themeConfig: {
