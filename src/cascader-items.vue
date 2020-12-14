@@ -66,6 +66,7 @@ export default {
       width: 10px;
       fill: darken($grey, 50%);
       margin-top: 3px;
+      margin-right: 1em;
       transform: translateX(15px);
     }
   }
