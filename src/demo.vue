@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <b-button>aaa</b-button>
-    <div>{{this.selected}}</div>
     <b-cascader :source="source" popover-height="200px" :selected="selected" 
     @update:selected="selected = $event"></b-cascader>
     <p>2222</p>

@@ -7,26 +7,27 @@
       </div>
     </div>
     <div class="right" v-if="rightItem">
-      <gulu-cascader-items :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
+      <gulu-cascader-items :selected="selected" @update:selected="onUpdateSelected" 
+      :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
     </div>
   </div>
 </template>
 
 <script>
-import Icon from './Icon'
+import Icon from "./Icon";
 export default {
   name: "GuluCascaderItems",
   components: {
-    Icon
+    Icon,
   },
   props: {
-    level: { 
+    level: {
       type: Number,
-      default: 0
+      default: 0,
     },
     selected: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     sourceItem: {
       type: Array,
@@ -35,26 +36,20 @@ export default {
       type: String,
     },
   },
-  data() {
-    return {
-      leftSelected: null,
-    };
-  },
   methods: {
     onClickLabel(item) {
-      const selectedCopy = JSON.parse(JSON.stringify(this.selected))
-      selectedCopy[this.level] = item
-      selectedCopy.splice(this.level + 1)
-      this.$emit('update:selected', selectedCopy)
+      const selectedCopy = JSON.parse(JSON.stringify(this.selected));
+      selectedCopy[this.level] = item;
+      selectedCopy.splice(this.level + 1);
+      this.$emit("update:selected", selectedCopy);
     },
     onUpdateSelected(newSelected) {
-      this.$emit('update:selected', newSelected)
-    }
+      this.$emit("update:selected", newSelected);
+    },
   },
   computed: {
     rightItem() {
-      const curSelected = this.selected[this.level]
-      console.log(this.selected);
+      const curSelected = this.selected[this.level];
       if (curSelected && curSelected.children) {
         return curSelected.children;
       } else {
@@ -66,13 +61,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'var';
+@import "var";
 .cascaderItems {
   display: flex;
   .left {
     height: 100%;
     padding: 0.3em 0;
-    
   }
   .right {
     height: 100%;

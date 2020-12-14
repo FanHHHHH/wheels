@@ -4,7 +4,7 @@
       {{result}}
     </div>
     <div class="popover-wrapper" v-if="popoverVisable">
-      <cascader-items :selectkd="selected" :sourceItem="source" 
+      <cascader-items :selected="selected" :sourceItem="source" 
       class="popover" :height="popoverHeight"
       @update:selected="onUpdateSelected"
       ></cascader-items>
@@ -43,9 +43,8 @@ export default {
   },
   computed: {
     result() {
-      console.log(this.selected);
       return this.selected.map( val => {
-        return val.name
+        return val = val.name
       }).join('/')
     }
   }
@@ -57,7 +56,6 @@ export default {
 .cascader {
   position: relative;
   > .trigger {
-    border: 1px solid black;
     display: inline-flex;
     align-items: center;
     min-width: 10em;
