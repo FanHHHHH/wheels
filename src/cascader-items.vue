@@ -1,6 +1,5 @@
 <template>
   <div class="cascaderItems" :style="{ height: height }">
-    <div></div>
     <div class="left">
       <div class="label" v-for="item in this.sourceItem" :key="item.name" @click="onClickLabel(item)">
         {{ item.name }}
@@ -55,6 +54,7 @@ export default {
   computed: {
     rightItem() {
       const curSelected = this.selected[this.level]
+      console.log(this.selected);
       if (curSelected && curSelected.children) {
         return curSelected.children;
       } else {

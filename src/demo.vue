@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <b-button>aaa</b-button>
-    <p>{{selected}}</p>
+    <div>{{this.selected}}</div>
     <b-cascader :source="source" popover-height="200px" :selected="selected" 
-    @update:selected="x"></b-cascader>
+    @update:selected="selected = $event"></b-cascader>
     <p>2222</p>
   </div>
 </template>
@@ -35,11 +35,6 @@ export default {
       ],
     };
   },
-  methods: {
-    x(newSelected) {
-      this.selected = newSelected
-    }
-  }
 };
 </script>
 
