@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div id="app">
     <b-button>aaa</b-button>
-    <p>1111</p>
-    <b-cascader :source="source" popover-height="200px"></b-cascader>
+    <p>{{selected}}</p>
+    <b-cascader :source="source" popover-height="200px" :selected="selected" 
+    @update:selected="selected = $event"></b-cascader>
     <p>2222</p>
   </div>
 </template>
@@ -18,6 +19,7 @@ export default {
   },
   data() {
     return {
+      selected: [],
       source: [
         {
           name: "江苏",
