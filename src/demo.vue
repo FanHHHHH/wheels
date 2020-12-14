@@ -3,7 +3,7 @@
     <b-button>aaa</b-button>
     <p>{{selected}}</p>
     <b-cascader :source="source" popover-height="200px" :selected="selected" 
-    @update:selected="selected = $event"></b-cascader>
+    @update:selected="x"></b-cascader>
     <p>2222</p>
   </div>
 </template>
@@ -35,6 +35,11 @@ export default {
       ],
     };
   },
+  methods: {
+    x(newSelected) {
+      this.selected = newSelected
+    }
+  }
 };
 </script>
 
