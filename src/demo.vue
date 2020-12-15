@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <b-button>aaa</b-button>
-    <b-cascader :source="source" popover-height="200px" :selected="selected" 
-    @update:selected="selected = $event"></b-cascader>
+    <b-cascader :source="source" popover-height="200px" :selected.sync="selected"></b-cascader>
     <p>2222</p>
   </div>
 </template>
@@ -10,6 +9,13 @@
 <script>
 import Button from "./button.vue";
 import Cascader from "./cascader";
+import db from './db'
+
+const ajax = (parentId = 0) => {
+  return db.filter(item => item.parent_id === parentId)
+};
+console.log(ajax());
+
 export default {
   name: "demo",
   components: {
@@ -19,19 +25,7 @@ export default {
   data() {
     return {
       selected: [],
-      source: [
-        {
-          name: "江苏",
-          children: [
-              { name: "苏州", children: [{ name: "吴江" }, { name: "姑苏" }, { name: "工业园区" }] }, 
-              { name: "盐城", children: [{ name: "大丰" }, { name: "建湖" }] }, { name: "宿迁" }],
-        },
-        { name: "浙江", 
-          children: [
-              { name: "杭州" , children: [{name: '余杭'}]}, 
-              { name: "湖州" }, 
-              { name: "绍兴" }] },
-      ],
+      source: ajax()
     };
   },
 };
