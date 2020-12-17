@@ -57,6 +57,10 @@ export default {
       }
     },
   },
+  updated() {
+    console.log('items更新了');
+    console.log(this.sourceItem);
+  }
 };
 </script>
 
