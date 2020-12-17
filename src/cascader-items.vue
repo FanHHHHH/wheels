@@ -1,13 +1,15 @@
 <template>
   <div class="cascaderItems" :style="{ height: height }">
     <div class="left">
-      <div class="label" v-for="item in this.sourceItem" :key="item.name" @click="onClickLabel(item)">
-        {{ item.name }}
-        <icon class="icon" name="right" v-if="item.children">></icon>
+      <div class="label" v-for="item in this.sourceItem" :key="item.id" @click="onClickLabel(item)">
+        <span class="name">
+          {{ item.name }}
+        </span>
+        <icon class="icon" name="right" v-if="rightArrowVisable(item)"></icon>
       </div>
     </div>
     <div class="right" v-if="rightItem">
-      <gulu-cascader-items :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
+      <gulu-cascader-items :loadData="loadData" :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
     </div>
   </div>
 </template>
@@ -34,6 +36,9 @@ export default {
     height: {
       type: String,
     },
+    loadData: {
+      type: Function,
+    },
   },
   methods: {
     onClickLabel(item) {
@@ -44,6 +49,9 @@ export default {
     },
     onUpdateSelected(newSelected) {
       this.$emit("update:selected", newSelected);
+    },
+    rightArrowVisable(item) {
+      return this.loadData? !item.isLeaf: item.children;
     },
   },
   computed: {
@@ -65,7 +73,6 @@ export default {
   display: flex;
   .left {
     height: 100%;
-    // padding: 0.3em 0;
     overflow: auto;
   }
   .right {
@@ -73,16 +80,24 @@ export default {
     border-left: 1px solid $border-color-light;
   }
   .label {
-    padding: 0.3em 1em;
+    padding: 0.5em 1em;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    &:hover {
+      background: $grey;
+      cursor: pointer;
+    }
+
+    > .name {
+      margin-right: 1em;
+      user-select: none;
+    }
     .icon {
       width: 10px;
       fill: darken($grey, 50%);
       margin-top: 3px;
-      margin-right: 1em;
-      transform: translateX(15px);
+      margin-left: auto;
     }
   }
 }

@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <b-button>aaa</b-button>
-    <b-cascader :source.sync="source" :load-data="loadData" popover-height="200px" :selected.sync="selected"></b-cascader>
+    <b-cascader :source.sync="source" :loadData="loadData"  popover-height="200px" :selected.sync="selected"></b-cascader>
+    <span>{{source}}</span>
     <p>2222</p>
   </div>
 </template>
@@ -15,6 +16,13 @@ function ajax(parentId = 0) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let result = db.filter((item) => item.parent_id === parentId);
+      result.forEach((node) => {
+        if (db.filter((item) => item.parent_id === node.id).length > 0) {
+          node.isLeaf = false;
+        } else {
+          node.isLeaf = true;
+        }
+      });
       resolve(result);
     }, 300);
   });
@@ -35,15 +43,16 @@ export default {
   methods: {
     loadData(node, updateSource) {
       let { id } = node;
-      ajax(id).then((result) => {
-        updateSource(result);
-      });
+        ajax(id).then((result) => {
+          updateSource(result);
+        });
     },
   },
   created() {
     ajax(0).then((result) => {
       this.source = result;
     });
+    // this.source = db
   },
 };
 </script>
