@@ -7,8 +7,7 @@
       </div>
     </div>
     <div class="right" v-if="rightItem">
-      <gulu-cascader-items :selected="selected" @update:selected="onUpdateSelected" 
-      :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
+      <gulu-cascader-items :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
     </div>
   </div>
 </template>
@@ -49,18 +48,14 @@ export default {
   },
   computed: {
     rightItem() {
-      const curSelected = this.selected[this.level];
-      if (curSelected && curSelected.children) {
-        return curSelected.children;
-      } else {
-        return null;
+      if (this.selected[this.level]) {
+        let selected = this.sourceItem.filter((item) => item.name === this.selected[this.level].name);
+        if (selected && selected[0].children) {
+          return selected[0].children;
+        }
       }
     },
   },
-  updated() {
-    console.log('items更新了');
-    console.log(this.sourceItem);
-  }
 };
 </script>
 

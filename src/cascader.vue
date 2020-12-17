@@ -73,9 +73,6 @@ export default {
         })
         .join("/");
     },
-  },
-  updated() {
-    console.log('跟新了');
   }
 };
 </script>
