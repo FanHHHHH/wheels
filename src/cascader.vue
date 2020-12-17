@@ -1,6 +1,6 @@
 <template>
-  <div class="cascader">
-    <div class="trigger" @click="popoverVisable = !popoverVisable">
+  <div class="cascader" ref="cascader">
+    <div class="trigger" @click="toggle">
       {{ result || "&nbsp;" }}
     </div>
     <div class="popover-wrapper" v-if="popoverVisable">
@@ -65,6 +65,31 @@ export default {
         this.loadData(lastItem, updateSource); //回调
       }
     },
+    onClickDocument(e) {
+      const { cascader } = this.$refs;
+      if (e.target === cascader || cascader.contains(e.target)) {
+        return;
+      }
+      this.close();
+    },
+    open() {
+      this.popoverVisable = true;
+      setTimeout((_) => {
+        document.addEventListener("click", this.onClickDocument);
+      });
+    },
+    close() {
+      console.log('关闭');
+      this.popoverVisable = false;
+      document.removeEventListener("click", this.onClickDocument);
+    },
+    toggle() {
+      if (this.popoverVisable) {
+        this.close();
+      } else {
+        this.open();
+      }
+    },
   },
   computed: {
     result() {
@@ -82,6 +107,8 @@ export default {
 @import "var";
 .cascader {
   position: relative;
+  border: 1px solid salmon;
+  display: inline-block;
   > .trigger {
     display: inline-flex;
     align-items: center;
@@ -96,6 +123,7 @@ export default {
     position: absolute;
     background-color: white;
     margin-top: 8px;
+    white-space: nowrap;
   }
 }
 </style>

@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <b-button>aaa</b-button>
     <b-cascader :source.sync="source" :loadData="loadData"  popover-height="200px" :selected.sync="selected"></b-cascader>
-    <span>{{source}}</span>
-    <p>2222</p>
   </div>
 </template>
 
