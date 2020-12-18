@@ -1,24 +1,21 @@
+const onclickDocument = (e) => {
+  const { target } = e;
+  callbacks.forEach((item) => {
+    if (target === item.el || item.el.contains(target)) {
+      return;
+    }
+    item.callback();
+  });
+};
+document.addEventListener("click", onclickDocument);
+const callbacks = [];
 export default {
   bind: function(el, binding) {
-    document.addEventListener("click", (e) => {
-      let { target } = e;
-      if (target === el || el.contains(target)) {
-        return;
-      }
-      binding.value();
-    });
+    callbacks.push({ el, callback: binding.value });
   },
 };
 
-
-// export default {
-//     bind: function(el, binding) {
-//       document.onclick =function(e) {
-//         let { target } = e;
-//         if (target === el || el.contains(target)) {
-//           return;
-//         }
-//         binding.value();
-//       };
-//     },
-//   };
+const removeListener = () => {
+  document.removeEventListener("click", onclickDocument);
+};
+export { removeListener };

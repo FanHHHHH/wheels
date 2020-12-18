@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <b-cascader :source.sync="source" :loadData="loadData"  popover-height="200px" :selected.sync="selected"></b-cascader>
+    <b-cascader :source.sync="source" :loadData="loadData"  popover-height="200px" :selected.sync="selected"></b-cascader>
+
   </div>
 </template>
 
@@ -8,6 +10,7 @@
 import Button from "./button.vue";
 import Cascader from "./cascader";
 import db from "./db";
+import { removeListener } from "./click-outside.js";
 
 function ajax(parentId = 0) {
   return new Promise((resolve, reject) => {
@@ -50,6 +53,7 @@ export default {
       this.source = result;
     });
     // this.source = db
+    // removeListener()
   },
 };
 </script>
