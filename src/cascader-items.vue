@@ -51,7 +51,7 @@ export default {
       this.$emit("update:selected", newSelected);
     },
     rightArrowVisable(item) {
-      return this.loadData? !item.isLeaf: item.children;
+      return this.loadData ? !item.isLeaf : item.children;
     },
   },
   computed: {

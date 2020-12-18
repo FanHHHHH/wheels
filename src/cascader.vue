@@ -1,7 +1,7 @@
 <template>
   <div class="cascader" ref="cascader" v-click-outside="close">
     <div class="trigger" @click="toggle">
-      {{ result || "&nbsp;" }}
+      {{ result }}
     </div>
     <div class="popover-wrapper" v-if="popoverVisable">
       <cascader-items :loadData="loadData" :selected="selected" :sourceItem="source" class="popover" :height="popoverHeight" @update:selected="onUpdateSelected"></cascader-items>
@@ -93,7 +93,6 @@ export default {
         .join("/");
     },
   },
-  
 };
 </script>
 
@@ -101,9 +100,9 @@ export default {
 @import "var";
 .cascader {
   position: relative;
-  border: 1px solid salmon;
   display: inline-block;
   > .trigger {
+    background: #fff;
     display: inline-flex;
     align-items: center;
     min-width: 10em;
@@ -111,6 +110,7 @@ export default {
     padding: 0 1em;
     border: 1px solid $border-color;
     border-radius: $border-radius;
+    vertical-align: top;
   }
   > .popover-wrapper {
     @extend %box-shadow;
@@ -118,6 +118,7 @@ export default {
     background-color: white;
     margin-top: 8px;
     white-space: nowrap;
+    z-index: 1;
   }
 }
 </style>

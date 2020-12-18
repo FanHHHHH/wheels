@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <b-cascader :source.sync="source" :loadData="loadData"  popover-height="200px" :selected.sync="selected"></b-cascader>
-    <b-cascader :source.sync="source" :loadData="loadData"  popover-height="200px" :selected.sync="selected"></b-cascader>
-
+    <b-cascader :source.sync="source" :loadData="loadData" popover-height="200px" :selected.sync="selected"></b-cascader>
+    <div>
+      <b-cascader :source.sync="source" :loadData="loadData" popover-height="200px" :selected.sync="selected"></b-cascader>
+    </div>
   </div>
 </template>
 
@@ -43,9 +44,9 @@ export default {
   methods: {
     loadData(node, updateSource) {
       let { id } = node;
-        ajax(id).then((result) => {
-          updateSource(result);
-        });
+      ajax(id).then((result) => {
+        updateSource(result);
+      });
     },
   },
   created() {
