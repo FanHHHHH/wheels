@@ -5,11 +5,18 @@
         <span class="name">
           {{ item.name }}
         </span>
-        <icon class="icon" name="right" v-if="rightArrowVisable(item)"></icon>
+        <span class="icons">
+          <template v-if="item.name === loadingItem.name">
+            <icon class="icon loading" name="loading"></icon>
+          </template>
+          <template v-else>
+            <icon class="icon" name="right" v-if="rightArrowVisable(item)"></icon>
+          </template>
+        </span>
       </div>
     </div>
     <div class="right" v-if="rightItem">
-      <gulu-cascader-items :loadData="loadData" :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
+      <gulu-cascader-items :loading-item="loadingItem" :loadData="loadData" :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
     </div>
   </div>
 </template>
@@ -38,6 +45,10 @@ export default {
     },
     loadData: {
       type: Function,
+    },
+    loadingItem: {
+      type: Object,
+      defult: () => ({})
     },
   },
   methods: {
@@ -93,11 +104,16 @@ export default {
       margin-right: 1em;
       user-select: none;
     }
+    .icons {
+      margin-top: 3px;
+      margin-left: auto;
+      .loading {
+        animation: spin 2s infinite linear;
+      }
+    }
     .icon {
       width: 10px;
       fill: darken($grey, 50%);
-      margin-top: 3px;
-      margin-left: auto;
     }
   }
 }

@@ -4,7 +4,7 @@
       {{ result }}
     </div>
     <div class="popover-wrapper" v-if="popoverVisable">
-      <cascader-items :loadData="loadData" :selected="selected" :sourceItem="source" class="popover" :height="popoverHeight" @update:selected="onUpdateSelected"></cascader-items>
+      <cascader-items :loading-item="loadingItem" :loadData="loadData" :selected="selected" :sourceItem="source" class="popover" :height="popoverHeight" @update:selected="onUpdateSelected"></cascader-items>
     </div>
   </div>
 </template>
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       popoverVisable: false,
+      loadingItem: {},
     };
   },
   methods: {
@@ -63,10 +64,12 @@ export default {
         let copy = JSON.parse(JSON.stringify(this.source));
         const toUpdate = dfs(copy, lastItem.id)[0];
         toUpdate.children = result;
+        this.loadingItem = {};
         this.$emit("update:source", copy);
       };
       if (this.loadData && !lastItem.isLeaf) {
         this.loadData(lastItem, updateSource); //回调
+        this.loadingItem = lastItem;
       }
     },
     open() {
