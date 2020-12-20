@@ -4,6 +4,7 @@
     <div>
       <b-cascader :source.sync="source" :loadData="loadData" popover-height="200px" :selected.sync="selected"></b-cascader>
     </div>
+    <b-button>按钮测试</b-button>
   </div>
 </template>
 
