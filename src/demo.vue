@@ -10,6 +10,8 @@
       <template slot="content">这是内容</template>
       <template><button>关闭</button></template>
     </b-popover>
+    <b-input value="ceshi"></b-input>
+    <input type="text" value="hahah">
   </div>
 </template>
 
@@ -17,6 +19,8 @@
 import Button from './button.vue'
 import Cascader from './cascader'
 import Popover from './popover'
+import Input from './Input'
+
 import db from './db'
 import { removeListener } from './click-outside.js'
 
@@ -42,6 +46,7 @@ export default {
     'b-button': Button,
     'b-cascader': Cascader,
     'b-popover': Popover,
+    'b-input': Input
   },
   data() {
     return {

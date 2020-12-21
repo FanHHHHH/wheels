@@ -22,7 +22,7 @@ export default {
     },
     props: {
         value: {
-            tyep: String
+            type: String
         },
         disabled: {
             type: Boolean,
