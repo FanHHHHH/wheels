@@ -11,46 +11,46 @@
 
 <script>
 export default {
-  name: "GuluPopover",
+  name: 'GuluPopover',
   props: {
     position: {
       type: String,
-      default: "top",
+      default: 'top',
       validator(value) {
-        return ["top", "bottom", "left", "right"].indexOf(value) >= 0;
+        return ['top', 'bottom', 'left', 'right'].indexOf(value) >= 0
       },
     },
     trigger: {
       type: String,
-      default: "click",
+      default: 'click',
       validator(value) {
-        return ["click", "hover"].indexOf(value) >= 0;
+        return ['click', 'hover'].indexOf(value) >= 0
       },
     },
   },
   data() {
     return {
       visable: false,
-    };
+    }
   },
   mounted() {
-    if (this.trigger === "click") {
-      this.$refs.popover.addEventListener("click", this.onClick);
+    if (this.trigger === 'click') {
+      this.$refs.popover.addEventListener('click', this.onClick)
     } else {
-      this.$refs.popover.addEventListener("mouseenter", this.open);
-      this.$refs.popover.addEventListener("mouseleave", this.close);
+      this.$refs.popover.addEventListener('mouseenter', this.open)
+      this.$refs.popover.addEventListener('mouseleave', this.close)
     }
   },
   destroyed() {
-    this.$refs.popover.removeEventListener("mouseenter", this.open);
-    this.$refs.popover.removeEventListener("mouseleave", this.close);
+    this.$refs.popover.removeEventListener('mouseenter', this.open)
+    this.$refs.popover.removeEventListener('mouseleave', this.close)
   },
   methods: {
     positionContent() {
-      document.body.appendChild(this.$refs.contentWrapper);
-      const { contentWrapper, triggerWrapper } = this.$refs;
-      const { height: height1 } = contentWrapper.getBoundingClientRect();
-      let { width, height, top, left } = triggerWrapper.getBoundingClientRect();
+      document.body.appendChild(this.$refs.contentWrapper)
+      const { contentWrapper, triggerWrapper } = this.$refs
+      const { height: height1 } = contentWrapper.getBoundingClientRect()
+      let { width, height, top, left } = triggerWrapper.getBoundingClientRect()
 
       const positions = {
         top: {
@@ -69,41 +69,41 @@ export default {
           left: left + width + window.scrollX,
           top: top + (height - height1) / 2 + window.scrollY,
         },
-      };
-      contentWrapper.style.left = positions[this.position].left + "px";
-      contentWrapper.style.top = positions[this.position].top + "px";
+      }
+      contentWrapper.style.left = positions[this.position].left + 'px'
+      contentWrapper.style.top = positions[this.position].top + 'px'
     },
     onClickDocument(e) {
       if (this.$refs.popover && (this.$refs.popover.contains(e.target) || this.$refs.popover === e.target)) {
-        return;
+        return
       }
       if (this.$refs.contentWrapper && (this.$refs.contentWrapper.contains(e.target) || this.$refs.contentWrapper === e.target)) {
-        return;
+        return
       }
-      this.close();
+      this.close()
     },
     open() {
-      this.visable = true;
+      this.visable = true
       setTimeout(() => {
-        this.positionContent();
-        document.addEventListener("click", this.onClickDocument);
-      });
+        this.positionContent()
+        document.addEventListener('click', this.onClickDocument)
+      })
     },
     close() {
-      this.visable = false;
-      document.removeEventListener("click", this.onClickDocument);
+      this.visable = false
+      document.removeEventListener('click', this.onClickDocument)
     },
     onClick(event) {
       if (this.$refs.triggerWrapper.contains(event.target)) {
         if (this.visable) {
-          this.close();
+          this.close()
         } else {
-          this.open();
+          this.open()
         }
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -124,7 +124,7 @@ export default {
   background: white;
   &::before,
   &::after {
-    content: "";
+    content: '';
     display: block;
     border: 10px solid transparent;
     width: 0;

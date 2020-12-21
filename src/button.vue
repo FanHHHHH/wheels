@@ -9,19 +9,19 @@
 </template>
 
 <script>
-import Icon from "./Icon.vue";
+import Icon from './Icon.vue'
 export default {
-  name: "GuluButton",
+  name: 'GuluButton',
   components: {
-    "g-icon": Icon,
+    'g-icon': Icon,
   },
   props: {
     icon: {},
     iconPosition: {
       type: String,
-      default: "left",
+      default: 'left',
       validator(val) {
-        return !(val !== "left" && val !== "right");
+        return !(val !== 'left' && val !== 'right')
       },
     },
     loading: {
@@ -29,7 +29,7 @@ export default {
       default: false,
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
