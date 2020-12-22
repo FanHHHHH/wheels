@@ -1,17 +1,16 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <!-- <b-cascader :source.sync="source" :loadData="loadData" popover-height="200px" :selected.sync="selected"></b-cascader>
-    <div>
-      <b-cascader :source.sync="source" :loadData="loadData" popover-height="200px" :selected.sync="selected"></b-cascader>
-    </div>
-    <b-button>按钮测试</b-button> -->
-
-    <b-popover>
-      <template slot="content">这是内容</template>
-      <template><button>关闭</button></template>
-    </b-popover>
-    <b-input value="ceshi"></b-input>
-    <input type="text" value="hahah">
+    <b-slides :selected="selected">
+      <b-slides-item name="1">
+        <div class="box">1</div>
+      </b-slides-item>
+      <b-slides-item name="2">
+        <div class="box">2</div>
+      </b-slides-item>
+      <b-slides-item name="3">
+        <div class="box">3</div>
+      </b-slides-item>
+    </b-slides>
   </div>
 </template>
 
@@ -20,25 +19,11 @@ import Button from './button.vue'
 import Cascader from './cascader'
 import Popover from './popover'
 import Input from './Input'
+import BSlides from './slides'
+import BSlidesItem from './slides-item'
 
 import db from './db'
 import { removeListener } from './click-outside.js'
-
-function ajax(parentId = 0) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      let result = db.filter((item) => item.parent_id === parentId)
-      result.forEach((node) => {
-        if (db.filter((item) => item.parent_id === node.id).length > 0) {
-          node.isLeaf = false
-        } else {
-          node.isLeaf = true
-        }
-      })
-      resolve(result)
-    }, 300)
-  })
-}
 
 export default {
   name: 'demo',
@@ -46,30 +31,33 @@ export default {
     'b-button': Button,
     'b-cascader': Cascader,
     'b-popover': Popover,
-    'b-input': Input
+    'b-input': Input,
+    BSlides,
+    BSlidesItem,
   },
   data() {
     return {
-      selected: [],
-      source: [],
+      selected: '1',
     }
   },
-  methods: {
-    loadData(node, updateSource) {
-      let { id } = node
-      ajax(id).then((result) => {
-        updateSource(result)
-      })
-    },
-  },
   created() {
-    ajax(0).then((result) => {
-      this.source = result
-    })
-    // this.source = db
-    // removeListener()
+    setTimeout(() => {
+      this.selected = '2'
+    }, 2000)
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.box {
+  width: 200px;
+  height: 150px;
+  background: #eee;
+  border: 1px solid slateblue;
+}
+</style>
