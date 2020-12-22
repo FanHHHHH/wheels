@@ -41,8 +41,13 @@ export default {
     }
   },
   created() {
-    setTimeout(() => {
-      this.selected = '2'
+    let i = '1'
+    setInterval(() => {
+      if (i === 4) {
+        i = 1
+      }
+      this.selected = i.toString()
+      i++
     }, 2000)
   },
 }

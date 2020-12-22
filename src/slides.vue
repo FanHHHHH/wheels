@@ -14,21 +14,26 @@ export default {
     selected: {
       type: String,
     },
+    autoPlay: {
+      type: Boolean,
+      default: false,
+    },
   },
   mounted() {
-    const children = this.$children
-    if (!this.selected) {
-      this.selected = children[0].name
-    }
-    this.$children.forEach((vm) => {
-      vm.selected = this.selected
-    })
+    this.updateChildren()
   },
   updated() {
-    console.log(this.selected)
-    this.$children.forEach((vm) => {
-      vm.selected = this.selected
-    })
+    this.updateChildren()
+  },
+  methods: {
+    updateChildren() {
+      const children = this.$children
+      let selected = this.selected || children[0]
+      this.$children.forEach((vm) => {
+        vm.selected = selected
+      })
+    },
+    playAutomatically() {},
   },
 }
 </script>

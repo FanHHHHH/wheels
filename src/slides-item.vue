@@ -34,6 +34,8 @@ export default {
 }
 .silde-leave-active {
   position: absolute;
+  top: 0;
+  left: 0;
 }
 .silde-enter {
   transform: translateX(100%);
