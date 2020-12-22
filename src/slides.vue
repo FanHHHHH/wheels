@@ -21,19 +21,33 @@ export default {
   },
   mounted() {
     this.updateChildren()
+    this.playAutomatically()
   },
   updated() {
     this.updateChildren()
   },
   methods: {
     updateChildren() {
-      const children = this.$children
-      let selected = this.selected || children[0]
+      let selected = this.getSelected()
       this.$children.forEach((vm) => {
         vm.selected = selected
       })
     },
-    playAutomatically() {},
+    getSelected() {
+      const children = this.$children
+      return this.selected || children[0].name
+    },
+    playAutomatically() {
+      const names = this.$children.map((item) => item.name)
+      let index = names.indexOf(this.getSelected())
+      setInterval(() => {
+        if (index === names.length) {
+          index = 0
+        }
+        this.$emit('update:selected', names[index + 1])
+        index++
+      }, 2000)
+    },
   },
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-slides :selected="selected">
+    <b-slides :selected.sync="selected">
       <b-slides-item name="1">
         <div class="box">1</div>
       </b-slides-item>
@@ -40,16 +40,7 @@ export default {
       selected: '1',
     }
   },
-  created() {
-    let i = '1'
-    setInterval(() => {
-      if (i === 4) {
-        i = 1
-      }
-      this.selected = i.toString()
-      i++
-    }, 2000)
-  },
+  created() {},
 }
 </script>
 
