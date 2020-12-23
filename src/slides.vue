@@ -1,5 +1,5 @@
 <template>
-  <div class="b-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+  <div class="b-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
     <div class="b-slides-window" ref="window">
       <div class="b-slides-wrapper">
         <slot></slot>
@@ -29,6 +29,7 @@ export default {
       childrenLength: 0,
       lastSelectedIndex: undefined,
       timerId: undefined,
+      startTouch: undefined,
     }
   },
   mounted() {
@@ -48,9 +49,15 @@ export default {
     },
   },
   methods: {
-    select(id) {
+    select(newIndex) {
+      if (newIndex === -1) {
+        newIndex = this.names.length - 1
+      }
+      if (newIndex === this.names.length) {
+        newIndex = 0
+      }
       this.lastSelectedIndex = this.names.indexOf(this.selected)
-      this.$emit('update:selected', this.names[id])
+      this.$emit('update:selected', this.names[newIndex])
     },
     updateChildren() {
       let selected = this.getSelected()
@@ -79,12 +86,7 @@ export default {
       const run = () => {
         let index = this.names.indexOf(this.getSelected())
         let newIndex = index + 1
-        if (newIndex === -1) {
-          newIndex = this.names.length - 1
-        }
-        if (newIndex === this.names.length) {
-          newIndex = 0
-        }
+
         this.select(newIndex)
         this.timerId = setTimeout(run, 2000)
       }
@@ -99,6 +101,30 @@ export default {
     },
     onMouseLeave() {
       this.playAutomatically()
+    },
+    onTouchStart(e) {
+      this.pause(this.timerId)
+      this.isTouching = true
+
+      //只有一根手指滑动的时候才能滑动
+      if (e.touches.length > 1) return
+      this.startTouch = e.touches[0]
+    },
+    onTouchMove() {},
+    onTouchEnd(e) {
+      const { clientX: x1, clientY: y1 } = this.startTouch
+      const { clientX: x2, clientY: y2 } = e.changedTouches[0]
+      const rate = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) / Math.abs(y2 - y1)
+      if (rate > 2) {
+        if (x2 > x1) {
+          this.select(this.selectedIndex - 1)
+        } else {
+          this.select(this.selectedIndex + 1)
+        }
+      }
+      this.$nextTick(() => {
+        this.playAutomatically()
+      })
     },
   },
 }
