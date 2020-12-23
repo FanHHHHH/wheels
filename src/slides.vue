@@ -56,11 +56,13 @@ export default {
       let selected = this.getSelected()
       this.$children.forEach((vm) => {
         let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
-        if (this.lastSelectedIndex === this.names.length - 1 && this.selectedIndex === 0) {
-          reverse = false
-        }
-        if (this.lastSelectedIndex === 0 && this.selectedIndex === this.names.length - 1) {
-          reverse = true
+        if (this.timerId) {
+          if (this.lastSelectedIndex === this.names.length - 1 && this.selectedIndex === 0) {
+            reverse = false
+          }
+          if (this.lastSelectedIndex === 0 && this.selectedIndex === this.names.length - 1) {
+            reverse = true
+          }
         }
         vm.reverse = reverse
         this.$nextTick(() => {
@@ -103,6 +105,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'var';
 .b-slides {
   &-window {
     overflow: hidden;
@@ -111,9 +114,28 @@ export default {
     position: relative;
   }
   &-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+
     > span {
+      background: $grey;
+      border-radius: 100%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      margin: 0 8px;
+      &:hover {
+        cursor: pointer;
+      }
       &.active {
-        background: red;
+        background: black;
+        color: #fff;
+        cursor: default;
       }
     }
   }
