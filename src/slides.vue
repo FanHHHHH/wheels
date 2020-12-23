@@ -1,5 +1,5 @@
 <template>
-  <div class="b-slides">
+  <div class="b-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div class="b-slides-window" ref="window">
       <div class="b-slides-wrapper">
         <slot></slot>
@@ -28,11 +28,12 @@ export default {
     return {
       childrenLength: 0,
       lastSelectedIndex: undefined,
+      timerId: undefined,
     }
   },
   mounted() {
     this.updateChildren()
-    // this.playAutomatically()
+    this.playAutomatically()
     this.childrenLength = this.$children.length
   },
   updated() {
@@ -54,7 +55,14 @@ export default {
     updateChildren() {
       let selected = this.getSelected()
       this.$children.forEach((vm) => {
-        vm.reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
+        let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
+        if (this.lastSelectedIndex === this.names.length - 1 && this.selectedIndex === 0) {
+          reverse = false
+        }
+        if (this.lastSelectedIndex === 0 && this.selectedIndex === this.names.length - 1) {
+          reverse = true
+        }
+        vm.reverse = reverse
         this.$nextTick(() => {
           vm.selected = selected
         })
@@ -65,16 +73,30 @@ export default {
       return this.selected || children[0].name
     },
     playAutomatically() {
-      let index = this.names.indexOf(this.getSelected())
+      if (this.timerId) return
       const run = () => {
-        if (index === this.names.length) {
-          index = 0
+        let index = this.names.indexOf(this.getSelected())
+        let newIndex = index + 1
+        if (newIndex === -1) {
+          newIndex = this.names.length - 1
         }
-        this.select(index + 1)
-        index++
-        setTimeout(run, 5000)
+        if (newIndex === this.names.length) {
+          newIndex = 0
+        }
+        this.select(newIndex)
+        this.timerId = setTimeout(run, 2000)
       }
-      setTimeout(run)
+      this.timerId = setTimeout(run, 2000)
+    },
+    pause(id) {
+      window.clearTimeout(id)
+      this.timerId = undefined
+    },
+    onMouseEnter() {
+      this.pause(this.timerId)
+    },
+    onMouseLeave() {
+      this.playAutomatically()
     },
   },
 }
@@ -83,7 +105,6 @@ export default {
 <style lang="scss" scoped>
 .b-slides {
   &-window {
-    border: 1px solid salmon;
     overflow: hidden;
   }
   &-wrapper {

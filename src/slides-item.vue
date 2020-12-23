@@ -31,7 +31,7 @@ export default {
 <style>
 .silde-enter-active,
 .silde-leave-active {
-  transition: all 1s;
+  transition: all .5s;
 }
 .silde-leave-active {
   position: absolute;

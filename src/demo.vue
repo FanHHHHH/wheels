@@ -54,6 +54,9 @@ export default {
   width: 100%;
   height: 300px;
   background: #eee;
-  border: 1px solid slateblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
 }
 </style>
