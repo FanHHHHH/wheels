@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  name:"BlueSlidesItem",
   props: {
     name: {
       type: String,

@@ -6,15 +6,19 @@
       </div>
     </div>
     <div class="b-slides-dots">
+      <span @click="select(selectedIndex - 1)"><b-icon name="left"></b-icon></span>
       <span v-for="n in childrenLength" :key="n" :class="{ active: selectedIndex === n - 1 }" @click="select(n - 1)">
-        {{ n - 1 }}
+        {{ n }}
       </span>
+      <span @click="select(selectedIndex + 1)"><b-icon name="right"></b-icon></span>
     </div>
   </div>
 </template>
 
 <script>
+import BIcon from './Icon'
 export default {
+  components: { BIcon },
   props: {
     selected: {
       type: String,
@@ -35,7 +39,7 @@ export default {
   mounted() {
     this.updateChildren()
     this.playAutomatically()
-    this.childrenLength = this.$children.length
+    this.childrenLength = this.items.length
   },
   updated() {
     this.updateChildren()
@@ -45,7 +49,10 @@ export default {
       return this.names.indexOf(this.getSelected())
     },
     names() {
-      return this.$children.map((vm) => vm.name)
+      return this.items.map((vm) => vm.name)
+    },
+    items() {
+      return this.$children.filter((vm) => vm.$options.name === 'BlueSlidesItem')
     },
   },
   methods: {
@@ -61,7 +68,7 @@ export default {
     },
     updateChildren() {
       let selected = this.getSelected()
-      this.$children.forEach((vm) => {
+      this.items.forEach((vm) => {
         let reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
         if (this.timerId) {
           if (this.lastSelectedIndex === this.names.length - 1 && this.selectedIndex === 0) {
@@ -78,7 +85,7 @@ export default {
       })
     },
     getSelected() {
-      const children = this.$children
+      const children = this.items
       return this.selected || children[0].name
     },
     playAutomatically() {
@@ -147,7 +154,7 @@ export default {
 
     > span {
       background: $grey;
-      border-radius: 100%;
+      border-radius: 50%;
       width: 20px;
       height: 20px;
       display: inline-flex;

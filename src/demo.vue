@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="margin: 100px;">
+  <div id="app" style="margin: 10px;">
     <b-slides :selected.sync="selected">
       <b-slides-item name="1">
         <div class="box">1</div>
