@@ -51,8 +51,8 @@ export default {
   box-sizing: border-box;
 }
 .box {
-  width: 200px;
-  height: 150px;
+  width: 100%;
+  height: 300px;
   background: #eee;
   border: 1px solid slateblue;
 }

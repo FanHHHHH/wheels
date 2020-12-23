@@ -5,6 +5,11 @@
         <slot></slot>
       </div>
     </div>
+    <div class="b-slides-dots">
+      <span v-for="n in childrenLength" :key="n" :class="{ active: selectedIndex === n - 1 }" @click="select(n - 1)">
+        {{ n - 1 }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -19,18 +24,40 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      childrenLength: 0,
+      lastSelectedIndex: undefined,
+    }
+  },
   mounted() {
     this.updateChildren()
-    this.playAutomatically()
+    // this.playAutomatically()
+    this.childrenLength = this.$children.length
   },
   updated() {
     this.updateChildren()
   },
+  computed: {
+    selectedIndex() {
+      return this.names.indexOf(this.getSelected())
+    },
+    names() {
+      return this.$children.map((vm) => vm.name)
+    },
+  },
   methods: {
+    select(id) {
+      this.lastSelectedIndex = this.names.indexOf(this.selected)
+      this.$emit('update:selected', this.names[id])
+    },
     updateChildren() {
       let selected = this.getSelected()
       this.$children.forEach((vm) => {
-        vm.selected = selected
+        vm.reverse = this.selectedIndex > this.lastSelectedIndex ? false : true
+        this.$nextTick(() => {
+          vm.selected = selected
+        })
       })
     },
     getSelected() {
@@ -38,15 +65,16 @@ export default {
       return this.selected || children[0].name
     },
     playAutomatically() {
-      const names = this.$children.map((item) => item.name)
-      let index = names.indexOf(this.getSelected())
-      setInterval(() => {
-        if (index === names.length) {
+      let index = this.names.indexOf(this.getSelected())
+      const run = () => {
+        if (index === this.names.length) {
           index = 0
         }
-        this.$emit('update:selected', names[index + 1])
+        this.select(index + 1)
         index++
-      }, 2000)
+        setTimeout(run, 5000)
+      }
+      setTimeout(run)
     },
   },
 }
@@ -54,13 +82,19 @@ export default {
 
 <style lang="scss" scoped>
 .b-slides {
-  display: inline-block;
   &-window {
     border: 1px solid salmon;
-    // overflow: hidden;
+    overflow: hidden;
   }
   &-wrapper {
     position: relative;
+  }
+  &-dots {
+    > span {
+      &.active {
+        background: red;
+      }
+    }
   }
 }
 </style>
