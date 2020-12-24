@@ -4,57 +4,57 @@
   </div>
 </template>
 <script>
-import Vue from "vue";
+import Vue from 'vue'
 export default {
-  name: "GuluTabs",
+  name: 'GuluTabs',
   props: {
     selected: {
       type: String,
     },
     direction: {
       type: String,
-      defaut: "horizontal",
+      defaut: 'horizontal',
       validator(val) {
-        return ["horizontal", "vertical"].indexOf(val) >= 0;
+        return ['horizontal', 'vertical'].indexOf(val) >= 0
       },
     },
   },
   data() {
     return {
       eventBus: new Vue(),
-    };
+    }
   },
   provide() {
     return {
       eventBus: this.eventBus,
-    };
+    }
   },
   created() {
-    this.$emit("update:selected", "xxx");
+    this.$emit('update:selected', 'xxx')
   },
   methods: {
     checkChildren() {
       if (this.$children.length === 0) {
-        console && console.warn && console.warn("tabs里面的子组件应该是tabs-nav和tabs-content,但你没有传入子组件");
+        console && console.warn && console.warn('tabs里面的子组件应该是tabs-nav和tabs-content,但你没有传入子组件')
       }
     },
     setSelected() {
       this.$children.forEach((vm) => {
-        if (vm.$options.name === "GuluTabsNav") {
+        if (vm.$options.name === 'GuluTabsNav') {
           vm.$children.forEach((childVm) => {
-            if (childVm.$options.name === "GuluTabsItem" && childVm.name === this.selected) {
-              this.eventBus.$emit("update:selected", this.selected, childVm);
+            if (childVm.$options.name === 'GuluTabsItem' && childVm.name === this.selected) {
+              this.eventBus.$emit('update:selected', this.selected, childVm)
             }
-          });
+          })
         }
-      });
+      })
     },
   },
   mounted() {
-    this.checkChildren();
-    this.setSelected();
+    this.checkChildren()
+    this.setSelected()
   },
-};
+}
 </script>
 
 <style lang="scss" scoped></style>

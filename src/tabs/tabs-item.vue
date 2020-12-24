@@ -1,20 +1,15 @@
 <template>
-  <div
-    class="tabs-item"
-    @click="onClick"
-    :class="activeClass"
-    :data-name="name"
-  >
+  <div class="tabs-item" @click="onClick" :class="activeClass" :data-name="name">
     <slot></slot>
   </div>
 </template>
 <script>
 export default {
-  name: "GuluTabsItem",
+  name: 'GuluTabsItem',
   data() {
     return {
       active: false,
-    };
+    }
   },
   props: {
     disabled: {
@@ -26,20 +21,20 @@ export default {
       required: true,
     },
   },
-  inject: ["eventBus"],
+  inject: ['eventBus'],
   created() {
     this.eventBus &&
-      this.eventBus.$on("update:selected", (val, vm) => {
-        this.active = val === this.name;
-      });
+      this.eventBus.$on('update:selected', (val, vm) => {
+        this.active = val === this.name
+      })
   },
   methods: {
     onClick() {
       if (this.disabled) {
-        return;
+        return
       }
       if (this.eventBus) {
-        this.eventBus.$emit("update:selected", this.name, this);
+        this.eventBus.$emit('update:selected', this.name, this)
       }
       this.$emit('click', this)
     },
@@ -49,14 +44,14 @@ export default {
       return {
         active: this.active,
         disabled: this.disabled,
-      };
+      }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import 'var';
+@import '../var';
 .tabs-item {
   flex-shrink: 0;
   padding: 0 1em;

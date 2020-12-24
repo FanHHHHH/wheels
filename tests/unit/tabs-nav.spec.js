@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai'
 import { shallowMount, mount } from '@vue/test-utils'
-import TabsNav from '@/tabs-nav.vue'
+import TabsNav from '@/tabs/tabs-nav.vue'
 
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'

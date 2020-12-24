@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import BIcon from './Icon'
+import BIcon from '../Icon.vue'
 export default {
   components: { BIcon },
   props: {
@@ -141,7 +141,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'var';
+@import '../var';
 .b-slides {
   &-window {
     overflow: hidden;

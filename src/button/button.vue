@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Icon from '../Icon'
+import Icon from '../Icon.vue'
 export default {
   name: 'GuluButton',
   components: {
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '_var';
+@import '../_var';
 
 .g-button {
   font-size: $font-size;

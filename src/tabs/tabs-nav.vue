@@ -9,23 +9,23 @@
 </template>
 <script>
 export default {
-  name: "GuluTabsNav",
-  inject: ["eventBus"],
+  name: 'GuluTabsNav',
+  inject: ['eventBus'],
   // created() {
   // }
   mounted() {
-    this.eventBus.$on("update:selected", (val, vm) => {
-      const { width, left } = vm.$el.getBoundingClientRect();
-      const {left: left2} = this.$el.getBoundingClientRect()
-      this.$refs.line.style.width = `${width}px`;
-      this.$refs.line.style.left = `${left - left2}px`;
-    });
+    this.eventBus.$on('update:selected', (val, vm) => {
+      const { width, left } = vm.$el.getBoundingClientRect()
+      const { left: left2 } = this.$el.getBoundingClientRect()
+      this.$refs.line.style.width = `${width}px`
+      this.$refs.line.style.left = `${left - left2}px`
+    })
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import 'var';
+@import '../var';
 .tabs-nav {
   display: flex;
   justify-content: flex-start;

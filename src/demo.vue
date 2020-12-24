@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import Button from '../button/button'
-import Cascader from './cascader'
+import Button from './button/button'
+import Cascader from './cascader/cascader'
 import Popover from './popover'
 import Input from './Input'
 import BSlides from './slides'
