@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Button from './button.vue'
+import Button from '../button/button'
 import Cascader from './cascader'
 import Popover from './popover'
 import Input from './Input'
