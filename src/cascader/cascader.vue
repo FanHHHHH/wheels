@@ -11,7 +11,7 @@
 
 <script>
 import CascaderItems from "./cascader-items.vue";
-import clickOutside from "./click-outside";
+import clickOutside from "../click-outside.js";
 export default {
   name: "GuluCascader",
   directives: {
@@ -100,7 +100,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../var";
+@import "../styles/var";
 .cascader {
   position: relative;
   display: inline-block;

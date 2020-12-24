@@ -11,7 +11,6 @@ chai.use(sinonChai)
 // import TabsNav from '@/tabs-nav.vue'
 // import TabsPane from '@/tabs-pane'
 
-
 // Vue.component('g-tabs', Tabs)
 // Vue.component('g-tabs-nav', TabsNav)
 // Vue.component('g-tabs-content', TabsContent)
@@ -19,12 +18,12 @@ chai.use(sinonChai)
 // Vue.component('g-tabs-pane', TabsPane)
 
 describe('Tabs', () => {
-    it('存在.', () => {
-        expect(Tabs).to.be.ok
-    })
-    xit('接受selected', (done) => {
-        const div = document.createElement('div')
-        div.innerHTML = `
+  it('存在.', () => {
+    expect(Tabs).to.be.ok
+  })
+  xit('接受selected', (done) => {
+    const div = document.createElement('div')
+    div.innerHTML = `
         <g-tabs selected="finance" >
         <g-tabs-nav>
             <template slot="actions">
@@ -48,13 +47,13 @@ describe('Tabs', () => {
         </g-tabs-content>
     </g-tabs>
         `
-        const vm = new Vue({
-            el: div
-        })
-        vm.$nextTick(() => {
-            const node = vm.$el.querySelector('.tabs-item[data-name="finance"]')
-            expect(node.classList.contains('active')).to.eq(true)
-            done()
-        })
+    const vm = new Vue({
+      el: div,
     })
+    vm.$nextTick(() => {
+      const node = vm.$el.querySelector('.tabs-item[data-name="finance"]')
+      expect(node.classList.contains('active')).to.eq(true)
+      done()
+    })
+  })
 })

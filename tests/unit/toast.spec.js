@@ -34,9 +34,7 @@ describe('Toast', () => {
       const closeButton = wrapper.find('.close')
       expect(closeButton.text().trim()).to.eq('测试关闭按钮')
       //bug 修复 ： 如果mount之后直接click，速度太快，不能再$nexttick()，之后close() toast组件，所以会造成undefined错误
-      closeButton.trigger('click').then(
-        expect(callback).to.have.been.called
-      )
+      closeButton.trigger('click').then(expect(callback).to.have.been.called)
     })
     it('可以设置enableHTML', () => {
       const Constructor = Vue.extend(Toast)

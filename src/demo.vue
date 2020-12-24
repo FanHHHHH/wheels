@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import Button from './button/button'
+import Button from './button/button.vue'
 import Cascader from './cascader/cascader'
 import Popover from './popover'
 import Input from './Input'
-import BSlides from './slides'
-import BSlidesItem from './slides-item'
+import BSlides from './slides/slides'
+import BSlidesItem from './slides/slides-item'
 
 import db from '../tests/fixtures/db.js'
 import { removeListener } from './click-outside.js'

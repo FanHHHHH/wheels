@@ -6,7 +6,7 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 
 describe('TabsContent', () => {
-    it('存在.', () => {
-        expect(TabsContent).to.be.ok
-    })
+  it('存在.', () => {
+    expect(TabsContent).to.be.ok
+  })
 })

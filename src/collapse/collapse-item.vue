@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../var';
+@import '../styles/var';
 .collapseItem {
   > .title {
     border: 1px solid $grey;

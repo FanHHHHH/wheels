@@ -50,7 +50,7 @@ describe('Input', () => {
   })
   describe('事件', () => {
     it('支持change/focus/input/blur 事件', () => {
-      ['change', 'input', 'focus', 'blur'].forEach((eventName) => {
+      ;['change', 'input', 'focus', 'blur'].forEach((eventName) => {
         const wrapper = mount(Input)
         const vm = wrapper.vm
         const callback = sinon.fake()

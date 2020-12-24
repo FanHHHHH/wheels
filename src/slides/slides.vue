@@ -141,7 +141,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../var';
+@import '../styles/var';
 .b-slides {
   &-window {
     overflow: hidden;
