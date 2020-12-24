@@ -7,7 +7,7 @@
     </div>
     <div class="b-slides-dots">
       <span @click="select(selectedIndex - 1)"><b-icon name="left"></b-icon></span>
-      <span v-for="n in childrenLength" :key="n" :class="{ active: selectedIndex === n - 1 }" @click="select(n - 1)">
+      <span :data-index="n - 1" v-for="n in childrenLength" :key="n" :class="{ active: selectedIndex === n - 1 }" @click="select(n - 1)">
         {{ n }}
       </span>
       <span @click="select(selectedIndex + 1)"><b-icon name="right"></b-icon></span>
@@ -27,6 +27,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    autoPlayDelay: {
+      type: Number,
+      default: 3000,
+    },
   },
   data() {
     return {
@@ -38,7 +42,9 @@ export default {
   },
   mounted() {
     this.updateChildren()
-    this.playAutomatically()
+    if (this.autoPlay) {
+      this.playAutomatically()
+    }
     this.childrenLength = this.items.length
   },
   updated() {
@@ -93,11 +99,10 @@ export default {
       const run = () => {
         let index = this.names.indexOf(this.getSelected())
         let newIndex = index + 1
-
         this.select(newIndex)
-        this.timerId = setTimeout(run, 2000)
+        this.timerId = setTimeout(run, this.autoPlayDelay)
       }
-      this.timerId = setTimeout(run, 2000)
+      this.timerId = setTimeout(run, this.autoPlayDelay)
     },
     pause(id) {
       window.clearTimeout(id)
@@ -129,9 +134,7 @@ export default {
           this.select(this.selectedIndex + 1)
         }
       }
-      this.$nextTick(() => {
-        this.playAutomatically()
-      })
+      this.playAutomatically()
     },
   },
 }
@@ -158,6 +161,8 @@ export default {
       width: 20px;
       height: 20px;
       display: inline-flex;
+      flex-shrink: 0;
+      flex-wrap: nowrap;
       justify-content: center;
       align-items: center;
       font-size: 12px;

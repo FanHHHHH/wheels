@@ -52,6 +52,7 @@ export default {
   methods: {
     updateLineStyle() {
       this.$nextTick(() => {
+        if (!this.$refs.line) return
         this.$refs.line.style.height = `${
           this.$refs.toastRef.getBoundingClientRect().height
         }px`;
