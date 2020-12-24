@@ -22,7 +22,7 @@ import Input from './Input'
 import BSlides from './slides'
 import BSlidesItem from './slides-item'
 
-import db from './db'
+import db from '../tests/fixtures/db.js'
 import { removeListener } from './click-outside.js'
 
 export default {
