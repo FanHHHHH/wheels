@@ -1,16 +1,10 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-slides :selected.sync="selected">
-      <b-slides-item name="1">
-        <div class="box">1</div>
-      </b-slides-item>
-      <b-slides-item name="2">
-        <div class="box">2</div>
-      </b-slides-item>
-      <b-slides-item name="3">
-        <div class="box">3</div>
-      </b-slides-item>
-    </b-slides>
+    <b-nav :selected.sync="selected" :multiple="false">
+      <b-nav-item name="home">首页 </b-nav-item>
+      <b-nav-item name="about"> 关于 </b-nav-item>
+      <b-nav-item name="hire"> 招聘</b-nav-item>
+    </b-nav>
   </div>
 </template>
 
@@ -21,6 +15,9 @@ import Popover from './popover'
 import Input from './Input'
 import BSlides from './slides/slides'
 import BSlidesItem from './slides/slides-item'
+import BNav from './nav/nav.vue'
+import BNavItem from './nav/nav-item.vue'
+import BSubNav from './nav/sub-nav.vue'
 
 import db from '../tests/fixtures/db.js'
 import { removeListener } from './click-outside.js'
@@ -34,10 +31,13 @@ export default {
     'b-input': Input,
     BSlides,
     BSlidesItem,
+    BNav,
+    BNavItem,
+    BSubNav,
   },
   data() {
     return {
-      selected: '1',
+      selected: ['home'],
     }
   },
   created() {},
@@ -49,14 +49,5 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-.box {
-  width: 100%;
-  height: 300px;
-  background: #eee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
 }
 </style>

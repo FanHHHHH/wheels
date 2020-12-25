@@ -13,7 +13,7 @@
 import CascaderItems from "./cascader-items.vue";
 import clickOutside from "../click-outside.js";
 export default {
-  name: "GuluCascader",
+  name: "BlueCascader",
   directives: {
     clickOutside,
   },

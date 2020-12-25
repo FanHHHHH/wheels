@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'GuluTabsPane',
+  name: 'BlueTabsPane',
   inject: ['eventBus'],
   props: {
     name: {

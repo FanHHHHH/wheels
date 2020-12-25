@@ -6,12 +6,12 @@
 
 <script>
 export default {
-  name: 'GuluButtonGroup',
+  name: 'BlueButtonGroup',
   mounted() {
     for (let node of this.$el.children) {
       const name = node.nodeName.toLowerCase()
       if (name !== 'button') {
-        console.warn(`wheels waring: g-button-group 下面的所有标签应该为g-button，而你给的是${name}`)
+        console.warn(`wheels waring: g-button-group 下面的所有标签应该为b-button，而你给的是${name}`)
       }
     }
   },

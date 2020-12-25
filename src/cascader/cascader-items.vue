@@ -24,7 +24,7 @@
 <script>
 import Icon from "../Icon.vue";
 export default {
-  name: "GuluCascaderItems",
+  name: "BlueCascaderItems",
   components: {
     Icon,
   },

@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "GuluSider",
+  name: "BlueSider",
   data() {
     return {
       visable: true,

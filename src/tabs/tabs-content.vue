@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "GuluTabsContent",
+  name: "BlueTabsContent",
   inject: ["eventBus"],
   created() {
   },

@@ -7,7 +7,7 @@
 <script>
 import Vue from "vue";
 export default {
-  name: "GuluCollapse",
+  name: "BlueCollapse",
   props: {
     single: {
       type: Boolean,

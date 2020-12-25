@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'GuluTabsItem',
+  name: 'BlueTabsItem',
   data() {
     return {
       active: false,

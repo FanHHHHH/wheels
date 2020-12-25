@@ -16,7 +16,7 @@
 <script>
 import Icon from './Icon.vue'
 export default {
-    name: 'GuluInput',
+    name: 'BlueInput',
     components: {
         'g-icon': Icon
     },
