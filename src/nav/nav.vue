@@ -68,8 +68,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/var";
 .b-nav {
   display: flex;
-  border: 1px solid salmon;
+  border-bottom: 1px solid $grey;
+  cursor: default;
 }
 </style>

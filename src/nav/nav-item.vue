@@ -26,15 +26,33 @@ export default {
   },
   created() {
     this.root.addItem(this)
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/var';
 .b-nav-item {
   padding: 10px 20px;
   &.selected {
-    background: red;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      border-bottom: 2px solid blue;
+    }
+  }
+}
+.b-sub-nav .b-nav-item {
+  &.selected {
+    &::after {
+      display: none;
+    }
+    background: $grey;
+    color: $color;
   }
 }
 </style>

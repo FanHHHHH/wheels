@@ -26,18 +26,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/var';
 .b-sub-nav {
+  & .b-sub-nav-span {
+    color: $light-color;
+    cursor: pointer;
+  }
   position: relative;
   &-span {
     padding: 10px 20px;
     display: block;
   }
   &-popover {
+    min-width: 8em;
+    background: white;
     position: absolute;
-    border: 1px solid seagreen;
     top: 100%;
     left: 0;
     white-space: nowrap;
+    margin-top: 4px;
+    font-size: $small-font-size;
+    border-radius: $border-radius;
+    box-shadow: 0 0 3px fade_out(#000000, 0.8);
   }
 }
 .b-sub-nav .b-sub-nav {
