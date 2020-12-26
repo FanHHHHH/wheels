@@ -7,6 +7,11 @@
 <script>
 export default {
   name: 'BlueNav',
+  provide() {
+    return {
+      root: this,
+    }
+  },
   props: {
     selected: {
       type: Array,
@@ -17,6 +22,11 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      items: [],
+    }
+  },
   mounted() {
     this.updateChildren()
     this.listenToChildren()
@@ -26,6 +36,7 @@ export default {
   },
   methods: {
     updateChildren() {
+      console.log(this.items);
       this.items.forEach((vm) => {
         if (this.selected.indexOf(vm.name) >= 0) {
           vm.selected = true
@@ -41,7 +52,6 @@ export default {
             if (this.selected.indexOf(name) < 0) {
               const copy = JSON.parse(JSON.stringify(this.selected))
               copy.push(name)
-              console.log(copy)
               this.$emit('update:selected', copy)
             }
           } else {
@@ -50,10 +60,8 @@ export default {
         })
       })
     },
-  },
-  computed: {
-    items() {
-      return this.$children.filter((vm) => vm.$options.name === 'BlueNavItem')
+    addItem(vm) {
+      this.items.push(vm)
     },
   },
 }
