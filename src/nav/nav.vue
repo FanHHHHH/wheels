@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       items: [],
+      namePath: []
     }
   },
   mounted() {
@@ -36,7 +37,6 @@ export default {
   },
   methods: {
     updateChildren() {
-      console.log(this.items);
       this.items.forEach((vm) => {
         if (this.selected.indexOf(vm.name) >= 0) {
           vm.selected = true
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/var";
+@import '../styles/var';
 .b-nav {
   display: flex;
   border-bottom: 1px solid $grey;

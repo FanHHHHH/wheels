@@ -21,9 +21,12 @@ export default {
   },
   methods: {
     onClick() {
+      this.root.namePath = []
+      this.$parent.updateNamePath && this.$parent.updateNamePath()
       this.$emit('add:selected', this.name)
     },
   },
+  
   created() {
     this.root.addItem(this)
   },
@@ -42,7 +45,7 @@ export default {
       bottom: 0;
       width: 100%;
       left: 0;
-      border-bottom: 2px solid blue;
+      border-bottom: 2px solid $blue;
     }
   }
 }
