@@ -1,8 +1,12 @@
 <template>
-  <div class="b-sub-nav">
+  <div class="b-sub-nav" v-click-outside="close">
     <span class="b-sub-nav-span" @click="onClick" :class="{ active }">
       <slot name="title"></slot>
+      <span class="b-sub-nav-icon" :class="{ open }">
+        <b-icon name="right"></b-icon>
+      </span>
     </span>
+
     <div v-show="open" class="b-sub-nav-popover">
       <slot></slot>
     </div>
@@ -10,9 +14,15 @@
 </template>
 
 <script>
+import clickOutside from '../click-outside.js'
+import BIcon from '../Icon.vue'
 export default {
   name: 'BlueSubNav',
+  directives: { clickOutside },
   inject: ['root'],
+  components: {
+    BIcon,
+  },
   props: {
     name: {
       type: String,
@@ -25,6 +35,9 @@ export default {
     }
   },
   methods: {
+    close() {
+      this.open = false
+    },
     activePartent() {
       if (!this.$parent.active) {
         this.$parent.updateNamePath && this.$parent.updateNamePath()
@@ -32,7 +45,6 @@ export default {
     },
     onClick() {
       this.open = !this.open
-      this.activePartent()
     },
     updateNamePath() {
       this.root.namePath.push(this.name)
@@ -51,6 +63,9 @@ export default {
 @import '../styles/var';
 .b-sub-nav {
   position: relative;
+  &-icon {
+    display: none;
+  }
   &-span.active {
     &::after {
       content: '';
@@ -65,7 +80,8 @@ export default {
     color: $light-color;
     cursor: pointer;
     padding: 10px 20px;
-    display: block;
+    display: flex;
+    align-items: center;
   }
   &-popover {
     min-width: 8em;
@@ -85,6 +101,24 @@ export default {
     left: 100%;
     top: 0;
     margin-left: 4px;
+  }
+  .b-sub-nav-span {
+    padding: 10px 10px 10px 20px;
+    justify-content: space-between;
+    svg {
+      fill: $light-color;
+    }
+    &::after {
+      display: none;
+    }
+  }
+  .b-sub-nav-icon {
+    display: inline-flex;
+    margin-left: 1em;
+    transition: 250ms;
+    &.open {
+      transform: rotate(180deg);
+    }
   }
 }
 </style>
