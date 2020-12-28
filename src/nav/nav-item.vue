@@ -1,5 +1,5 @@
 <template>
-  <div class="b-nav-item" :class="{ selected }" @click="onClick">
+  <div class="b-nav-item" :class="{ selected }" @click="onClick" :data-name="name">
     <slot></slot>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
     onClick() {
       this.root.namePath = []
       this.$parent.updateNamePath && this.$parent.updateNamePath()
-      this.$emit('add:selected', this.name)
+      this.$emit('update:selected', this.name)
     },
   },
 

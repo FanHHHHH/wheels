@@ -41,6 +41,7 @@
       </b-sub-nav>
       <b-nav-item name="hire"> 招聘</b-nav-item>
     </b-nav>
+    <p>{{ selected }}</p>
   </div>
 </template>
 
@@ -73,10 +74,25 @@ export default {
   },
   data() {
     return {
-      selected: ['culture'],
+      selected: 'culture',
     }
   },
+  methods: {
+    // onChange(selected) {
+    //   console.log(selected);
+    //   if (selected.indexOf('home') >= 0) {
+    //     window.alert('hi')
+    //   }
+    // }
+  },
   created() {},
+  watch: {
+    selected(newVal) {
+      if (newVal === 'home') {
+        window.alert('hi')
+      }
+    },
+  },
 }
 </script>
 
