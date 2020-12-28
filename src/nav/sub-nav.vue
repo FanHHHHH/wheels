@@ -6,10 +6,18 @@
         <b-icon name="right"></b-icon>
       </span>
     </span>
-
-    <div v-show="open" class="b-sub-nav-popover">
-      <slot></slot>
-    </div>
+    <template v-if="root.vertical">
+      <transition name="x" @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
+        <div v-show="open" class="b-sub-nav-popover" :class="{ vertical: root.vertical }">
+          <slot></slot>
+        </div>
+      </transition>
+    </template>
+    <template v-else>
+      <div v-show="open" class="b-sub-nav-popover">
+        <slot></slot>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -35,6 +43,31 @@ export default {
     }
   },
   methods: {
+    enter(el, done) {
+      const { height } = el.getBoundingClientRect()
+      el.style.height = 0
+      el.getBoundingClientRect()
+      el.style.height = `${height}px`
+      el.addEventListener('transitionend', () => {
+        done()
+      })
+    },
+    afterEnter(el) {
+      el.style.height = 'auto'
+    },
+    leave(el, done) {
+      const { height } = el.getBoundingClientRect()
+      el.style.height = `${height}px`
+      el.getBoundingClientRect()
+      el.style.height = 0
+      el.addEventListener('transitionend', () => {
+        done()
+      })
+    },
+    afterLeave(el) {
+      el.style.height = 'auto'
+      console.log('afterleave', el.style.height)
+    },
     close() {
       this.open = false
     },
@@ -94,6 +127,13 @@ export default {
     font-size: $small-font-size;
     border-radius: $border-radius;
     box-shadow: 0 0 3px fade_out(#000000, 0.8);
+    &.vertical {
+      position: static;
+      border-radius: 0;
+      box-shadow: none;
+      transition: all 500ms;
+      overflow: hidden;
+    }
   }
 }
 .b-sub-nav .b-sub-nav {
