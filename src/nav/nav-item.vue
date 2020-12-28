@@ -26,7 +26,7 @@ export default {
       this.$emit('add:selected', this.name)
     },
   },
-  
+
   created() {
     this.root.addItem(this)
   },
@@ -47,6 +47,10 @@ export default {
       left: 0;
       border-bottom: 2px solid $blue;
     }
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 }
 .b-sub-nav .b-nav-item {

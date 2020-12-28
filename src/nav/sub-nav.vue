@@ -2,7 +2,7 @@
   <div class="b-sub-nav" v-click-outside="close">
     <span class="b-sub-nav-span" @click="onClick" :class="{ active }">
       <slot name="title"></slot>
-      <span class="b-sub-nav-icon" :class="{ open }">
+      <span class="b-sub-nav-icon" :class="{ open, vertical: root.vertical }">
         <b-icon name="right"></b-icon>
       </span>
     </span>
@@ -48,9 +48,9 @@ export default {
       el.style.height = 0
       el.getBoundingClientRect()
       el.style.height = `${height}px`
-      el.addEventListener('transitionend', () => {
+      setTimeout(() => {
         done()
-      })
+      }, 501)
     },
     afterEnter(el) {
       el.style.height = 'auto'
@@ -60,16 +60,17 @@ export default {
       el.style.height = `${height}px`
       el.getBoundingClientRect()
       el.style.height = 0
-      el.addEventListener('transitionend', () => {
+      setTimeout(() => {
         done()
-      })
+      }, 501)
     },
     afterLeave(el) {
       el.style.height = 'auto'
-      console.log('afterleave', el.style.height)
     },
     close() {
-      this.open = false
+      if (!this.root.vertical) {
+        this.open = false
+      }
     },
     activePartent() {
       if (!this.$parent.active) {
@@ -101,6 +102,7 @@ export default {
   }
   &-span.active {
     &::after {
+      z-index: 1;
       content: '';
       position: absolute;
       bottom: 0;
@@ -156,6 +158,12 @@ export default {
     display: inline-flex;
     margin-left: 1em;
     transition: 250ms;
+    &.vertical {
+      transform: rotate(90deg);
+      &.open {
+        transform: rotate(270deg);
+      }
+    }
     &.open {
       transform: rotate(180deg);
     }
