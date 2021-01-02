@@ -37,12 +37,13 @@ describe('Button.vue', () => {
       propsData: {
         icon: 'settings',
       },
+      attachTo: 'body',
     })
     const vm = wrapper.vm
     const icon = vm.$el.querySelector('svg')
     expect(getComputedStyle(icon).order).to.eq('1')
-    vm.$el.remove()
-    vm.$destroy()
+    // vm.$el.remove()
+    wrapper.$destroy()
   })
   xit('设置 iconPosition 可以改变 order', () => {
     const wrapper = mount(Button, {
@@ -50,6 +51,7 @@ describe('Button.vue', () => {
         icon: 'settings',
         iconPosition: 'right',
       },
+      attachTo: 'body',
     })
     const vm = wrapper.vm
     const icon = vm.$el.querySelector('svg')
