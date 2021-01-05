@@ -5,7 +5,7 @@
     </span>
     <template v-for="(page, index) in pages" class="b-pager-item">
       <template v-if="page === currentPage">
-        <span class="b-pager-item active" :key="index">
+        <span :data-page="page" class="b-pager-item active" :key="index">
           {{ page }}
         </span>
       </template>
@@ -13,7 +13,7 @@
         <b-icon class="b-pager-item seperator" name="dots" :key="index"></b-icon>
       </template>
       <template v-else>
-        <span :key="index" class="b-pager-item others" @click="onClickPage(page)">
+        <span :data-page="page" :key="index" class="b-pager-item others" @click="onClickPage(page)">
           {{ page }}
         </span>
       </template>
