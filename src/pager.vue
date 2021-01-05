@@ -1,6 +1,6 @@
 <template>
-  <div class="b-pager">
-    <span class="b-pager-nav prev" :class="{ disabled: currentPage === 1 }">
+  <div class="b-pager" :class="{ hide: totalPage <= 1 && hideIfOnePage }">
+    <span class="b-pager-nav prev" :class="{ disabled: currentPage === 1 }" @click="onClickPage(currentPage - 1)">
       <b-icon name="left"></b-icon>
     </span>
     <template v-for="(page, index) in pages" class="b-pager-item">
@@ -13,12 +13,12 @@
         <b-icon class="b-pager-item seperator" name="dots" :key="index"></b-icon>
       </template>
       <template v-else>
-        <span :key="index" class="b-pager-item others">
+        <span :key="index" class="b-pager-item others" @click="onClickPage(page)">
           {{ page }}
         </span>
       </template>
     </template>
-    <span class="b-pager-nav next" :class="{ disabled: currentPage === totalPage }" @click="onClickPage">
+    <span class="b-pager-nav next" :class="{ disabled: currentPage === totalPage }" @click="onClickPage(currentPage + 1)">
       <b-icon name="right"></b-icon>
     </span>
   </div>
@@ -43,13 +43,20 @@ export default {
       default: true,
     },
   },
-  data() {
-    let pages = [1, this.totalPage, this.currentPage - 1, this.currentPage - 2, this.currentPage, this.currentPage + 1, this.currentPage + 2]
-    pages.sort((a, b) => a - b)
-    const pages_r = uniqueAndAddDot.call(this, pages)
-    return {
-      pages: pages_r,
-    }
+  computed: {
+    pages() {
+      let pages = [1, this.totalPage, this.currentPage - 1, this.currentPage - 2, this.currentPage, this.currentPage + 1, this.currentPage + 2]
+      pages.sort((a, b) => a - b)
+      const pages_r = uniqueAndAddDot.call(this, pages)
+      return pages_r
+    },
+  },
+  methods: {
+    onClickPage(page) {
+      if (page >= 1 && page <= this.totalPage) {
+        this.$emit('update:currentPage', page)
+      }
+    },
   },
 }
 function uniqueAndAddDot(arr) {
@@ -79,6 +86,9 @@ function uniqueAndAddDot(arr) {
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;
+  &.hide {
+    display: none;
+  }
   &-nav {
     display: inline-flex;
     align-items: center;
@@ -89,6 +99,7 @@ function uniqueAndAddDot(arr) {
     border: 1px solid $grey;
     border-radius: $border-radius;
     margin: 0 4px;
+    cursor: pointer;
     &:hover {
       border: 1px solid $blue;
     }
@@ -98,7 +109,7 @@ function uniqueAndAddDot(arr) {
       }
       background: $grey;
       border: none;
-      cursor: default;
+      cursor: not-allowed;
     }
   }
   &-item {
@@ -112,6 +123,7 @@ function uniqueAndAddDot(arr) {
     align-items: center;
     font-size: $small-font-size;
     margin: 0 4px;
+    user-select: none;
     cursor: pointer;
     &.active,
     &:hover {
@@ -122,6 +134,7 @@ function uniqueAndAddDot(arr) {
     }
     &.seperator {
       border: none;
+      cursor: default;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-pager :total-page="20" :current-page="1" @change="goToPage" hide-if-one-page></b-pager>
+    <b-pager :total-page="10" :current-page.sync="currentPage" @change="goToPage" hide-if-one-page></b-pager>
   </div>
 </template>
 
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       selected: 'culture',
+      currentPage: 1,
     }
   },
   methods: {
