@@ -1,6 +1,7 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-table :index-is-visable="false" bordered :data-source="dataSource" :columns="columns" @changeItem="x"></b-table>
+    {{ selected }}
+    <b-table :index-is-visable="false" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns"></b-table>
     <b-table :index-is-visable="false" :striped="false" bordered tight :data-source="dataSource" :columns="columns"></b-table>
     <b-pager :total-page="10" :current-page.sync="currentPage" hide-if-one-page></b-pager>
   </div>
@@ -47,27 +48,22 @@ export default {
       dataSource: [
         { id: 1, name: 'hefan', score: 100 },
         { id: 2, name: 'wzx', score: 99 },
+        { id: 3, name: 'aa', score: 99 },
+        { id: 4, name: 'bb', score: 99 },
+        { id: 5, name: 'cc', score: 99 },
+        { id: 6, name: 'dd', score: 99 },
+        { id: 7, name: 'ee', score: 99 },
+        { id: 8, name: 'ff', score: 99 },
+        { id: 9, name: 'gg', score: 99 },
+        { id: 10, name: 'hh', score: 99 },
       ],
+      selected: [],
     }
   },
-  methods: {
-    // onChange(selected) {
-    //   console.log(selected);
-    //   if (selected.indexOf('home') >= 0) {
-    //     window.alert('hi')
-    //   }
-    // }
-    x(obj) {
-      console.log(obj)
-    },
-  },
+  methods: {},
   created() {},
   watch: {
-    selected(newVal) {
-      if (newVal === 'home') {
-        window.alert('hi')
-      }
-    },
+    selected(newVla) {},
   },
 }
 </script>

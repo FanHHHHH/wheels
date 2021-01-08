@@ -3,7 +3,7 @@
     <table class="b-table" :class="{ bordered, tight, striped }">
       <thead>
         <tr>
-          <th><input type="checkbox" /></th>
+          <th><input @change="onSelectedAllItems" type="checkbox" /></th>
           <th v-if="indexIsVisable">#</th>
           <th v-for="col in columns" :key="col.text">
             {{ col.text }}
@@ -12,7 +12,8 @@
       </thead>
       <tbody>
         <tr v-for="(row, index) in dataSource" :key="row.id">
-          <th><input type="checkbox" @change="onSlecteItem(row, index, $event)" /></th>
+          <!-- checked 根据selectedItems设置选中状态 -->
+          <th><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="selectedItems.filter((i) => i.id === row.id).length > 0" /></th>
           <td v-if="indexIsVisable">{{ index }}</td>
           <template v-for="col in columns">
             <td :key="col.text">{{ row[col.field] }}</td>
@@ -30,6 +31,10 @@ export default {
     columns: {
       type: Array,
       required: true,
+    },
+    selectedItems: {
+      type: Array,
+      default: () => [],
     },
     dataSource: {
       type: Array,
@@ -53,8 +58,24 @@ export default {
     },
   },
   methods: {
-    onSlecteItem(row, idx, e) {
-      this.$emit('changeItem', { selected: e.target.checked, row, idx })
+    onSlecteItem(row, index, e) {
+      let selected = e.target.checked
+      let selectedItemsCopy = JSON.parse(JSON.stringify(this.selectedItems))
+      // console.log(this.selectedItems, this.selectedItemsCopy, selected, row)
+      if (selected) {
+        selectedItemsCopy.push(row)
+      } else {
+        selectedItemsCopy.splice(selectedItemsCopy.indexOf(row), 1)
+      }
+      this.$emit('update:selectedItems', selectedItemsCopy)
+    },
+    onSelectedAllItems(e) {
+      let selected = e.target.checked
+      if (selected) {
+        this.$emit('update:selectedItems', this.dataSource)
+      } else {
+        this.$emit('update:selectedItems', [])
+      }
     },
   },
 }
