@@ -3,7 +3,7 @@
     <table class="b-table" :class="{ bordered, tight, striped }">
       <thead>
         <tr>
-          <th><input @change="onSelectedAllItems" type="checkbox" /></th>
+          <th><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" /></th>
           <th v-if="indexIsVisable">#</th>
           <th v-for="col in columns" :key="col.text">
             {{ col.text }}
@@ -13,7 +13,7 @@
       <tbody>
         <tr v-for="(row, index) in dataSource" :key="row.id">
           <!-- checked 根据selectedItems设置选中状态 -->
-          <th><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="selectedItems.filter((i) => i.id === row.id).length > 0" /></th>
+          <th><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></th>
           <td v-if="indexIsVisable">{{ index }}</td>
           <template v-for="col in columns">
             <td :key="col.text">{{ row[col.field] }}</td>
@@ -39,6 +39,10 @@ export default {
     dataSource: {
       type: Array,
       required: true,
+      // 判断是否每一项都有ID
+      validator(arr) {
+        return !(arr.filter((item) => item.id === undefined).length > 0)
+      },
     },
     indexIsVisable: {
       type: Boolean,
@@ -75,6 +79,20 @@ export default {
         this.$emit('update:selectedItems', this.dataSource)
       } else {
         this.$emit('update:selectedItems', [])
+      }
+    },
+    inSelectedItems(row) {
+      return this.selectedItems.filter((i) => i.id === row.id).length > 0
+    },
+  },
+  watch: {
+    selectedItems() {
+      console.log(this.selectedItems)
+
+      if (this.selectedItems.length > this.dataSource.length / 2 && this.selectedItems.length < this.dataSource.length) {
+        this.$refs.selectAll.indeterminate = true
+      } else {
+        this.$refs.selectAll.indeterminate = false
       }
     },
   },
