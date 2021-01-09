@@ -6,7 +6,13 @@
           <th><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" /></th>
           <th v-if="indexIsVisable">#</th>
           <th v-for="col in columns" :key="col.field">
-            {{ col.text }}
+            <div class="b-table-header">
+              {{ col.text }}
+              <span class="b-table-sorter" v-if="col.field in orderBy" @click="changeOrderBy(col.field)">
+                <b-icon name="asc" :class="{ active: orderBy[col.field] === 'asc' }"></b-icon>
+                <b-icon name="desc" :class="{ active: orderBy[col.field] === 'desc' }"></b-icon>
+              </span>
+            </div>
           </th>
         </tr>
       </thead>
@@ -25,8 +31,12 @@
 </template>
 
 <script>
+import BIcon from './Icon.vue'
 export default {
   name: 'BlueTable',
+  components: {
+    BIcon,
+  },
   props: {
     columns: {
       type: Array,
@@ -60,6 +70,15 @@ export default {
       type: Boolean,
       default: true,
     },
+    orderBy: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  data() {
+    return {
+      up: true,
+    }
   },
   methods: {
     onSlecteItem(row, index, e) {
@@ -84,6 +103,18 @@ export default {
     inSelectedItems(row) {
       return this.selectedItems.filter((i) => i.id === row.id).length > 0
     },
+    changeOrderBy(key) {
+      const copy = JSON.parse(JSON.stringify(this.orderBy))
+      const oldVal = copy[key]
+      if (oldVal === 'asc') {
+        copy[key] = 'desc'
+      } else if (oldVal === 'desc') {
+        copy[key] = true
+      } else {
+        copy[key] = 'asc'
+      }
+      this.$emit('update:orderBy', copy)
+    },
   },
   watch: {
     selectedItems() {
@@ -91,11 +122,6 @@ export default {
         this.$refs.selectAll.indeterminate = true
       } else {
         this.$refs.selectAll.indeterminate = false
-        // if (this.selectedItems.length === this.dataSource.length) {
-        //   this.$refs.selectAll.checked = true
-        // } else {
-        //   this.$refs.selectAll.checked = false
-        // }
       }
     },
   },
@@ -149,6 +175,24 @@ $grey: darken($grey, 10%);
         background: lighten($grey, 10%);
       }
     }
+  }
+  &-sorter {
+    display: inline-flex;
+    flex-direction: column;
+    cursor: pointer;
+    svg {
+      width: 9px;
+      height: 9px;
+      margin: 0 8px;
+      fill: $grey;
+      &.active {
+        fill: red;
+      }
+    }
+  }
+  &-header {
+    display: flex;
+    align-items: center;
   }
 }
 </style>

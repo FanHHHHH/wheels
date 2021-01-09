@@ -1,7 +1,6 @@
 <template>
   <div id="app" style="margin: 100px;">
-    {{ selected }}
-    <b-table :index-is-visable="false" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns"></b-table>
+    <b-table :index-is-visable="true" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy"></b-table>
     <b-table :index-is-visable="false" :striped="false" bordered tight :data-source="dataSource" :columns="columns"></b-table>
     <b-pager :total-page="10" :current-page.sync="currentPage" hide-if-one-page></b-pager>
   </div>
@@ -45,6 +44,10 @@ export default {
         { text: '姓名', field: 'name' },
         { text: '分数', field: 'score' },
       ],
+      orderBy: {
+        name: true,
+        score: 'desc',
+      },
       dataSource: [
         { id: 1, name: 'hefan', score: 100 },
         { id: 2, name: 'wzx', score: 99 },
