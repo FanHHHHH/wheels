@@ -92,8 +92,11 @@ export default {
   },
   mounted() {
     const table = this.$refs.bTable
-    const table2 = table.cloneNode(true)
+    const table2 = table.cloneNode(false)
     table2.classList.add('b-table-copy')
+    const { height } = table.children[0].getBoundingClientRect()
+    table2.appendChild(table.children[0])
+    table.style.marginTop = height + 'px'
     this.table2 = table2
     this.$refs.wrapper.appendChild(table2)
     this.updateHeaderWidth()
