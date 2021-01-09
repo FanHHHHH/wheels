@@ -109,7 +109,6 @@ export default {
   methods: {
     updateHeaderWidth() {
       const table = this.$refs.bTable
-      this.$el.querySelector('.b-table-copy').style.width = this.$refs.wrapper.getBoundingClientRect().width + 'px'
       const table2 = this.table2
       const tableHeader = Array.from(table.children).filter((node) => node.tagName.toLowerCase() === 'tbody')[0]
       let tableHeader2
@@ -128,7 +127,6 @@ export default {
     onSlecteItem(row, index, e) {
       let selected = e.target.checked
       let selectedItemsCopy = JSON.parse(JSON.stringify(this.selectedItems))
-      // console.log(this.selectedItems, this.selectedItemsCopy, selected, row)
       if (selected) {
         selectedItemsCopy.push(row)
       } else {
@@ -203,10 +201,13 @@ $grey: darken($grey, 10%);
     position: relative;
   }
   &-copy {
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
     background: white;
+    border-bottom: none;
   }
   &.bordered td,
   &.bordered th {
