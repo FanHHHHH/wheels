@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-table :index-is-visable="true" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy"></b-table>
+    <b-table :index-is-visable="true" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy" @update:orderBy="x" :loading="loading"></b-table>
     <b-table :index-is-visable="false" :striped="false" bordered tight :data-source="dataSource" :columns="columns"></b-table>
     <b-pager :total-page="10" :current-page.sync="currentPage" hide-if-one-page></b-pager>
   </div>
@@ -61,9 +61,18 @@ export default {
         { id: 10, name: 'hh', score: 99 },
       ],
       selected: [],
+      loading: false,
     }
   },
-  methods: {},
+  methods: {
+    x(e) {
+      this.loading = true
+      setTimeout(() => {
+        this.dataSource.sort((a, b) => a.score - b.score)
+        this.loading = false
+      }, 2000)
+    },
+  },
   created() {},
   watch: {
     selected(newVla) {},
