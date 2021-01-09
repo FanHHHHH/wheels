@@ -3,7 +3,7 @@
     <table class="b-table" :class="{ bordered, tight, striped }">
       <thead>
         <tr>
-          <th><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" /></th>
+          <th><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" /></th>
           <th v-if="indexIsVisable">#</th>
           <th v-for="col in columns" :key="col.field">
             {{ col.text }}
@@ -87,13 +87,35 @@ export default {
   },
   watch: {
     selectedItems() {
-      console.log(this.selectedItems)
-
-      if (this.selectedItems.length > this.dataSource.length / 2 && this.selectedItems.length < this.dataSource.length) {
+      if (this.selectedItems.length >= 1 && this.selectedItems.length < this.dataSource.length) {
         this.$refs.selectAll.indeterminate = true
       } else {
         this.$refs.selectAll.indeterminate = false
+        // if (this.selectedItems.length === this.dataSource.length) {
+        //   this.$refs.selectAll.checked = true
+        // } else {
+        //   this.$refs.selectAll.checked = false
+        // }
       }
+    },
+  },
+  computed: {
+    areAllItemsSelected() {
+      const ds = this.dataSource.map((item) => item.id).sort()
+      const sitems = this.selectedItems.map((item) => item.id).sort()
+      if (ds.length !== sitems.length) {
+        return false
+      }
+      let equal = true
+      let n = ds.length - 1
+      while (n > 0) {
+        if (ds[n] !== sitems[n]) {
+          equal = false
+          break
+        }
+        n--
+      }
+      return equal
     },
   },
 }
