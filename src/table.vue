@@ -1,32 +1,35 @@
 <template>
-  <div class="b-table-wrapper">
-    <table class="b-table" :class="{ bordered, tight, striped }">
-      <thead>
-        <tr>
-          <th><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" /></th>
-          <th v-if="indexIsVisable">#</th>
-          <th v-for="col in columns" :key="col.field">
-            <div class="b-table-header">
-              {{ col.text }}
-              <span class="b-table-sorter" v-if="col.field in orderBy" @click="changeOrderBy(col.field)">
-                <b-icon name="asc" :class="{ active: orderBy[col.field] === 'asc' }"></b-icon>
-                <b-icon name="desc" :class="{ active: orderBy[col.field] === 'desc' }"></b-icon>
-              </span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(row, index) in dataSource" :key="row.id">
-          <!-- checked 根据selectedItems设置选中状态 -->
-          <th><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></th>
-          <td v-if="indexIsVisable">{{ index }}</td>
-          <template v-for="col in columns">
-            <td :key="col.field">{{ row[col.field] }}</td>
-          </template>
-        </tr>
-      </tbody>
-    </table>
+  <div class="b-table-wrapper" ref="wrapper">
+    <div style="height: 200px; overflow: auto; position: relative; white-space: no-wrap">
+      <table class="b-table" :class="{ bordered, tight, striped }" ref="bTable">
+        <thead>
+          <tr>
+            <th><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" /></th>
+            <th v-if="indexIsVisable">#</th>
+            <th v-for="col in columns" :key="col.field">
+              <div class="b-table-header">
+                {{ col.text }}
+                <span class="b-table-sorter" v-if="col.field in orderBy" @click="changeOrderBy(col.field)">
+                  <b-icon name="asc" :class="{ active: orderBy[col.field] === 'asc' }"></b-icon>
+                  <b-icon name="desc" :class="{ active: orderBy[col.field] === 'desc' }"></b-icon>
+                </span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(row, index) in dataSource" :key="row.id">
+            <!-- checked 根据selectedItems设置选中状态 -->
+            <th><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></th>
+            <td v-if="indexIsVisable">{{ index }}</td>
+            <template v-for="col in columns">
+              <td :key="col.field">{{ row[col.field] }}</td>
+            </template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="b-table-loading" v-if="loading">
       <b-icon name="loading"></b-icon>
     </div>
@@ -79,15 +82,49 @@ export default {
     },
     loading: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       up: true,
     }
   },
+  mounted() {
+    const table = this.$refs.bTable
+    const table2 = table.cloneNode(true)
+    table2.classList.add('b-table-copy')
+    this.table2 = table2
+    this.$refs.wrapper.appendChild(table2)
+    this.updateHeaderWidth()
+    this.onWindowResize = () => {
+      this.updateHeaderWidth()
+    }
+    window.addEventListener('resize', this.onWindowResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onWindowResize)
+    this.table2.remove()
+  },
   methods: {
+    updateHeaderWidth() {
+      const table = this.$refs.bTable
+      this.$el.querySelector('.b-table-copy').style.width = this.$refs.wrapper.getBoundingClientRect().width + 'px'
+      const table2 = this.table2
+      const tableHeader = Array.from(table.children).filter((node) => node.tagName.toLowerCase() === 'tbody')[0]
+      let tableHeader2
+      Array.from(table2.children).map((node) => {
+        if (node.tagName.toLowerCase() !== 'thead') {
+          node.remove()
+        } else {
+          tableHeader2 = node
+        }
+      })
+      Array.from(tableHeader.children[0].children).map((node, idx) => {
+        const width = window.getComputedStyle(node).width
+        tableHeader2.children[0].children[idx].style.width = width
+      })
+    },
     onSlecteItem(row, index, e) {
       let selected = e.target.checked
       let selectedItemsCopy = JSON.parse(JSON.stringify(this.selectedItems))
@@ -162,6 +199,15 @@ $grey: darken($grey, 10%);
   border-spacing: 0;
   border-collapse: collapse;
   border-bottom: 1px solid $grey;
+  &-wrapper {
+    position: relative;
+  }
+  &-copy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+  }
   &.bordered td,
   &.bordered th {
     border: 1px solid $grey;
@@ -193,7 +239,7 @@ $grey: darken($grey, 10%);
       margin: 0 8px;
       fill: $grey;
       &.active {
-        fill: red;
+        fill: $blue;
       }
     }
   }
@@ -201,9 +247,7 @@ $grey: darken($grey, 10%);
     display: flex;
     align-items: center;
   }
-  &-wrapper {
-    position: relative;
-  }
+
   &-loading {
     position: absolute;
     top: 0;

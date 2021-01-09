@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-table :index-is-visable="true" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy" @update:orderBy="x" :loading="loading"></b-table>
-    <b-table :index-is-visable="false" :striped="false" bordered tight :data-source="dataSource" :columns="columns"></b-table>
+    <b-table :index-is-visable="false" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy" @update:orderBy="x" :loading="loading"></b-table>
+    <!-- <b-table :index-is-visable="false" :striped="false" bordered tight :data-source="dataSource" :columns="columns"></b-table> -->
     <b-pager :total-page="10" :current-page.sync="currentPage" hide-if-one-page></b-pager>
   </div>
 </template>
