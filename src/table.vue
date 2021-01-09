@@ -121,7 +121,9 @@ export default {
       })
       Array.from(tableHeader.children[0].children).map((node, idx) => {
         const width = window.getComputedStyle(node).width
-        tableHeader2.children[0].children[idx].style.width = width
+        if (idx < tableHeader.children[0].children.length - 1) {
+          tableHeader2.children[0].children[idx].style.width = width
+        }
       })
     },
     onSlecteItem(row, index, e) {
@@ -201,13 +203,12 @@ $grey: darken($grey, 10%);
     position: relative;
   }
   &-copy {
-    display: flex;
+    // display: flex;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     background: white;
-    border-bottom: none;
   }
   &.bordered td,
   &.bordered th {
