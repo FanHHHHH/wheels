@@ -1,12 +1,12 @@
 <template>
   <div class="b-table-wrapper" ref="wrapper">
-    <div style="height: 200px; overflow: auto; position: relative; white-space: no-wrap">
+    <div ref="tableWrapper" style="height: 200px; overflow: auto; position: relative; white-space: no-wrap">
       <table class="b-table" :class="{ bordered, tight, striped }" ref="bTable">
         <thead>
           <tr>
-            <th><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" /></th>
-            <th v-if="indexIsVisable">#</th>
-            <th v-for="col in columns" :key="col.field">
+            <th style="width: 50px"><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" /></th>
+            <th style="width: 50px" v-if="indexIsVisable">#</th>
+            <th :style="{ width: col.width + 'px' }" v-for="col in columns" :key="col.field">
               <div class="b-table-header">
                 {{ col.text }}
                 <span class="b-table-sorter" v-if="col.field in orderBy" @click="changeOrderBy(col.field)">
@@ -20,10 +20,10 @@
         <tbody>
           <tr v-for="(row, index) in dataSource" :key="row.id">
             <!-- checked 根据selectedItems设置选中状态 -->
-            <th><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></th>
-            <td v-if="indexIsVisable">{{ index }}</td>
+            <td style="width: 50px"><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></td>
+            <td style="width: 50px" v-if="indexIsVisable">{{ index }}</td>
             <template v-for="col in columns">
-              <td :key="col.field">{{ row[col.field] }}</td>
+              <td :style="{ width: col.width + 'px' }" :key="col.field">{{ row[col.field] }}</td>
             </template>
           </tr>
         </tbody>
@@ -84,6 +84,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    height: {
+      type: Number,
+    },
   },
   data() {
     return {
@@ -93,42 +96,18 @@ export default {
   mounted() {
     const table = this.$refs.bTable
     const table2 = table.cloneNode(false)
+    this.table2 = table2
     table2.classList.add('b-table-copy')
     const { height } = table.children[0].getBoundingClientRect()
     table2.appendChild(table.children[0])
-    table.style.marginTop = height + 'px'
-    this.table2 = table2
+    this.$refs.tableWrapper.style.marginTop = height + 'px'
+    this.$refs.tableWrapper.style.height = this.height - height + 'px'
     this.$refs.wrapper.appendChild(table2)
-    this.updateHeaderWidth()
-    this.onWindowResize = () => {
-      this.updateHeaderWidth()
-    }
-    window.addEventListener('resize', this.onWindowResize)
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.onWindowResize)
     this.table2.remove()
   },
   methods: {
-    updateHeaderWidth() {
-      const table = this.$refs.bTable
-      const table2 = this.table2
-      const tableHeader = Array.from(table.children).filter((node) => node.tagName.toLowerCase() === 'tbody')[0]
-      let tableHeader2
-      Array.from(table2.children).map((node) => {
-        if (node.tagName.toLowerCase() !== 'thead') {
-          node.remove()
-        } else {
-          tableHeader2 = node
-        }
-      })
-      Array.from(tableHeader.children[0].children).map((node, idx) => {
-        const width = window.getComputedStyle(node).width
-        if (idx < tableHeader.children[0].children.length - 1) {
-          tableHeader2.children[0].children[idx].style.width = width
-        }
-      })
-    },
     onSlecteItem(row, index, e) {
       let selected = e.target.checked
       let selectedItemsCopy = JSON.parse(JSON.stringify(this.selectedItems))
@@ -204,13 +183,19 @@ $grey: darken($grey, 10%);
   border-bottom: 1px solid $grey;
   &-wrapper {
     position: relative;
+    &::before {
+      content: '';
+      display: table;
+    }
   }
   &-copy {
     // display: flex;
+    margin-top: 0;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    // width: 100%;
+    overflow: hidden;
     background: white;
   }
   &.bordered td,
