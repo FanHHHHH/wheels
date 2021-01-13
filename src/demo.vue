@@ -82,7 +82,7 @@ export default {
     },
     view(a) {
       window.alert(a.name)
-    }
+    },
   },
   created() {},
   watch: {

@@ -18,6 +18,7 @@
                 </span>
               </div>
             </th>
+            <th ref="actionHeader"></th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +36,9 @@
                 <td :style="{ width: col.width + 'px' }" :key="col.field">{{ row[col.field] }}</td>
               </template>
               <td>
-                <slot :item="row"></slot>
+                <div ref="action" style="display:inline-block">
+                  <slot :item="row"></slot>
+                </div>
               </td>
             </tr>
             <tr v-if="inExpanedIds(row.id)" :key="`${row.id}-expand`" :class="{ striped: index % 2 === 1 }">
@@ -126,6 +129,22 @@ export default {
     this.$refs.tableWrapper.style.marginTop = height + 'px'
     this.$refs.tableWrapper.style.height = this.height - height + 'px'
     this.$refs.wrapper.appendChild(table2)
+    if (this.$scopedSlots.default) {
+      const scrollbarWidth = this.$refs.tableWrapper.offsetWidth - this.$refs.tableWrapper.clientWidth
+      const div = this.$refs.action[0]
+      const { width } = div.getBoundingClientRect()
+      const parent = div.parentNode
+      const styles = window.getComputedStyle(parent)
+      const leftPadding = styles.getPropertyValue('padding-left')
+      const rightPadding = styles.getPropertyValue('padding-right')
+      const leftBorder = styles.getPropertyValue('border-left-width')
+      const rightBorder = styles.getPropertyValue('border-right-width')
+      const width2 = parseInt(leftPadding) + parseInt(rightPadding) + parseInt(leftBorder) + parseInt(rightBorder) + 4 + width // +2 是为了减少parseInt精度损失
+      this.$refs.actionHeader.style.width = width2 + scrollbarWidth + 'px'
+      this.$refs.action.map((div) => {
+        div.parentNode.style.width = width2 + 'px'
+      })
+    }
   },
   beforeDestroy() {
     this.table2.remove()
@@ -246,6 +265,7 @@ $grey: darken($grey, 10%);
   }
   &-wrapper {
     position: relative;
+    border-bottom: 1px solid $grey;
     &::before {
       content: '';
       display: table;
