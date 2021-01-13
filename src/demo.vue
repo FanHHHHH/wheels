@@ -1,6 +1,11 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-table indexIsVisable checkable expandField="description" :index-is-visable="false" :height="300" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy" @update:orderBy="x" :loading="loading"></b-table>
+    <b-table indexIsVisable checkable expandField="description" :index-is-visable="false" :height="300" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy" @update:orderBy="x" :loading="loading">
+      <template v-slot="row">
+        <button @click="edit(row.item)">编辑</button>
+        <button @click="view(row.item)">查看</button>
+      </template>
+    </b-table>
     <!-- <b-table :index-is-visable="false" :striped="false" bordered tight :data-source="dataSource" :columns="columns"></b-table> -->
     <b-pager :total-page="10" :current-page.sync="currentPage" hide-if-one-page></b-pager>
   </div>
@@ -72,6 +77,12 @@ export default {
         this.loading = false
       }, 2000)
     },
+    edit(a) {
+      window.alert(a.name)
+    },
+    view(a) {
+      window.alert(a.name)
+    }
   },
   created() {},
   watch: {

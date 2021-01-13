@@ -34,6 +34,9 @@
               <template v-for="col in columns">
                 <td :style="{ width: col.width + 'px' }" :key="col.field">{{ row[col.field] }}</td>
               </template>
+              <td>
+                <slot :item="row"></slot>
+              </td>
             </tr>
             <tr v-if="inExpanedIds(row.id)" :key="`${row.id}-expand`" :class="{ striped: index % 2 === 1 }">
               <td :colspan="colSpan">{{ row[expandField] || '空' }}</td>
