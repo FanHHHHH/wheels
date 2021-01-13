@@ -1,11 +1,14 @@
 <template>
   <div class="b-table-wrapper" ref="wrapper">
     <div ref="tableWrapper" style="height: 200px; overflow: auto; position: relative; white-space: no-wrap">
-      <table class="b-table" :class="{ bordered, tight, striped }" ref="bTable">
+      <table class="b-table" :class="{ bordered, tight }" ref="bTable">
         <thead>
           <tr>
-            <th style="width: 50px"><input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" /></th>
-            <th style="width: 50px" v-if="indexIsVisable">#</th>
+            <th style="width: 50px" class="b-table-center"></th>
+            <th style="width: 50px" class="b-table-center">
+              <input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" />
+            </th>
+            <th style="width: 50px" class="b-table-center" v-if="indexIsVisable">#</th>
             <th :style="{ width: col.width + 'px' }" v-for="col in columns" :key="col.field">
               <div class="b-table-header">
                 {{ col.text }}
@@ -18,18 +21,27 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, index) in dataSource" :key="row.id">
-            <!-- checked 根据selectedItems设置选中状态 -->
-            <td style="width: 50px"><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></td>
-            <td style="width: 50px" v-if="indexIsVisable">{{ index }}</td>
-            <template v-for="col in columns">
-              <td :style="{ width: col.width + 'px' }" :key="col.field">{{ row[col.field] }}</td>
-            </template>
-          </tr>
+          <template v-for="(row, index) in dataSource">
+            <tr :key="row.id" :class="{ striped: index % 2 === 1 }">
+              <td style="width: 50px" class="b-table-center">
+                <span @click="expandItem(row.id)" class="b-table-expand-wrapper" :class="{ 'expand-active': inExpanedIds(row.id) }">
+                  <b-icon class="b-table-expand" name="right"></b-icon>
+                </span>
+              </td>
+              <!-- checked 根据selectedItems设置选中状态 -->
+              <td style="width: 50px" class="b-table-center"><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></td>
+              <td style="width: 50px" class="b-table-center" v-if="indexIsVisable">{{ index }}</td>
+              <template v-for="col in columns">
+                <td :style="{ width: col.width + 'px' }" :key="col.field">{{ row[col.field] }}</td>
+              </template>
+            </tr>
+            <tr v-if="inExpanedIds(row.id)" :key="`${row.id}-expand`" :class="{ striped: index % 2 === 1 }">
+              <td :colspan="colspan">{{ row[expandField] || '空' }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
-
     <div class="b-table-loading" v-if="loading">
       <b-icon name="loading"></b-icon>
     </div>
@@ -87,10 +99,14 @@ export default {
     height: {
       type: Number,
     },
+    expandField: {
+      type: String,
+    },
   },
   data() {
     return {
       up: true,
+      expandedIds: [],
     }
   },
   mounted() {
@@ -108,6 +124,20 @@ export default {
     this.table2.remove()
   },
   methods: {
+    expandItem(id) {
+      if (this.inExpanedIds(id)) {
+        this.expandedIds.splice(this.expandedIds.indexOf(id), 1)
+      } else {
+        this.expandedIds.push(id)
+      }
+    },
+    inExpanedIds(id) {
+      if (this.expandedIds.indexOf(id) >= 0) {
+        return true
+      }
+
+      return false
+    },
     onSlecteItem(row, index, e) {
       let selected = e.target.checked
       let selectedItemsCopy = JSON.parse(JSON.stringify(this.selectedItems))
@@ -169,6 +199,15 @@ export default {
       }
       return equal
     },
+    colspan() {
+      if (this.indexIsVisable && this.expandField) {
+        return this.columns.length + 3
+      }
+      if (this.indexIsVisable) {
+        return this.columns.length + 2
+      }
+      return this.columns.length + 1
+    },
   },
 }
 </script>
@@ -181,6 +220,23 @@ $grey: darken($grey, 10%);
   border-spacing: 0;
   border-collapse: collapse;
   border-bottom: 1px solid $grey;
+  & &-center {
+    text-align: center;
+  }
+  &-expand {
+    width: 0.8em;
+    height: 0.8em;
+  }
+  &-expand-wrapper {
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.4s;
+    &.expand-active {
+      transform: rotate(90deg);
+    }
+  }
   &-wrapper {
     position: relative;
     &::before {
@@ -212,13 +268,10 @@ $grey: darken($grey, 10%);
   &.tight th {
     padding: 4px 4px;
   }
-  &.striped tbody {
-    > tr {
-      &:nth-child(even) {
-        background: lighten($grey, 10%);
-      }
-    }
+  & .striped {
+    background: lighten($grey, 10%);
   }
+
   &-sorter {
     display: inline-flex;
     flex-direction: column;
