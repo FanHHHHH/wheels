@@ -4,8 +4,8 @@
       <table class="b-table" :class="{ bordered, tight }" ref="bTable">
         <thead>
           <tr>
-            <th style="width: 50px" class="b-table-center"></th>
-            <th style="width: 50px" class="b-table-center">
+            <th v-if="expandField" style="width: 50px" class="b-table-center"></th>
+            <th style="width: 50px" class="b-table-center" v-if="checkable">
               <input ref="selectAll" @change="onSelectedAllItems" type="checkbox" :checked="areAllItemsSelected" />
             </th>
             <th style="width: 50px" class="b-table-center" v-if="indexIsVisable">#</th>
@@ -23,20 +23,20 @@
         <tbody>
           <template v-for="(row, index) in dataSource">
             <tr :key="row.id" :class="{ striped: index % 2 === 1 }">
-              <td style="width: 50px" class="b-table-center">
+              <td v-if="expandField" style="width: 50px" class="b-table-center">
                 <span @click="expandItem(row.id)" class="b-table-expand-wrapper" :class="{ 'expand-active': inExpanedIds(row.id) }">
                   <b-icon class="b-table-expand" name="right"></b-icon>
                 </span>
               </td>
               <!-- checked 根据selectedItems设置选中状态 -->
-              <td style="width: 50px" class="b-table-center"><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></td>
+              <td style="width: 50px" class="b-table-center" v-if="checkable"><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></td>
               <td style="width: 50px" class="b-table-center" v-if="indexIsVisable">{{ index }}</td>
               <template v-for="col in columns">
                 <td :style="{ width: col.width + 'px' }" :key="col.field">{{ row[col.field] }}</td>
               </template>
             </tr>
             <tr v-if="inExpanedIds(row.id)" :key="`${row.id}-expand`" :class="{ striped: index % 2 === 1 }">
-              <td :colspan="colspan">{{ row[expandField] || '空' }}</td>
+              <td :colspan="colSpan">{{ row[expandField] || '空' }}</td>
             </tr>
           </template>
         </tbody>
@@ -101,6 +101,10 @@ export default {
     },
     expandField: {
       type: String,
+    },
+    checkable: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -199,7 +203,7 @@ export default {
       }
       return equal
     },
-    colspan() {
+    colSpan() {
       if (this.indexIsVisable && this.expandField) {
         return this.columns.length + 3
       }
