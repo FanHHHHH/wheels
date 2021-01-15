@@ -1,12 +1,11 @@
 <template>
-  <div class="footer">
-      <slot></slot>
+  <div class="b-footer">
+    <slot></slot>
   </div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

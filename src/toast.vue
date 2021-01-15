@@ -1,36 +1,34 @@
 <template>
-  <div class="wrapper" :class="getPosition">
+  <div class="b-toast-wrapper" :class="getPosition">
     <div class="toast" ref="toastRef">
       <div class="message">
         <slot v-if="!enableHTML"></slot>
         <div v-else v-html="this.$slots.default[0]"></div>
       </div>
       <div class="line" ref="line"></div>
-      <span class="close" @click="onclickClose" v-if="closeButton">{{
-        this.closeButton.text
-      }}</span>
+      <span class="close" @click="onclickClose" v-if="closeButton">{{ this.closeButton.text }}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "BlueToast",
+  name: 'BlueToast',
   props: {
     autoClose: {
       type: [Boolean, Number],
       default: 5,
       validator(val) {
         return val === false || typeof val === 'number'
-      }
+      },
     },
     closeButton: {
       type: Object,
       default: () => {
         return {
-          text: "关闭",
+          text: '关闭',
           callback: undefined,
-        };
+        }
       },
     },
     enableHTML: {
@@ -39,70 +37,84 @@ export default {
     },
     position: {
       type: String,
-      default: "top",
+      default: 'top',
       validator(value) {
-        return ["top", "bottom", "middle"].indexOf(value) !== -1;
+        return ['top', 'bottom', 'middle'].indexOf(value) !== -1
       },
     },
   },
   mounted() {
-    this.updateLineStyle();
-    this.excuteAutoClose();
+    this.updateLineStyle()
+    this.excuteAutoClose()
   },
   methods: {
     updateLineStyle() {
       this.$nextTick(() => {
         if (!this.$refs.line) return
-        this.$refs.line.style.height = `${
-          this.$refs.toastRef.getBoundingClientRect().height
-        }px`;
-      }); // trickey
+        this.$refs.line.style.height = `${this.$refs.toastRef.getBoundingClientRect().height}px`
+      }) // trickey
     },
     excuteAutoClose() {
       if (this.autoClose) {
         setTimeout(() => {
-          this.close();
-        }, this.autoClose * 1000);
+          this.close()
+        }, this.autoClose * 1000)
       }
     },
     close() {
-      this.$el.remove();
-      this.$emit("beforeClose");
-      this.$destroy();
+      this.$el.remove()
+      this.$emit('beforeClose')
+      this.$destroy()
     },
     log() {
-      console.log("测试给回调函数传组件的实例");
+      console.log('测试给回调函数传组件的实例')
     },
     onclickClose() {
-      this.close();
-      if (this.closeButton && typeof this.closeButton.callback === "function") {
-        this.closeButton.callback(this);
+      this.close()
+      if (this.closeButton && typeof this.closeButton.callback === 'function') {
+        this.closeButton.callback(this)
       }
     },
   },
   computed: {
     getPosition() {
-      return { [`position-${this.position}`]: true };
+      return { [`position-${this.position}`]: true }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "./styles/var";
+@import './styles/var';
 @keyframes slide-up {
-  0% { opacity: 0%; transform: translateY(100%); }
-  100% { opacity: 100%; transform: translateY(0%); }
+  0% {
+    opacity: 0%;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0%);
+  }
 }
 @keyframes slide-down {
-  0% { opacity: 0%; transform: translateY(-100%); }
-  100% { opacity: 100%; transform: translateY(0%); }
+  0% {
+    opacity: 0%;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0%);
+  }
 }
 @keyframes center {
-  0% { opacity: 0%; }
-   100% { opacity: 100%; }
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
-.wrapper {
+.b-toast-wrapper {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
@@ -111,7 +123,7 @@ export default {
     .toast {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
-      animation:  slide-down $animation-duration;
+      animation: slide-down $animation-duration;
     }
   }
   &.position-bottom {
@@ -126,9 +138,8 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     .toast {
-        animation: center $animation-duration;
+      animation: center $animation-duration;
     }
-    
   }
 }
 .toast {

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="sider" v-show="visable">
+    <div class="b-sider" v-show="visable">
       <slot></slot>
       <button class="closeButton" @click="hide">close</button>
     </div>
@@ -9,23 +9,23 @@
 
 <script>
 export default {
-  name: "BlueSider",
+  name: 'BlueSider',
   data() {
     return {
       visable: true,
       show: true,
-    };
+    }
   },
   methods: {
     hide() {
-      this.visable = false;
+      this.visable = false
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-.sider {
+.b-sider {
   position: relative;
   > button {
     position: absolute;
@@ -38,7 +38,7 @@ export default {
   transition: all 0.5s;
 }
 .slide-enter,
-.slide-leave-to { 
+.slide-leave-to {
   margin-left: -200px;
 }
 </style>

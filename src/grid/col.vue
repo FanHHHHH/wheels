@@ -6,15 +6,15 @@
 
 <script>
 const validator = (val) => {
-  let keys = Object.keys(val);
-  let valid = true;
+  let keys = Object.keys(val)
+  let valid = true
   keys.forEach((key) => {
-    if (!["span", "offset", "gutter"].includes(key)) {
-      valid = false;
+    if (!['span', 'offset', 'gutter'].includes(key)) {
+      valid = false
     }
-  });
-  return valid;
-};
+  })
+  return valid
+}
 export default {
   props: {
     span: {
@@ -31,43 +31,37 @@ export default {
   data() {
     return {
       gutter: 0,
-    };
+    }
   },
   methods: {
-    getClasses(obj, str = "") {
-      const res = [];
+    getClasses(obj, str = '') {
+      const res = []
       if (!obj) {
-        return [];
+        return []
       }
       if (obj.span) {
-        res.push(`col-${str}${obj.span}`);
+        res.push(`col-${str}${obj.span}`)
       }
       if (obj.offset) {
-        res.push(`offset-${str}${obj.offset}`);
+        res.push(`offset-${str}${obj.offset}`)
       }
-      return res;
+      return res
     },
   },
   computed: {
     colStyle() {
       return {
-        paddingLeft: this.gutter / 2 + "px",
+        paddingLeft: this.gutter / 2 + 'px',
         paddingRight: `${this.gutter / 2}px`,
-      };
+      }
     },
     colClass() {
-      let { span, offset, ipad, narrowPc, pc, widePc } = this;
+      let { span, offset, ipad, narrowPc, pc, widePc } = this
 
-      return [
-        ...this.getClasses({ span, offset }),
-        ...this.getClasses(ipad, "ipad-"),
-        ...this.getClasses(narrowPc, "narrow-pc-"),
-        ...this.getClasses(pc, "pc-"),
-        ...this.getClasses(widePc, "wide-pc-"),
-      ];
+      return [...this.getClasses({ span, offset }), ...this.getClasses(ipad, 'ipad-'), ...this.getClasses(narrowPc, 'narrow-pc-'), ...this.getClasses(pc, 'pc-'), ...this.getClasses(widePc, 'wide-pc-')]
     },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">
