@@ -18,7 +18,7 @@ module.exports = {
       {
         title: '组件',
         collapsable: false,
-        children: ['components/icon', 'components/layout', 'components/button', 'components/toast', 'components/tabs', 'components/popover', 'components/collapse', 'components/grid'],
+        children: ['components/icon', 'components/layout', 'components/button', 'components/toast', 'components/tabs', 'components/popover', 'components/collapse', 'components/grid', 'components/slides', 'components/nav'],
       },
     ],
   },

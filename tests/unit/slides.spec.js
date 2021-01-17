@@ -15,7 +15,7 @@ describe('Slides.vue', () => {
   it('接受BlueSlidesItem,默认展示第一个', (done) => {
     const wrapper = mount(Slides, {
       propsData: {
-        autoPay: false,
+        autoPlay: false,
       },
       slots: {
         default: `
@@ -39,7 +39,7 @@ describe('Slides.vue', () => {
   it('点击第二个，展示第二个', () => {
     const wrapper = mount(Slides, {
       propsData: {
-        autoPay: false,
+        autoPlay: false,
       },
       slots: {
         default: `

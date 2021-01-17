@@ -1,15 +1,19 @@
 <template>
   <transition name="slide">
-    <div class="b-sider" v-show="visable">
+    <div class="b-sider" v-show="visable" ref="BSider">
       <slot></slot>
-      <button class="closeButton" @click="hide">close</button>
+      <b-button class="closeButton" @click="hide">close</b-button>
     </div>
   </transition>
 </template>
 
 <script>
+import BButton from '../button/button.vue'
 export default {
   name: 'BlueSider',
+  components: {
+    BButton,
+  },
   data() {
     return {
       visable: true,
@@ -18,6 +22,8 @@ export default {
   },
   methods: {
     hide() {
+      const { width } = this.$refs.BSider.getBoundingClientRect()
+      this.$refs.BSider.style.marginLeft = `-${width}px`
       this.visable = false
     },
   },
@@ -35,10 +41,6 @@ export default {
 }
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.5s;
-}
-.slide-enter,
-.slide-leave-to {
-  margin-left: -200px;
+  transition: all 0.6s;
 }
 </style>

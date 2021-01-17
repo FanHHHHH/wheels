@@ -12,7 +12,9 @@ title: grid 栅格系统
 <grid-demo-1></grid-demo-1>
 </ClientOnly>
 
+:::tip
 通过 `row` 和 `col` 组件，并通过 `col` 组件的 `span` 属性我们就可以自由地组合布局。
+:::
 
 #### 示例代码(class 为样式，可不写)
 
@@ -77,7 +79,9 @@ title: grid 栅格系统
 <grid-demo-3></grid-demo-3>
 </ClientOnly>
 
+:::tip
 通过制定 `col` 组件的 `offset` 属性可以指定分栏偏移的栏数
+:::
 
 #### 示例代码
 
@@ -99,7 +103,9 @@ title: grid 栅格系统
 <grid-demo-4></grid-demo-4>
 </ClientOnly>
 
+:::tip
 其中手机为默认 `span`
+:::
 
 #### 示例代码
 
@@ -118,7 +124,9 @@ title: grid 栅格系统
 <grid-demo-5></grid-demo-5>
 </ClientOnly>
 
+:::tip
 其中默认为`align='left'`
+:::
 
 #### 示例代码
 
@@ -140,16 +148,16 @@ title: grid 栅格系统
 </b-row>
 ```
 
-# Attributes
+### Attributes
 
-### Row
+#### Row
 
 |  参数  |   说明   |      类型      |       可选值        | 默认值 |
 | :----: | :------: | :------------: | :-----------------: | :----: |
 | gutter |   间距   | String、Number |         --          |   0    |
 | align  | 对齐方式 |     String     | left、center、right |  left  |
 
-### Col
+#### Col
 
 |   参数   |        说明        |      类型      |            可选值            | 默认值 |
 | :------: | :----------------: | :------------: | :--------------------------: | :----: |

@@ -1,5 +1,5 @@
 <template>
-  <svg class="g-icon">
+  <svg class="b-icon">
     <use :xlink:href="`#icon-${name}`"></use>
   </svg>
 </template>
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
-.g-icon {
+.b-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;

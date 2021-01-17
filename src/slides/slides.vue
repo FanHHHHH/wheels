@@ -112,7 +112,9 @@ export default {
       this.pause(this.timerId)
     },
     onMouseLeave() {
-      this.playAutomatically()
+      if (this.autoPlay) {
+        this.playAutomatically()
+      }
     },
     onTouchStart(e) {
       this.pause(this.timerId)

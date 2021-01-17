@@ -3,7 +3,7 @@
     <div class="title" @click="toggle">
       {{ title }}
     </div>
-    <div class="content" v-if="open">
+    <div class="content" ref="bcontent">
       <slot></slot>
     </div>
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "BlueCollapseItem",
+  name: 'BlueCollapseItem',
   props: {
     title: {
       type: String,
@@ -22,33 +22,36 @@ export default {
       required: true,
     },
   },
-  inject: ["eventBus"],
+  inject: ['eventBus'],
   data() {
     return {
       open: false,
-    };
+    }
   },
   methods: {
     toggle() {
       if (this.open) {
-        this.eventBus && this.eventBus.$emit("update:removeSelected", this.name);
+        this.eventBus && this.eventBus.$emit('update:removeSelected', this.name)
       } else {
-        this.eventBus && this.eventBus.$emit("update:addSelected", this.name);
+        this.eventBus && this.eventBus.$emit('update:addSelected', this.name)
       }
     },
   },
   mounted() {
     if (this.eventBus) {
-      this.eventBus.$on("update:selected", (names) => {
+      const { height } = this.$refs.bcontent.getBoundingClientRect()
+      this.eventBus.$on('update:selected', (names) => {
         if (names.indexOf(this.name) >= 0) {
-            this.open = true
+          this.open = true
+          this.$refs.bcontent.style.height = `${height}px`
         } else {
           this.open = false
+          this.$refs.bcontent.style.height = 0
         }
-      });
+      })
     }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -63,6 +66,7 @@ export default {
     display: flex;
     align-items: center;
     padding: 0 8px;
+    cursor: pointer;
   }
   &:first-child {
     > .title {
@@ -75,6 +79,10 @@ export default {
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
+  }
+  > .content {
+    overflow: hidden;
+    transition: height 0.5s;
   }
 }
 </style>

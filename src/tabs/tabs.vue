@@ -11,13 +11,13 @@ export default {
     selected: {
       type: String,
     },
-    direction: {
-      type: String,
-      defaut: 'horizontal',
-      validator(val) {
-        return ['horizontal', 'vertical'].indexOf(val) >= 0
-      },
-    },
+    // direction: {
+    //   type: String,
+    //   defaut: 'horizontal',
+    //   validator(val) {
+    //     return ['horizontal', 'vertical'].indexOf(val) >= 0
+    //   },
+    // },
   },
   data() {
     return {
@@ -40,9 +40,9 @@ export default {
     },
     setSelected() {
       this.$children.forEach((vm) => {
-        if (vm.$options.name === 'GuluTabsNav') {
+        if (vm.$options.name === 'BlueTabsNav') {
           vm.$children.forEach((childVm) => {
-            if (childVm.$options.name === 'GuluTabsItem' && childVm.name === this.selected) {
+            if (childVm.$options.name === 'BlueTabsItem' && childVm.name === this.selected) {
               this.eventBus.$emit('update:selected', this.selected, childVm)
             }
           })

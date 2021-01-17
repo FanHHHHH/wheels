@@ -75,7 +75,7 @@ export default {
     color: #333;
     text-align: center;
     line-height: 200px;
-    width: 200px;
+    width: 150px;
   }
 
   .b-content {

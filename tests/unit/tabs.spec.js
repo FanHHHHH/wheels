@@ -6,17 +6,6 @@ import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-// import TabsContent from '@/tabs-content'
-// import TabsItem from '@/tabs-item'
-// import TabsNav from '@/tabs-nav.vue'
-// import TabsPane from '@/tabs-pane'
-
-// Vue.component('g-tabs', Tabs)
-// Vue.component('g-tabs-nav', TabsNav)
-// Vue.component('g-tabs-content', TabsContent)
-// Vue.component('g-tabs-item', TabsItem)
-// Vue.component('g-tabs-pane', TabsPane)
-
 describe('Tabs', () => {
   it('存在.', () => {
     expect(Tabs).to.be.ok

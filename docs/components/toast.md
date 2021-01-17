@@ -12,8 +12,12 @@ title: toast
 <toast-demo-common></toast-demo-common>
 </ClientOnly>
 
+:::tip
 注：如果被上层视图遮挡，请自行设置`b-toast-wrapper`的`z-index`。
+:::
+:::tip
 注：文末有本插件具体注册方式
+:::
 
 #### 示例代码
 
@@ -62,6 +66,8 @@ export default {
 :warning: 注意：开启`enableHTML`功能可能会导致 XSS 攻击，请谨慎使用！
 :::
 
+#### 示例代码
+
 ```vue
 <script>
 export default {
@@ -76,7 +82,9 @@ export default {
 
 ### 引入
 
+:::tip
 使用此插件需要给 Vue 全局注册`plugin`插件
+:::
 
 ```vue
 <script>
@@ -87,7 +95,7 @@ Vue.use(plugin)
 </script>
 ```
 
-# options
+### options
 
 |    参数     |           说明           |  类型   |                    可选值                    |                默认值                |
 | :---------: | :----------------------: | :-----: | :------------------------------------------: | :----------------------------------: |
