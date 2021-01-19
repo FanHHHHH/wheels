@@ -1,6 +1,6 @@
 <template>
   <div class="b-table-wrapper" ref="wrapper">
-    <div ref="tableWrapper" style="height: 200px; overflow: auto; position: relative; white-space: no-wrap">
+    <div ref="tableWrapper" style="overflow: auto; position: relative; white-space: no-wrap">
       <table class="b-table" :class="{ bordered, tight }" ref="bTable">
         <thead>
           <tr>
@@ -18,12 +18,12 @@
                 </span>
               </div>
             </th>
-            <th ref="actionHeader"></th>
+            <th ref="actionHeader">操作</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="(row, index) in dataSource">
-            <tr :key="row.id" :class="{ striped: index % 2 === 1 }">
+            <tr :key="row.id" :class="{ striped: striped && index % 2 === 1 }">
               <td v-if="expandField" style="width: 50px" class="b-table-center">
                 <span @click="expandItem(row.id)" class="b-table-expand-wrapper" :class="{ 'expand-active': inExpanedIds(row.id) }">
                   <b-icon class="b-table-expand" name="right"></b-icon>
@@ -41,7 +41,7 @@
                 </div>
               </td>
             </tr>
-            <tr v-if="inExpanedIds(row.id)" :key="`${row.id}-expand`" :class="{ striped: index % 2 === 1 }">
+            <tr v-if="inExpanedIds(row.id)" :key="`${row.id}-expand`" :class="{ striped: striped && index % 2 === 1 }">
               <td :colspan="colSpan">{{ row[expandField] || '空' }}</td>
             </tr>
           </template>
@@ -92,7 +92,7 @@ export default {
     },
     striped: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     orderBy: {
       type: Object,
@@ -120,6 +120,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.striped)
     const table = this.$refs.bTable
     const table2 = table.cloneNode(false)
     this.table2 = table2
@@ -227,12 +228,12 @@ export default {
     },
     colSpan() {
       if (this.indexIsVisable && this.expandField) {
-        return this.columns.length + 3
+        return this.columns.length + 4
       }
       if (this.indexIsVisable) {
-        return this.columns.length + 2
+        return this.columns.length + 3
       }
-      return this.columns.length + 1
+      return this.columns.length + 2
     },
   },
 }
@@ -245,7 +246,13 @@ $grey: darken($grey, 10%);
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
-  border-bottom: 1px solid $grey;
+  & tr {
+    background: none;
+  }
+  & td,
+  th {
+    border: none;
+  }
   & &-center {
     text-align: center;
   }
@@ -265,20 +272,17 @@ $grey: darken($grey, 10%);
   }
   &-wrapper {
     position: relative;
-    border-bottom: 1px solid $grey;
     &::before {
       content: '';
       display: table;
     }
   }
   &-copy {
-    // display: flex;
     margin-top: 0;
     position: absolute;
     top: 0;
     left: 0;
-    // width: 100%;
-    overflow: hidden;
+    border-bottom: none;
     background: white;
   }
   &.bordered td,

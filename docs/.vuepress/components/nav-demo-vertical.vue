@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <b-nav :selected.sync="selected">
+    <b-nav :selected.sync="selected" vertical>
       <b-nav-item name="home">首页 </b-nav-item>
       <b-sub-nav name="about">
         <template #title>关于</template>
@@ -48,6 +48,6 @@ export default {
   z-index: 100;
   margin-bottom: 20px;
   position: relative;
-  height: 100px;
+  width: 150px;
 }
 </style>

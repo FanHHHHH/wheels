@@ -16,15 +16,15 @@
       </div>
     </div>
     <div class="right" v-if="rightItem">
-      <gulu-cascader-items :loading-item="loadingItem" :loadData="loadData" :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></gulu-cascader-items>
+      <blue-cascader-items :loading-item="loadingItem" :loadData="loadData" :selected="selected" @update:selected="onUpdateSelected" :level="level + 1" :sourceItem="rightItem" :height="height" :class="height"></blue-cascader-items>
     </div>
   </div>
 </template>
 
 <script>
-import Icon from "../Icon.vue";
+import Icon from '../Icon.vue'
 export default {
-  name: "BlueCascaderItems",
+  name: 'BlueCascaderItems',
   components: {
     Icon,
   },
@@ -48,38 +48,38 @@ export default {
     },
     loadingItem: {
       type: Object,
-      defult: () => ({})
+      defult: () => ({}),
     },
   },
   methods: {
     onClickLabel(item) {
-      const selectedCopy = JSON.parse(JSON.stringify(this.selected));
-      selectedCopy[this.level] = item;
-      selectedCopy.splice(this.level + 1);
-      this.$emit("update:selected", selectedCopy);
+      const selectedCopy = JSON.parse(JSON.stringify(this.selected))
+      selectedCopy[this.level] = item
+      selectedCopy.splice(this.level + 1)
+      this.$emit('update:selected', selectedCopy)
     },
     onUpdateSelected(newSelected) {
-      this.$emit("update:selected", newSelected);
+      this.$emit('update:selected', newSelected)
     },
     rightArrowVisable(item) {
-      return this.loadData ? !item.isLeaf : item.children;
+      return this.loadData ? !item.isLeaf : item.children
     },
   },
   computed: {
     rightItem() {
       if (this.selected[this.level]) {
-        let selected = this.sourceItem.filter((item) => item.name === this.selected[this.level].name);
+        let selected = this.sourceItem.filter((item) => item.name === this.selected[this.level].name)
         if (selected && selected[0].children) {
-          return selected[0].children;
+          return selected[0].children
         }
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/var";
+@import '../styles/var';
 .cascaderItems {
   display: flex;
   .left {

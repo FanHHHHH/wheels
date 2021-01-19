@@ -1,6 +1,10 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-table indexIsVisable checkable expandField="description" :index-is-visable="false" :height="300" bordered :selected-items.sync="selected" :data-source="dataSource" :columns="columns" :order-by.sync="orderBy" @update:orderBy="x" :loading="loading">
+    <b-table indexIsVisable checkable expandField="description" 
+    :index-is-visable="false" :height="300" bordered 
+    :selected-items.sync="selected" :data-source="dataSource" 
+    :columns="columns" :order-by.sync="orderBy" @update:orderBy="x" 
+    :loading="loading">
       <template v-slot="row">
         <button @click="edit(row.item)">编辑</button>
         <button @click="view(row.item)">查看</button>

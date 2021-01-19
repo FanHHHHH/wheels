@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import CascaderItems from "./cascader-items.vue";
-import clickOutside from "../click-outside.js";
+import CascaderItems from './cascader-items.vue'
+import clickOutside from '../click-outside.js'
 export default {
-  name: "BlueCascader",
+  name: 'BlueCascader',
   directives: {
     clickOutside,
   },
@@ -39,51 +39,50 @@ export default {
     return {
       popoverVisable: false,
       loadingItem: {},
-    };
+    }
   },
   methods: {
     onUpdateSelected(newSelected) {
       function dfs(source, id) {
         if (!source) {
-          return [];
+          return []
         }
-        let res = [];
+        let res = []
         for (let i = 0; i < source.length; i++) {
-          const item = source[i];
+          const item = source[i]
           if (item.id === id) {
-            res = res.concat(item);
+            res = res.concat(item)
           } else {
-            res = res.concat(dfs(item.children, id));
+            res = res.concat(dfs(item.children, id))
           }
         }
-        return res;
+        return res
       }
-      this.$emit("update:selected", newSelected);
-      const lastItem = newSelected[newSelected.length - 1];
+      this.$emit('update:selected', newSelected)
+      const lastItem = newSelected[newSelected.length - 1]
       const updateSource = (result) => {
-        let copy = JSON.parse(JSON.stringify(this.source));
-        const toUpdate = dfs(copy, lastItem.id)[0];
-        toUpdate.children = result;
-        this.loadingItem = {};
-        this.$emit("update:source", copy);
-      };
+        let copy = JSON.parse(JSON.stringify(this.source))
+        const toUpdate = dfs(copy, lastItem.id)[0]
+        toUpdate.children = result
+        this.loadingItem = {}
+        this.$emit('update:source', copy)
+      }
       if (this.loadData && !lastItem.isLeaf) {
-        this.loadData(lastItem, updateSource); //回调
-        this.loadingItem = lastItem;
+        this.loadData(lastItem, updateSource) //回调
+        this.loadingItem = lastItem
       }
     },
     open() {
-      this.popoverVisable = true;
+      this.popoverVisable = true
     },
     close() {
-      console.log("关闭");
-      this.popoverVisable = false;
+      this.popoverVisable = false
     },
     toggle() {
       if (this.popoverVisable) {
-        this.close();
+        this.close()
       } else {
-        this.open();
+        this.open()
       }
     },
   },
@@ -91,16 +90,16 @@ export default {
     result() {
       return this.selected
         .map((val) => {
-          return (val = val.name);
+          return (val = val.name)
         })
-        .join("/");
+        .join('/')
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/var";
+@import '../styles/var';
 .cascader {
   position: relative;
   display: inline-block;

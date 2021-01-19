@@ -12,22 +12,35 @@ title: Nav 导航菜单
 <nav-demo-common></nav-demo-common>
 </ClientOnly>
 
+:::tip
+`:selected.sync="selected"` 必填。
+:::
+
 #### 示例代码
 
 ```vue
 <template>
   <div class="wrapper">
-    <b-slides :selected.sync="selected">
-      <b-slides-item name="1">
-        <div class="box1 slide-content-purple">1</div>
-      </b-slides-item>
-      <b-slides-item name="2">
-        <div class="box2 slide-content-purple">2</div>
-      </b-slides-item>
-      <b-slides-item name="3">
-        <div class="box3 slide-content-purple">3</div>
-      </b-slides-item>
-    </b-slides>
+    <b-nav :selected.sync="selected">
+      <b-nav-item name="home">首页 </b-nav-item>
+      <b-sub-nav name="about">
+        <template #title>关于</template>
+        <b-nav-item name="culture"> 企业文化 </b-nav-item>
+        <b-nav-item name="developers"> 开发团队 </b-nav-item>
+        <b-sub-nav name="contact">
+          <template #title>联系方式</template>
+          <b-nav-item name="wechat"> 微信 </b-nav-item>
+          <b-nav-item name="qq"> QQ </b-nav-item>
+          <b-sub-nav name="phone">
+            <template #title>手机</template>
+            <b-nav-item name="cn"> 电信 </b-nav-item>
+            <b-nav-item name="cu"> 联通 </b-nav-item>
+            <b-nav-item name="cm"> 移动 </b-nav-item>
+          </b-sub-nav>
+        </b-sub-nav>
+      </b-sub-nav>
+      <b-nav-item name="hire"> 招聘</b-nav-item>
+    </b-nav>
   </div>
 </template>
 
@@ -35,17 +48,17 @@ title: Nav 导航菜单
 export default {
   data() {
     return {
-      selected: '2',
+      selected: 'home',
     }
   },
 }
 </script>
 ```
 
-### 自动播放
+### 竖向
 
 <ClientOnly>
-<slides-demo-settime></slides-demo-settime>
+<nav-demo-vertical></nav-demo-vertical>
 </ClientOnly>
 
 #### 示例代码
@@ -53,17 +66,26 @@ export default {
 ```vue
 <template>
   <div class="wrapper">
-    <b-slides :selected.sync="selected" autoPlay :autoPlayDelay="500">
-      <b-slides-item name="1">
-        <div class="box1 slide-content-purple">1</div>
-      </b-slides-item>
-      <b-slides-item name="2">
-        <div class="box2 slide-content-purple">2</div>
-      </b-slides-item>
-      <b-slides-item name="3">
-        <div class="box3 slide-content-purple">3</div>
-      </b-slides-item>
-    </b-slides>
+    <b-nav :selected.sync="selected" vertical>
+      <b-nav-item name="home">首页 </b-nav-item>
+      <b-sub-nav name="about">
+        <template #title>关于</template>
+        <b-nav-item name="culture"> 企业文化 </b-nav-item>
+        <b-nav-item name="developers"> 开发团队 </b-nav-item>
+        <b-sub-nav name="contact">
+          <template #title>联系方式</template>
+          <b-nav-item name="wechat"> 微信 </b-nav-item>
+          <b-nav-item name="qq"> QQ </b-nav-item>
+          <b-sub-nav name="phone">
+            <template #title>手机</template>
+            <b-nav-item name="cn"> 电信 </b-nav-item>
+            <b-nav-item name="cu"> 联通 </b-nav-item>
+            <b-nav-item name="cm"> 移动 </b-nav-item>
+          </b-sub-nav>
+        </b-sub-nav>
+      </b-sub-nav>
+      <b-nav-item name="hire"> 招聘</b-nav-item>
+    </b-nav>
   </div>
 </template>
 
@@ -71,7 +93,7 @@ export default {
 export default {
   data() {
     return {
-      selected: '1',
+      selected: 'home',
     }
   },
 }
@@ -80,16 +102,21 @@ export default {
 
 ### attributes
 
-#### slides
+#### nav
 
-|     参数      |       说明       |  类型  | 可选值 | 默认值 |
-| :-----------: | :--------------: | :----: | :----: | :----: |
-|   selected    |     当前选中     | String |  必填  |   --   |
-|   autoPlay    |     自动播放     | String |   --   | false  |
-| autoPlayDelay | 自动播放延迟时间 | Number |   --   |  3000  |
+|   参数   |   说明   |  类型   | 可选值 | 默认值 |
+| :------: | :------: | :-----: | :----: | :----: |
+| selected | 当前选中 | String  |   --   |   --   |
+| vertical | 竖向导航 | Boolean |   --   | false  |
 
-#### slides-item
+#### nav-item
 
 | 参数 |    说明     |  类型  | 可选值 | 默认值 |
 | :--: | :---------: | :----: | :----: | :----: |
 | name | item 的名称 | String |  必填  |   --   |
+
+#### sub-nav
+
+| 参数 |      说明      |  类型  | 可选值 | 默认值 |
+| :--: | :------------: | :----: | :----: | :----: |
+| name | sub-nav 的名称 | String |  必填  |   --   |
