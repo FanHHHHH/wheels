@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /hero.jpg
+heroImage: /blue&pink.png
 heroText: BLUE&PINK
 tagline: For Love
 actionText: 快速上手 →

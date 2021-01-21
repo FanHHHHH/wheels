@@ -18,11 +18,24 @@ export default {
 }
 </script>
 
+<style>
+* {
+  box-sizing: border-box;
+}
+</style>
+
 <style lang="scss" scoped>
 .wrapper {
   margin-top: 10px;
   > div {
     margin-top: 10px;
   }
+  .w1 {
+    background-color: #48ddc9;
+  }
+  .w2 {
+    background-color: #ffcdb2;
+  }
 }
 </style>
+#fdb4e9

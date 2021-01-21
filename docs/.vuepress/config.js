@@ -6,14 +6,14 @@ module.exports = {
     nav: [
       { text: '主页', link: '/' },
       { text: '文档', link: '/get-started/' },
-      { text: '交流', link: 'https://google.com' },
+      { text: 'guthub', link: 'https://github.com/FanHHHHH/wheels' },
     ],
     displayAllHeaders: true, // 默认值：false
     sidebar: [
       {
         title: '入门',
         collapsable: false,
-        children: ['install/', '/get-started/'],
+        children: ['/introduce/', '/get-started/'],
       },
       {
         title: '组件',
