@@ -25,6 +25,10 @@ export default {
       type: String,
       default: 'POST',
     },
+    parseUrl: {
+      type: Function,
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -47,8 +51,8 @@ export default {
           // 上传完毕
           console.log('xhr返回', xhr.response)
           // 反序列化
-          let obj = JSON.parse(xhr.response)
-          this.url = 'http://localhost:3000/preview/' + obj.id
+
+          this.url = this.parseUrl(xhr.response)
         }
         xhr.send(formData)
       })
