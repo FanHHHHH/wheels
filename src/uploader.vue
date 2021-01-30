@@ -7,8 +7,8 @@
     <div class="clickButton" ref="clickButton"></div>
     <ul>
       <li v-for="file in fileList" :key="file.name">
-        <img width="100" height="100" :src="file.url" alt="" />
-        {{ file.name }}
+        <img width="100" height="100" :src="file.url" alt="" />{{ file.name }}
+        <button @click="onRemoveFile(file)">x</button>
       </li>
     </ul>
   </div>
@@ -40,11 +40,17 @@ export default {
     },
   },
   data() {
-    return {
-      url: 'about:blank',
-    }
+    return {}
   },
   methods: {
+    onRemoveFile(file) {
+      if (window.confirm('您确定要删除当前项吗？')) {
+        const fileList = [...this.fileList]
+        const idx = fileList.indexOf(file)
+        fileList.splice(idx, 1)
+        this.$emit('update:fileList', fileList)
+      }
+    },
     onClickUpload() {
       // create input
       const input = document.createElement('input')
