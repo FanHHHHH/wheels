@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="margin: 100px;">
-    <b-uploader accept="image/*" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl">
+    <b-uploader accept="image/*" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl" :fileList.sync="fileList">
       <button>点击上传</button>
       <template #tips>
         <div>只能上传 300KB 以内的 png、jpeg 文件</div>
