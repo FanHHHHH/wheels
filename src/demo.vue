@@ -1,5 +1,6 @@
 <template>
   <div id="app" style="margin: 100px;">
+    {{ fileList }}
     <b-uploader accept="image/*" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl" :fileList.sync="fileList">
       <button>点击上传</button>
       <template #tips>
