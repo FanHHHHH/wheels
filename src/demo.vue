@@ -1,11 +1,12 @@
 <template>
   <div id="app" style="margin: 100px;">
-    {{ fileList }}
-    <b-uploader accept="image/*" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl" :fileList.sync="fileList">
-      <button>点击上传</button>
-      <template #tips>
-        <div>只能上传 300KB 以内的 png、jpeg 文件</div>
-      </template>
+    {{ error }}
+    <div>只能上传 300KB 以内的 png、jpeg 文件</div>
+    <b-uploader :size="1024 * 1024 * 2" accept="image/*" @error="error = $event" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl" :fileList.sync="fileList">
+      <b-button>
+        <b-icon name="upload"></b-icon>
+        点击上传
+      </b-button>
     </b-uploader>
     <!-- <form id="f" ac="http://127.0.0.1:3000/upload">
       <div>
@@ -24,15 +25,19 @@
 <script>
 import { removeListener } from './click-outside.js'
 import BUploader from './uploader.vue'
-
+import BButton from './button/button.vue'
+import BIcon from './Icon.vue'
 export default {
   name: 'demo',
   components: {
     BUploader,
+    BButton,
+    BIcon,
   },
   data() {
     return {
       fileList: [],
+      error: '',
     }
   },
   methods: {

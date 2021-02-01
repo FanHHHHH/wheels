@@ -5,20 +5,33 @@
     </div>
     <slot name="tips"></slot>
     <div class="clickButton" ref="clickButton"></div>
-    <ul>
+    <ul class="b-uploader-list">
       <li v-for="file in fileList" :key="file.name">
-        <template v-if="file.status === 'pending'">菊花</template>
-        <img width="100" height="100" :src="file.url" alt="" />{{ file.name }}
-        <button @click="onRemoveFile(file)">x</button>
-        <span>{{ file.status }}</span>
+        <div v-if="file.status === 'pending'" class=" b-uploader-loading">
+          <b-icon name="loading"></b-icon>
+        </div>
+        <div class="b-uploader-image" v-else-if="file.type.indexOf('image') === 0">
+          <img :src="file.url" alt="" />
+        </div>
+        <div v-else class="b-uploader-defaultImage"></div>
+        <span class="b-uploader-fileName" :class="{ [file.status]: true }">
+          {{ file.name }}
+        </span>
+        <b-button class="b-uploader-remove" @click="onRemoveFile(file)">x</b-button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import BButton from './button/button.vue'
+import BIcon from './Icon.vue'
 export default {
   name: 'BlueUploader',
+  components: {
+    BButton,
+    BIcon,
+  },
   props: {
     name: {
       type: String,
@@ -39,6 +52,9 @@ export default {
     fileList: {
       type: Array,
       default: [],
+    },
+    size: {
+      type: Number,
     },
   },
   data() {
@@ -64,7 +80,13 @@ export default {
     },
     beforeUpdateFile(file, name) {
       let { size, type } = file
-      this.$emit('update:fileList', [...this.fileList, { name, size, type, url: '', status: 'pending' }])
+      if (size > this.size) {
+        this.$emit('error', '文件大小超过2M')
+        return false
+      } else {
+        this.$emit('update:fileList', [...this.fileList, { name, size, type, url: '', status: 'pending' }])
+        return true
+      }
     },
     onClickUpload() {
       // create input
@@ -78,7 +100,9 @@ export default {
         let name = name0
         name = this.generateName(name0)
 
-        this.beforeUpdateFile(file, name)
+        if (!this.beforeUpdateFile(file, name)) {
+          return
+        }
 
         let formData = new FormData()
         formData.append(this.name, file) // 获取文件名
@@ -93,9 +117,13 @@ export default {
           // 上传成功
           this.afterUpdateFile(name, xhr.response, 'success')
         }
-        // xhr.onerror = () => {
-        //   this.afterUpdateFile(name, xhr.response, 'fail')
-        // }
+        xhr.onerror = () => {
+          // 上传失败
+          this.afterUpdateFile(name, xhr.response, 'fail')
+          if (xhr.status === 0) {
+            this.$emit('error', '请检查网络连接')
+          }
+        }
         xhr.send(formData)
       })
       input.click()
@@ -107,7 +135,6 @@ export default {
         url = this.parseUrl(response)
       }
       const obj = this.fileList.filter((item) => item.name === name)[0]
-      console.log(obj)
       let idx = this.fileList.indexOf(obj)
       const copy = JSON.parse(JSON.stringify(obj))
 
@@ -122,6 +149,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './styles/var';
 .b-uploader {
+  &-list {
+    & > li {
+      list-style-type: none;
+      border: 1px solid $grey;
+      display: flex;
+      align-items: center;
+      border-radius: $border-radius;
+    }
+  }
+  &-remove {
+    margin-left: auto;
+  }
+  &-defaultImage {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+  }
+  &-image {
+    margin-right: 8px;
+    & > img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  &-loading {
+    @include spin;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+  }
+  &-fileName {
+    &.success {
+      color: darken($blue, 10%);
+    }
+    &.fail {
+      color: $red;
+    }
+  }
 }
 </style>
