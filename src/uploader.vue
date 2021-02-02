@@ -56,6 +56,10 @@ export default {
     size: {
       type: Number,
     },
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {}
@@ -78,56 +82,75 @@ export default {
       }
       return name
     },
-    beforeUpdateFile(file, name) {
-      let { size, type } = file
-      if (size > this.size) {
-        this.$emit('error', '文件大小超过2M')
-        return false
-      } else {
-        this.$emit('update:fileList', [...this.fileList, { name, size, type, url: '', status: 'pending' }])
-        return true
+    beforeLoadFiles(files, names) {
+      const files_array = Array.from(files)
+      for (let item of files_array) {
+        let { size } = item
+        if (size > this.size) {
+          this.$emit('error', '文件大小超过2M')
+          return false
+        }
       }
+      const files_ret = files_array.map((item, i) => {
+        return { name: names[i], size: item.size, type: item.type, url: '', status: 'pending' }
+      })
+      this.$emit('update:fileList', [...this.fileList, ...files_ret])
+      return true
     },
     onClickUpload() {
       // create input
       const input = document.createElement('input')
       input.type = 'file'
+      input.multiple = this.multiple
       this.$refs.clickButton.appendChild(input)
       input.addEventListener('change', () => {
         // update file
-        let file = input.files[0]
-        const { name: name0, type, size } = file
-        let name = name0
-        name = this.generateName(name0)
-
-        if (!this.beforeUpdateFile(file, name)) {
+        let names = []
+        if (input.multiple) {
+          // 多文件
+          for (let i = 0; i < input.files.length; i++) {
+            let file = input.files.item(i)
+            names[i] = this.generateName(file.name)
+          }
+        } else {
+          // 单文件
+          let file = input.files.item(0)
+          names[0] = this.generateName(file.name)
+          if (!this.beforeLoadFiles(file, names)) {
+            return
+          }
+          this.doUploadFile(this.name, file)
           return
         }
-
-        let formData = new FormData()
-        formData.append(this.name, file) // 获取文件名
-        const xhr = new XMLHttpRequest()
-        // 上传失败测试代码
-        // setTimeout(() => {
-        //   this.afterUpdateFile(name, xhr.response, 'fail')
-        // }, 0)
-        // return
-        xhr.open(this.method, this.action)
-        xhr.onload = () => {
-          // 上传成功
-          this.afterUpdateFile(name, xhr.response, 'success')
+        if (!this.beforeLoadFiles(input.files, names)) {
+          return
         }
-        xhr.onerror = () => {
-          // 上传失败
-          this.afterUpdateFile(name, xhr.response, 'fail')
-          if (xhr.status === 0) {
-            this.$emit('error', '请检查网络连接')
-          }
+        for (let i = 0; i < input.files.length; i++) {
+          let file = input.files.item(i)
+          let name = names[i]
+          this.doUploadFile(file, name)
         }
-        xhr.send(formData)
       })
       input.click()
       input.remove()
+    },
+    doUploadFile(file, name) {
+      let formData = new FormData()
+      formData.append(this.name, file) // 获取文件名
+      const xhr = new XMLHttpRequest()
+      xhr.open(this.method, this.action)
+      xhr.onload = () => {
+        // 上传成功
+        this.afterUpdateFile(name, xhr.response, 'success')
+      }
+      xhr.onerror = () => {
+        // 上传失败
+        this.afterUpdateFile(name, xhr.response, 'fail')
+        if (xhr.status === 0) {
+          this.$emit('error', '请检查网络连接')
+        }
+      }
+      xhr.send(formData)
     },
     afterUpdateFile(name, response, status) {
       let url = ''

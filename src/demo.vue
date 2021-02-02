@@ -1,8 +1,9 @@
 <template>
   <div id="app" style="margin: 100px;">
     {{ error }}
+    {{ fileList }}
     <div>只能上传 300KB 以内的 png、jpeg 文件</div>
-    <b-uploader :size="1024 * 1024 * 2" accept="image/*" @error="error = $event" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl" :fileList.sync="fileList">
+    <b-uploader multiple :size="1024 * 1024 * 2" accept="image/*" @error="error = $event" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl" :fileList.sync="fileList">
       <b-button>
         <b-icon name="upload"></b-icon>
         点击上传
