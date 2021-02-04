@@ -26,6 +26,8 @@
 <script>
 import BButton from './button/button.vue'
 import BIcon from './Icon.vue'
+import http from './http.js'
+
 export default {
   name: 'BlueUploader',
   components: {
@@ -51,7 +53,7 @@ export default {
     },
     fileList: {
       type: Array,
-      default: [],
+      default: () => [],
     },
     size: {
       type: Number,
@@ -59,6 +61,10 @@ export default {
     multiple: {
       type: Boolean,
       default: false,
+    },
+    accept: {
+      type: String,
+      default: '*/*',
     },
   },
   data() {
@@ -102,9 +108,9 @@ export default {
       const input = document.createElement('input')
       input.type = 'file'
       input.multiple = this.multiple
+      input.accept = this.accept
       this.$refs.clickButton.appendChild(input)
       input.addEventListener('change', () => {
-        // update file
         let names = []
         if (input.multiple) {
           // 多文件
@@ -132,35 +138,29 @@ export default {
         }
       })
       input.click()
-      input.remove()
+      setTimeout(() => {
+        input.remove()
+      }, 3000)
     },
     doUploadFile(file, name) {
       let formData = new FormData()
       formData.append(this.name, file) // 获取文件名
-      const xhr = new XMLHttpRequest()
-      xhr.open(this.method, this.action)
-      xhr.onload = () => {
-        // 上传成功
-        this.afterUpdateFile(name, xhr.response, 'success')
-      }
-      xhr.onerror = () => {
-        // 上传失败
-        this.afterUpdateFile(name, xhr.response, 'fail')
-        if (xhr.status === 0) {
-          this.$emit('error', '请检查网络连接')
-        }
-      }
-      xhr.send(formData)
+      http[this.method.toLowerCase()](this.action, {
+        callback: this.afterUpdateFile,
+        data: formData,
+        name,
+      })
     },
     afterUpdateFile(name, response, status) {
       let url = ''
       if (status === 'success') {
         url = this.parseUrl(response)
       }
+
       const obj = this.fileList.filter((item) => item.name === name)[0]
       let idx = this.fileList.indexOf(obj)
-      const copy = JSON.parse(JSON.stringify(obj))
 
+      const copy = JSON.parse(JSON.stringify(obj))
       copy.url = url
       copy.status = status
       const newFileList = JSON.parse(JSON.stringify(this.fileList))
@@ -174,6 +174,11 @@ export default {
 <style lang="scss" scoped>
 @import './styles/var';
 .b-uploader {
+  .clickButton {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+  }
   &-list {
     & > li {
       list-style-type: none;
