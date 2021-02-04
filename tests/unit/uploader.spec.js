@@ -60,7 +60,7 @@ describe('Uploader.vue', () => {
     // 存在loading状态
     setTimeout(() => {
       let use = vm.find('use')
-      expect(use).to.be.exist
+      expect(use.exists()).to.eq(true)
     }, 500)
   })
 })

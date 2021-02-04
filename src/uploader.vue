@@ -1,6 +1,6 @@
 <template>
   <div class="b-uploader">
-    <div @click="onClickUpload">
+    <div class="b-uploader-button" @click="onClickUpload">
       <slot></slot>
     </div>
     <slot name="tips"></slot>
@@ -53,10 +53,11 @@ export default {
     },
     fileList: {
       type: Array,
-      default: () => [],
+      required: true,
     },
     size: {
       type: Number,
+      default: 1024 * 1024 * 3,
     },
     multiple: {
       type: Boolean,
@@ -122,11 +123,6 @@ export default {
           // 单文件
           let file = input.files.item(0)
           names[0] = this.generateName(file.name)
-          if (!this.beforeLoadFiles(file, names)) {
-            return
-          }
-          this.doUploadFile(this.name, file)
-          return
         }
         if (!this.beforeLoadFiles(input.files, names)) {
           return
@@ -174,6 +170,9 @@ export default {
 <style lang="scss" scoped>
 @import './styles/var';
 .b-uploader {
+  &-button {
+    display: inline-block;
+  }
   .clickButton {
     height: 0;
     width: 0;

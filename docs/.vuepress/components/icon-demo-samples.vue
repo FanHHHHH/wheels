@@ -45,10 +45,6 @@
       loading
     </span>
     <span class="b-icon1">
-      <b-icon name="loading"></b-icon>
-      loading
-    </span>
-    <span class="b-icon1">
       <b-icon name="download"></b-icon>
       download
     </span>
