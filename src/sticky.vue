@@ -1,6 +1,6 @@
 <template>
-  <div class="b-sticky-wrapper" ref="sticky">
-    <div class="b-sticky" :class="classes">
+  <div class="b-sticky-wrapper" ref="sticky" :style="{ height }">
+    <div class="b-sticky" :class="classes" :style="{ left, width }">
       <slot></slot>
     </div>
   </div>
@@ -12,14 +12,20 @@ export default {
   data() {
     return {
       sticky: false,
+      height: undefined,
+      left: undefined,
+      width: undefined,
     }
   },
   mounted() {
     const top = this.top()
     window.addEventListener('scroll', () => {
       if (top <= window.scrollY) {
-        const height = this.height()
-        this.$refs.sticky.style.height = height + 'px'
+        const { height, left, width } = this.$refs.sticky.getBoundingClientRect()
+        this.height = height + 'px'
+        this.left = left + 'px'
+        this.width = width + 'px'
+
         this.sticky = true
       } else {
         this.sticky = false
@@ -31,10 +37,6 @@ export default {
       const { top } = this.$refs.sticky.getBoundingClientRect()
       const scrollY = window.scrollY
       return top + scrollY
-    },
-    height() {
-      const { height } = this.$refs.sticky.getBoundingClientRect()
-      return height
     },
   },
   computed: {
@@ -52,8 +54,6 @@ export default {
   &.sticky {
     position: fixed;
     top: 0;
-    // left: 0;
-    width: 100%;
   }
 }
 </style>
