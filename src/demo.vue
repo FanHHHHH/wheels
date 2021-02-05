@@ -1,24 +1,25 @@
 <template>
-  <div id="app" style="margin: 100px;">
-    {{ error }}
-    <div>只能上传 300KB 以内的 png、jpeg 文件</div>
-    <b-uploader :size="1024 * 1024 * 2" accept="image/PNG" @error="error = $event" action="http://localhost:3000/upload" name="file" method="POST" :parseUrl="parseUrl" :fileList.sync="fileList">
-      <b-button>
-        <b-icon name="upload"></b-icon>
-        点击上传
-      </b-button>
-    </b-uploader>
-    <!-- <form id="f" ac="http://127.0.0.1:3000/upload">
-      <div>
-        <input type="file" name="file" />
-      </div>
-      <div>
-        <input type="submit" value="点击上传" />
-      </div>
-    </form> -->
-    <!-- <div>
-      <img id="img" src="" alt="" />
-    </div> -->
+  <div id="app" >
+    <b-sticky distance="100">
+      <div style="border: 1px solid red">内容</div>
+    </b-sticky>
+    <div>
+      <p>段落1</p>
+      <p>段落2</p>
+      <p>段落3</p>
+      <p>段落4</p>
+      <p>段落5</p>
+      <p>段落6</p>
+      <p>段落7</p>
+      <p>段落8</p>
+      <p>段落9</p>
+      <p>段落10</p>
+      <p>段落11</p>
+      <p>段落12</p>
+      <p>段落13</p>
+      <p>段落14</p>
+      <p>段落15</p>
+    </div>
   </div>
 </template>
 
@@ -27,12 +28,11 @@ import { removeListener } from './click-outside.js'
 import BUploader from './uploader.vue'
 import BButton from './button/button.vue'
 import BIcon from './Icon.vue'
+import BSticky from './sticky.vue'
 export default {
   name: 'demo',
   components: {
-    BUploader,
-    BButton,
-    BIcon,
+    BSticky,
   },
   data() {
     return {
