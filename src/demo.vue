@@ -1,5 +1,5 @@
 <template>
-  <div id="app" >
+  <div id="app" style="margin: 100px">
     <b-sticky distance="100">
       <div style="border: 1px solid red">内容</div>
     </b-sticky>

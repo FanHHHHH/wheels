@@ -15,10 +15,11 @@ export default {
     }
   },
   mounted() {
-    const { top, height } = this.topAndHeight()
-    this.$refs.sticky.style.height = height + 'px'
+    const top = this.top()
     window.addEventListener('scroll', () => {
       if (top <= window.scrollY) {
+        const height = this.height()
+        this.$refs.sticky.style.height = height + 'px'
         this.sticky = true
       } else {
         this.sticky = false
@@ -26,10 +27,14 @@ export default {
     })
   },
   methods: {
-    topAndHeight() {
-      const { top, height } = this.$refs.sticky.getBoundingClientRect()
+    top() {
+      const { top } = this.$refs.sticky.getBoundingClientRect()
       const scrollY = window.scrollY
-      return { top: top + scrollY, height }
+      return top + scrollY
+    },
+    height() {
+      const { height } = this.$refs.sticky.getBoundingClientRect()
+      return height
     },
   },
   computed: {
