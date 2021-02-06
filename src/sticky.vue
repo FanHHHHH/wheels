@@ -1,6 +1,6 @@
 <template>
   <div class="b-sticky-wrapper" ref="sticky" :style="{ height }">
-    <div class="b-sticky" :class="classes" :style="{ left, width }">
+    <div class="b-sticky" :class="classes" :style="{ left, width, top }">
       <slot></slot>
     </div>
   </div>
@@ -9,27 +9,37 @@
 <script>
 export default {
   name: 'BlueSticky',
+  props: {
+    distance: {
+      type: Number,
+    },
+  },
   data() {
     return {
       sticky: false,
-      height: undefined,
-      left: undefined,
-      width: undefined,
+      height: null,
+      left: null,
+      width: null,
       timerId: null,
+      top: null,
     }
   },
   mounted() {
-    const top = this.top()
+    const top = this.offsetTop()
     this.windowScrollHandler = () => {
       const x = () => {
-        if (top <= window.scrollY) {
+        if (top <= window.scrollY + this.distance) {
           const { height, left, width } = this.$refs.sticky.getBoundingClientRect()
           this.height = height + 'px'
           this.left = left + 'px'
           this.width = width + 'px'
-
+          this.top = this.distance + 'px'
           this.sticky = true
         } else {
+          this.height = null
+          this.left = null
+          this.width = null
+          this.top = null
           this.sticky = false
         }
       }
@@ -41,7 +51,7 @@ export default {
     window.addEventListener('scroll', this.windowScrollHandler)
   },
   methods: {
-    top() {
+    offsetTop() {
       const { top } = this.$refs.sticky.getBoundingClientRect()
       const scrollY = window.scrollY
       return top + scrollY
@@ -64,7 +74,6 @@ export default {
 .b-sticky {
   &.sticky {
     position: fixed;
-    top: 0;
   }
 }
 </style>
