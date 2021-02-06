@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     const top = this.top()
-    window.addEventListener('scroll', () => {
+    this.windowScrollHandler = () => {
       if (top <= window.scrollY) {
         const { height, left, width } = this.$refs.sticky.getBoundingClientRect()
         this.height = height + 'px'
@@ -30,7 +30,8 @@ export default {
       } else {
         this.sticky = false
       }
-    })
+    }
+    window.addEventListener('scroll', this.windowScrollHandler)
   },
   methods: {
     top() {
@@ -45,6 +46,9 @@ export default {
         sticky: this.sticky,
       }
     },
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.windowScrollHandler)
   },
 }
 </script>
