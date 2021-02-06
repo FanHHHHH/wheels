@@ -15,21 +15,28 @@ export default {
       height: undefined,
       left: undefined,
       width: undefined,
+      timerId: null,
     }
   },
   mounted() {
     const top = this.top()
     this.windowScrollHandler = () => {
-      if (top <= window.scrollY) {
-        const { height, left, width } = this.$refs.sticky.getBoundingClientRect()
-        this.height = height + 'px'
-        this.left = left + 'px'
-        this.width = width + 'px'
+      const x = () => {
+        if (top <= window.scrollY) {
+          const { height, left, width } = this.$refs.sticky.getBoundingClientRect()
+          this.height = height + 'px'
+          this.left = left + 'px'
+          this.width = width + 'px'
 
-        this.sticky = true
-      } else {
-        this.sticky = false
+          this.sticky = true
+        } else {
+          this.sticky = false
+        }
       }
+      if (this.timerId) {
+        window.clearTimeout(this.timerId)
+      }
+      this.timerId = setTimeout(x, 10)
     }
     window.addEventListener('scroll', this.windowScrollHandler)
   },
