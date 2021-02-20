@@ -12,6 +12,7 @@ export default {
   props: {
     distance: {
       type: Number,
+      defult: 0,
     },
   },
   data() {
@@ -20,12 +21,12 @@ export default {
       height: null,
       left: null,
       width: null,
-      timerId: null,
       top: null,
     }
   },
   mounted() {
     const top = this.offsetTop()
+    let id = null
     this.windowScrollHandler = () => {
       const x = () => {
         if (top <= window.scrollY + this.distance) {
@@ -43,10 +44,10 @@ export default {
           this.sticky = false
         }
       }
-      if (this.timerId) {
-        window.clearTimeout(this.timerId)
+      if (id) {
+        window.clearTimeout(id)
       }
-      this.timerId = setTimeout(x, 10)
+      id = setTimeout(x, 15)
     }
     window.addEventListener('scroll', this.windowScrollHandler)
   },

@@ -33,7 +33,14 @@
               <td style="width: 50px" class="b-table-center" v-if="checkable"><input type="checkbox" @change="onSlecteItem(row, index, $event)" :checked="inSelectedItems(row)" /></td>
               <td style="width: 50px" class="b-table-center" v-if="indexIsVisable">{{ index }}</td>
               <template v-for="col in columns">
-                <td :style="{ width: col.width + 'px' }" :key="col.field">{{ row[col.field] }}</td>
+                <td :style="{ width: col.width + 'px' }" :key="col.field">
+                  <template v-if="col.render">
+                    <vnodes :vnodes="col.render({ value: row[col.field] })" />
+                  </template>
+                  <template v-else>
+                    {{ row[col.field] }}
+                  </template>
+                </td>
               </template>
               <td>
                 <div ref="action" style="display:inline-block">
@@ -60,12 +67,12 @@ export default {
   name: 'BlueTable',
   components: {
     BIcon,
+    vnodes: {
+      functional: true,
+      render: (h, context) => context.props.vnodes,
+    },
   },
   props: {
-    columns: {
-      type: Array,
-      required: true,
-    },
     selectedItems: {
       type: Array,
       default: () => [],
@@ -117,10 +124,15 @@ export default {
     return {
       up: true,
       expandedIds: [],
+      columns: [],
     }
   },
   mounted() {
-    console.log(this.striped)
+    this.$slots.default.map((node) => {
+      const { text, field, width } = node.componentOptions.propsData
+      const render = node.data.scopedSlots && node.data.scopedSlots.default
+      this.columns.push({ text, field, width, render })
+    })
     const table = this.$refs.bTable
     const table2 = table.cloneNode(false)
     this.table2 = table2
