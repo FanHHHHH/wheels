@@ -1,8 +1,8 @@
 ---
-title: cascader 级联选择器
+title: Cascader 级联选择器
 ---
 
-# 级联选择器
+# Cascader 级联选择器
 
 **使用方法**
 

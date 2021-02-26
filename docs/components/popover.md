@@ -1,8 +1,8 @@
 ---
-title: popover 弹出框
+title: Popover 弹出框
 ---
 
-# 弹出框
+# Popover 弹出框
 
 **使用方法**
 

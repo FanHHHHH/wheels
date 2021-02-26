@@ -1,8 +1,8 @@
 ---
-title: scroll 滚动条
+title: Scroll 滚动条
 ---
 
-# 滚动条
+# Scroll 滚动条
 
 **使用方法**
 

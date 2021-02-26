@@ -1,8 +1,8 @@
 ---
-title: table 表格
+title: Table 表格
 ---
 
-# 表格
+# Table 表格
 
 **使用方法**
 

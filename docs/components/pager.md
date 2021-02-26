@@ -1,8 +1,8 @@
 ---
-title: pager 分页
+title: Pager 分页
 ---
 
-# 分页
+# Pager 分页
 
 **使用方法**
 

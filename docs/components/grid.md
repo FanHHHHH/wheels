@@ -1,8 +1,8 @@
 ---
-title: grid 栅格系统
+title: Grid 栅格系统
 ---
 
-# grid 栅格系统
+# Grid 栅格系统
 
 **使用方法**
 

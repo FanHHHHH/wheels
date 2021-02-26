@@ -1,8 +1,8 @@
 ---
-title: toast
+title: Toast
 ---
 
-# toast
+# Toast
 
 **使用方法**
 

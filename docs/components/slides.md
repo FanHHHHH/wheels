@@ -1,8 +1,8 @@
 ---
-title: slides 轮播图
+title: Slides 轮播图
 ---
 
-# 轮播图 slides
+# Slides 轮播图
 
 **使用方法**
 

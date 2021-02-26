@@ -1,8 +1,8 @@
 ---
-title: sticky 粘滞
+title: Sticky 粘滞组件
 ---
 
-# sticky
+# Sticky 粘滞组件
 
 **使用方法**
 

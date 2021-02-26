@@ -1,8 +1,8 @@
 ---
-title: layout 布局
+title: Layout 布局
 ---
 
-# 布局
+# Layout 布局
 
 **使用方法**
 

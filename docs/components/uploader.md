@@ -1,8 +1,8 @@
 ---
-title: uploader 上传组件
+title: Uploader 上传组件
 ---
 
-# 上传组件
+# Uploader 上传组件
 
 **使用方法**
 
