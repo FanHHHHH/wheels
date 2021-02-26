@@ -129,6 +129,7 @@ export default {
   },
   mounted() {
     this.$slots.default.map((node) => {
+      if (!node.componentOptions) return
       const { text, field, width } = node.componentOptions.propsData
       const render = node.data.scopedSlots && node.data.scopedSlots.default
       this.columns.push({ text, field, width, render })

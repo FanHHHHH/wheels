@@ -1,6 +1,16 @@
 <template>
   <div class="wrapper">
-    <b-table bordered striped checkable indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource" :columns="columns">
+    <b-table indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
+      <b-table-column text="姓名" field="name" :width="300">
+        <template slot-scope="scope">
+          {{ scope.value }}
+        </template>
+      </b-table-column>
+      <b-table-column text="分数" field="score" :width="80">
+        <template slot-scope="scope">
+          {{ scope.value }}
+        </template>
+      </b-table-column>
       <template v-slot="row">
         <button @click="edit(row.item)">编辑</button>
         <button @click="view(row.item)">查看</button>
@@ -11,17 +21,14 @@
 
 <script>
 import BTable from '../../../src/table'
+import BTableColumn from '../../../src/table-column'
 export default {
   components: {
     BTable,
+    BTableColumn,
   },
   data() {
     return {
-      currentPage: 1,
-      columns: [
-        { text: '姓名', field: 'name', width: '300' },
-        { text: '分数', field: 'score', width: '80' },
-      ],
       orderBy: {
         name: true,
         score: 'desc',
@@ -72,8 +79,5 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   margin-top: 10px;
-  height: 500px;
-  margin-bottom: -20px;
-  // overflow: auto;
 }
 </style>

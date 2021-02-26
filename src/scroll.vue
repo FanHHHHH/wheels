@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <div class="b-scroll-track" ref="track" v-show="barVisible">
-      <div class="b-scroll-slide" ref="slide">
+      <div class="b-scroll-slide" ref="slide" @mousedown="onMousedown" @selectstart="onSelectstart">
         <div class="b-scroll-slide-inner"></div>
       </div>
     </div>
@@ -19,10 +19,14 @@ export default {
       barVisible: false,
       childrenHeight: 0,
       parentHeight: 0,
+      onmousemove: false,
+      prevY: 0,
+      slideTranslateY: 0,
+      scrollTranslateY: 0,
+      slideHeight: 0,
     }
   },
   mounted() {
-    let y = 0
     this.childrenHeight = this.$refs.children.getBoundingClientRect().height
     this.parentHeight = this.$refs.parent.getBoundingClientRect().height
     const { paddingBottom, paddingTop } = window.getComputedStyle(this.$refs.children)
@@ -30,24 +34,27 @@ export default {
     const height = this.childrenHeight - this.parentHeight + parseInt(borderBottomWidth) + parseInt(borderTopWidth) + parseInt(paddingBottom) + parseInt(paddingTop)
     this.$refs.parent.addEventListener('wheel', (e) => {
       e.preventDefault()
-      y -= e.deltaY
-      if (y > 0) {
-        y = 0
+      this.scrollTranslateY -= e.deltaY
+      if (this.scrollTranslateY > 0) {
+        this.scrollTranslateY = 0
       }
-      if (y < -height) {
-        y = -height
+      if (this.scrollTranslateY < -height) {
+        this.scrollTranslateY = -height
       }
-      const shiftDistance = this.getShiftDistance(y, this.childrenHeight)
+      const shiftDistance = this.getShiftDistance(this.scrollTranslateY, this.childrenHeight)
       this.$refs.slide.style.transform = `translateY(${-shiftDistance}px)`
-      this.$refs.children.style.transform = `translateY(${y}px)`
+      this.$refs.children.style.transform = `translateY(${this.scrollTranslateY}px)`
+      this.slideTranslateY = -shiftDistance
     })
+    document.addEventListener('mousemove', this.move)
+    document.addEventListener('mouseup', this.onMouseup)
   },
   methods: {
     updateSlideHeight(childrenHeight, parentHeight) {
       this.$nextTick(() => {
         const { height: trackHeight } = this.$refs.track.getBoundingClientRect()
-        const slideHeight = (trackHeight * parentHeight) / childrenHeight
-        this.$refs.slide.style.height = slideHeight + 'px'
+        this.slideHeight = (trackHeight * parentHeight) / childrenHeight
+        this.$refs.slide.style.height = this.slideHeight + 'px'
       })
     },
     getShiftDistance(y, childrenHeight) {
@@ -61,13 +68,45 @@ export default {
     onMouseLeave() {
       this.barVisible = false
     },
+    move(e) {
+      if (this.onmousemove) {
+        const slide = document.querySelector('.b-scroll-slide')
+        const deltaY = e.clientY - this.prevY
+        this.slideTranslateY = this.slideTranslateY + deltaY
+        if (this.slideTranslateY < 0) {
+          this.slideTranslateY = 0
+        }
+        if (this.slideTranslateY > this.parentHeight - this.slideHeight) {
+          this.slideTranslateY = this.parentHeight - this.slideHeight
+        }
+        slide.style.transform = `translateY(${this.slideTranslateY}px)`
+        this.prevY = e.clientY
+        this.scrollTranslateY = -this.slideTranslateY
+        this.scrollTranslateY = -(this.slideTranslateY * this.childrenHeight) / this.parentHeight
+        this.$refs.children.style.transform = `translateY(${this.scrollTranslateY}px)`
+      }
+    },
+    onMousedown(e) {
+      this.prevY = e.clientY
+      this.onmousemove = true
+    },
+    onMouseup() {
+      this.onmousemove = false
+    },
+    onSelectstart(e) {
+      e.preventDefault()
+    },
+  },
+  beforeDestroy() {
+    document.removeEventListener('mousemove', this.move)
+    document.removeEventListener('mouseup', this.onMouseup)
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .b-scroll {
-  transition: transform 0.15s ease;
+  //   transition: transform 0.05s ease;
   &-wrapper {
     position: relative;
     width: 200px;
@@ -91,7 +130,7 @@ export default {
     position: absolute;
     left: 50%;
     margin-left: -4px;
-    transition: transform 0.15s ease;
+    // transition: transform 0.05s ease;
     width: 8px;
     padding: 4px 0;
     &-inner {

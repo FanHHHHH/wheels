@@ -19,26 +19,27 @@ title: table 表格
 #### 示例代码：
 
 ```vue
-<template>
-  <div class="wrapper">
-    <b-table :data-source="dataSource" :columns="columns">
-      <template v-slot="row">
-        <button @click="edit(row.item)">编辑</button>
-        <button @click="view(row.item)">查看</button>
-      </template>
-    </b-table>
-  </div>
-</template>
+<b-table :data-source="dataSource">
+  <b-table-column text="姓名" field="name" :width="300">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <b-table-column text="分数" field="score" :width="80">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <template v-slot="row">
+    <button @click="edit(row.item)">编辑</button>
+    <button @click="view(row.item)">查看</button>
+  </template>
+</b-table>
 
 <script>
 export default {
   data() {
     return {
-      currentPage: 1,
-      columns: [
-        { text: '姓名', field: 'name', width: '300' },
-        { text: '分数', field: 'score', width: '80' },
-      ],
       dataSource: [
         { id: 1, name: 'hf', score: 100, description: 'aaa bbb' },
         { id: 2, name: 'wzx', score: 99, description: 'ccc ddd' },
@@ -51,7 +52,6 @@ export default {
         { id: 9, name: 'gg', score: 99 },
         { id: 10, name: 'hh', score: 99 },
       ],
-      selected: [],
     }
   },
   methods: {,
@@ -81,26 +81,27 @@ export default {
 #### 示例代码
 
 ```vue
-<template>
-  <div class="wrapper">
-    <b-table bordered striped checkable indexIsVisable tight :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource" :columns="columns">
-      <template v-slot="row">
-        <button @click="edit(row.item)">编辑</button>
-        <button @click="view(row.item)">查看</button>
-      </template>
-    </b-table>
-  </div>
-</template>
+<b-table bordered striped checkable indexIsVisable @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
+  <b-table-column text="姓名" field="name" :width="300">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <b-table-column text="分数" field="score" :width="80">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <template v-slot="row">
+    <button @click="edit(row.item)">编辑</button>
+    <button @click="view(row.item)">查看</button>
+  </template>
+</b-table>
 
 <script>
 export default {
   data() {
     return {
-      currentPage: 1,
-      columns: [
-        { text: '姓名', field: 'name', width: '300' },
-        { text: '分数', field: 'score', width: '80' },
-      ],
       orderBy: {
         name: true,
         score: 'desc',
@@ -148,26 +149,27 @@ export default {
 #### 示例代码
 
 ```vue
-<template>
-  <div class="wrapper">
-    <b-table bordered striped checkable indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource" :columns="columns">
-      <template v-slot="row">
-        <button @click="edit(row.item)">编辑</button>
-        <button @click="view(row.item)">查看</button>
-      </template>
-    </b-table>
-  </div>
-</template>
+<b-table indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
+  <b-table-column text="姓名" field="name" :width="300">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <b-table-column text="分数" field="score" :width="80">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <template v-slot="row">
+    <button @click="edit(row.item)">编辑</button>
+    <button @click="view(row.item)">查看</button>
+  </template>
+</b-table>
 
 <script>
 export default {
   data() {
     return {
-      currentPage: 1,
-      columns: [
-        { text: '姓名', field: 'name', width: '300' },
-        { text: '分数', field: 'score', width: '80' },
-      ],
       orderBy: {
         name: true,
         score: 'desc',
@@ -216,26 +218,27 @@ export default {
 #### 示例代码
 
 ```vue
-<template>
-  <div class="wrapper">
-    <b-table bordered striped checkable indexIsVisable expandField="description" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource" :columns="columns">
-      <template v-slot="row">
-        <button @click="edit(row.item)">编辑</button>
-        <button @click="view(row.item)">查看</button>
-      </template>
-    </b-table>
-  </div>
-</template>
+<b-table expandField="description" bordered striped checkable indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
+  <b-table-column text="姓名" field="name" :width="300">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <b-table-column text="分数" field="score" :width="80">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <template v-slot="row">
+    <button @click="edit(row.item)">编辑</button>
+    <button @click="view(row.item)">查看</button>
+  </template>
+</b-table>
 
 <script>
 export default {
   data() {
     return {
-      currentPage: 1,
-      columns: [
-        { text: '姓名', field: 'name', width: '300' },
-        { text: '分数', field: 'score', width: '80' },
-      ],
       orderBy: {
         name: true,
         score: 'desc',
@@ -280,26 +283,92 @@ export default {
 #### 示例代码
 
 ```vue
-<template>
-  <div class="wrapper">
-    <b-table bordered striped checkable indexIsVisable expandField="description" :height="200" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource" :columns="columns">
-      <template v-slot="row">
-        <button @click="edit(row.item)">编辑</button>
-        <button @click="view(row.item)">查看</button>
-      </template>
-    </b-table>
-  </div>
-</template>
+<b-table :height="200" expandField="description" bordered striped checkable indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
+  <b-table-column text="姓名" field="name" :width="300">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <b-table-column text="分数" field="score" :width="80">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <template v-slot="row">
+    <button @click="edit(row.item)">编辑</button>
+    <button @click="view(row.item)">查看</button>
+  </template>
+</b-table>
 
 <script>
 export default {
   data() {
     return {
-      currentPage: 1,
-      columns: [
-        { text: '姓名', field: 'name', width: '300' },
-        { text: '分数', field: 'score', width: '80' },
+      orderBy: {
+        name: true,
+        score: 'desc',
+      },
+      dataSource: [
+        { id: 1, name: 'hf', score: 100, description: 'aaa bbb' },
+        { id: 2, name: 'wzx', score: 99, description: 'ccc ddd' },
+        { id: 3, name: 'aa', score: 99 },
+        { id: 4, name: 'bb', score: 99 },
+        { id: 5, name: 'cc', score: 99 },
+        { id: 6, name: 'dd', score: 99 },
+        { id: 7, name: 'ee', score: 99 },
+        { id: 8, name: 'ff', score: 99 },
+        { id: 9, name: 'gg', score: 99 },
+        { id: 10, name: 'hh', score: 99 },
       ],
+      selected: [],
+      loading: false,
+    }
+  },
+  methods: {
+    x() {
+      console.log('sort callback')
+    },
+    edit(row) {
+      console.log(row)
+    },
+    view(row) {
+      console.log(row)
+    },
+  },
+}
+</script>
+```
+
+### 自定义表格内容
+
+<ClientOnly>
+<table-demo-td></table-demo-td>
+</ClientOnly>
+
+#### 示例代码
+
+```vue
+<b-table :data-source="dataSource">
+  <b-table-column text="姓名" field="name" :width="300">
+    <template slot-scope="scope">
+      <a href="#">{{ scope.value }}</a>
+    </template>
+  </b-table-column>
+  <b-table-column text="分数" field="score" :width="80">
+    <template slot-scope="scope">
+      {{ scope.value }}
+    </template>
+  </b-table-column>
+  <template v-slot="row">
+    <button @click="edit(row.item)">编辑</button>
+    <button @click="view(row.item)">查看</button>
+  </template>
+</b-table>
+
+<script>
+export default {
+  data() {
+    return {
       orderBy: {
         name: true,
         score: 'desc',
@@ -339,7 +408,6 @@ export default {
 
 |      参数      |                说明                |  类型   | 可选值 | 默认值 |
 | :------------: | :--------------------------------: | :-----: | :----: | :----: |
-|    columns     |                列名                |  Array  |  必填  |   --   |
 | selectedItems  |               选中行               |  Array  |   --   |   []   |
 |   dataSource   |               行数据               |  Array  |  必填  |   --   |
 | indexIsVisable |           行序号是否可见           | Boolean |   --   |  true  |

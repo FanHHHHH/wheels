@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <b-table expandField="description" bordered striped checkable indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
+    <b-table :data-source="dataSource">
       <b-table-column text="姓名" field="name" :width="300">
         <template slot-scope="scope">
-          {{ scope.value }}
+          <a href="#">{{ scope.value }}</a>
         </template>
       </b-table-column>
       <b-table-column text="分数" field="score" :width="80">
@@ -64,19 +64,19 @@ export default {
 </script>
 
 <style>
-.b-table {
-  margin: 0 !important;
-}
 * {
   box-sizing: border-box;
+}
+
+.b-table {
+  margin: 0 !important;
 }
 </style>
 
 <style lang="scss" scoped>
 .wrapper {
   margin-top: 10px;
-  height: 500px;
-  margin-bottom: -100px;
+  // height: 500px;
   // overflow: auto;
 }
 </style>

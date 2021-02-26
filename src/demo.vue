@@ -104,7 +104,7 @@
         <div>100</div>
       </div>
     </b-scroll>
-    <!-- <b-table :height="200" expandField="description" bordered striped checkable indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
+    <b-table :height="200" expandField="description" bordered striped checkable indexIsVisable :loading="loading" @update:orderBy="x" :selected-items.sync="selected" :order-by.sync="orderBy" :data-source="dataSource">
       <b-table-column text="姓名" field="name" :width="300">
         <template slot-scope="scope">
           <a href="#">{{ scope.value }}</a>
@@ -119,7 +119,8 @@
         <button @click="edit(row.item)">编辑</button>
         <button @click="view(row.item)">查看</button>
       </template>
-    </b-table> -->
+    </b-table>
+    <div class="test" @mousedown="onMousedown" @mouseup="onMouseup"></div>
   </div>
 </template>
 
@@ -138,6 +139,8 @@ export default {
   },
   data() {
     return {
+      prevX: 0,
+      prevY: 0,
       currentPage: 1,
       // columns: [
       //   { text: '姓名', field: 'name', width: '300' },
@@ -164,25 +167,26 @@ export default {
     }
   },
   mounted() {
-    // let y = 0
-    // const { height: childrenHeight } = this.$refs.children.getBoundingClientRect()
-    // const { paddingBottom, paddingTop } = window.getComputedStyle(this.$refs.children)
-    // const { borderBottomWidth, borderTopWidth } = window.getComputedStyle(this.$refs.parent)
-    // const { height: parentHeight } = this.$refs.parent.getBoundingClientRect()
-    // console.log(borderBottomWidth, borderTopWidth, paddingBottom, paddingTop)
-    // const height = childrenHeight - parentHeight + parseInt(borderBottomWidth) + parseInt(borderTopWidth) + parseInt(paddingBottom) + parseInt(paddingTop)
-    // this.$refs.children.style.transition = 'transform 0.15s ease'
-    // this.$refs.parent.addEventListener('wheel', (e) => {
-    //   y -= e.deltaY
-    //   if (y > 0) {
-    //     y = 0
-    //   }
-    //   if (y < -height) {
-    //     y = -height
-    //   }
-    //   console.log(y)
-    //   this.$refs.children.style.transform = `translateY(${y}px)`
-    // })
+    async function async1() {
+      console.log('async1 start')
+      await async2()
+      console.log('async1 end')
+    }
+    async function async2() {
+      console.log('async2')
+    }
+    console.log('script start')
+    setTimeout(function() {
+      console.log('setTimeOut')
+    }, 0)
+    async1()
+    new Promise(function(resolve) {
+      console.log('promise1')
+      resolve()
+    }).then(function() {
+      console.log('promise2')
+    })
+    console.log('script end')
   },
   methods: {
     x() {
@@ -191,12 +195,51 @@ export default {
         this.dataSource.sort((a, b) => a.score - b.score)
         this.loading = false
       }, 2000)
+
+      async function async1() {
+        console.log('1')
+        await async2()
+        console.log('2')
+      }
+      async function async2() {
+        console.log('3')
+      }
+      async1()
+      new Promise((resolve) => {
+        console.log('4')
+        resolve()
+      }).then(() => {
+        console.log('5')
+      })
     },
     edit(row) {
       console.log(row)
     },
     view(row) {
       console.log(row)
+    },
+    move(e) {
+      const test = document.querySelector('.test')
+      const rect = test.getBoundingClientRect()
+      // const offsetX = this.prevX - e.clientX
+      const offsetY = this.prevY - e.clientY
+      console.log(rect.y - offsetY, rect.y, offsetY)
+      test.style.transform = `translate(0, ${rect.y - offsetY}px)`
+      // this.prevX = rect.x - offsetX
+      // console.log(window.getComputedStyle(test).transform)
+      // this.prevX = e.clientX
+      this.prevY = e.clientY
+    },
+    onMousedown(e) {
+      const test = document.querySelector('.test')
+      // this.prevX = e.clientX
+      this.prevY = e.clientY
+
+      test.addEventListener('mousemove', this.move)
+    },
+    onMouseup() {
+      const test = document.querySelector('.test')
+      test.removeEventListener('mousemove', this.move)
     },
   },
 }
@@ -207,5 +250,21 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+#id {
+  position: relative;
+}
+.test {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  border: 1px solid red;
+}
+.b-scroll-wrapper {
+  position: absolute;
+  left: 50%;
+  margin-left: -20px;
 }
 </style>
