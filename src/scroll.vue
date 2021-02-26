@@ -70,6 +70,7 @@ export default {
     },
     move(e) {
       if (this.onmousemove) {
+        e.preventDefault()
         const slide = document.querySelector('.b-scroll-slide')
         const deltaY = e.clientY - this.prevY
         this.slideTranslateY = this.slideTranslateY + deltaY
@@ -109,9 +110,6 @@ export default {
   //   transition: transform 0.05s ease;
   &-wrapper {
     position: relative;
-    width: 200px;
-    height: 400px;
-    border: 1px solid red;
     overflow: hidden;
   }
   &-track {
