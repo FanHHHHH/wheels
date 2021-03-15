@@ -6,7 +6,7 @@ module.exports = {
     nav: [
       { text: '主页', link: '/' },
       { text: '文档', link: '/get-started/' },
-      { text: 'guthub', link: 'https://github.com/FanHHHHH/wheels' },
+      { text: 'github', link: 'https://github.com/FanHHHHH/wheels' },
     ],
     displayAllHeaders: true, // 默认值：false
     sidebar: [
